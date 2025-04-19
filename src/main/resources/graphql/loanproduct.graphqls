@@ -1,0 +1,12 @@
+type Query {
+    loanProducts: LoanProductResult!
+}
+
+type LoanProductResult {
+    loanProductId: Long!
+    productName: String!
+    maximumInterestRate: Float!
+    minimumInterestRate: Float!
+    maximumLoanLimit: Int!
+    provider: String!
+}

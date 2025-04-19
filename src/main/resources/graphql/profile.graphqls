@@ -1,0 +1,43 @@
+extend type Mutation {
+    createProfile(profile: CreateProfileInput!): ProfileResult!
+}
+
+input CreateProfileInput {
+    job: String!
+    workplaceName: String!
+    employmentForm: String!
+    income: Int!
+    employmentDate: String!
+    cardDelinquency: CardDelinquency!
+    loanUsageStatus: LoanUsageStatus!
+    loanProductUsageCount: Int
+    totalLoanUsageAmount: Int
+    purposeOfLoan: String!
+    desiredLoanAmount: Int!
+    creditGradeStatus: String!
+}
+
+type ProfileResult {
+    purposeOfLoan: String
+    job: String
+    creditGradeStatus: String
+    loanProductUsageCount: Int
+    totalLoanUsageAmount: Int
+    desiredLoanAmount: Int
+}
+
+enum CardDelinquency {
+    YES, NO
+}
+
+enum LoanUsageStatus {
+    USING, NOT_USING
+}
+
+enum PurposeOfLoan {
+    LIVING_EXPENSES, STUDENT_LOAN, RESIDENTIAL_LOAN,
+    STARTUP_LOAN, EMERGENCY_LOAN, CONSUMER_LOAN, REPAY_EXISTING_LOAN,
+    ETC
+}
+
+

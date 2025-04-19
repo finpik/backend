@@ -1,0 +1,50 @@
+# Java 관련
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.iml
+
+# Gradle
+.gradle/
+build/
+/gradle
+
+# 환경 설정 파일 (민감 정보 보호)
+*.env
+application-*.yml
+application-*.yaml
+application-*.properties
+!application-example.yml
+!application-example.properties
+
+# IDE 설정
+.idea/
+*.iws
+*.ipr
+*.iml
+.vscode/
+
+# OS별
+.DS_Store
+
+# 기타 캐시/백업
+*.log
+*.swp
+*.tmp
+*.bak
+
+# 테스트 리포트/커버리지
+test-output/
+jacoco.exec
+
+# Spring Boot DevTools
+.spring-boot-devtools.properties
+
+# Local database
+*.h2.db
+
+# Git 자체
+.git/
+
