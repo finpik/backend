@@ -2,15 +2,18 @@
 *.class
 *.war
 *.ear
+*.jar
 *.log
 *.iml
 
 # Gradle
 .gradle/
 build/
+/gradle
 
 # 환경 설정 파일 (민감 정보 보호)
 *.env
+application.yml
 application-*.yml
 application-*.yaml
 application-*.properties
