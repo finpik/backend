@@ -5,9 +5,10 @@ name: Run Tests
 # feature브랜치까지 커버해야 나중에 main develop에 푸쉬할 때 사이드 이펙트를 줄일 수 있음
 on:
   push:
-    - main
-    - develop
-    - 'feature/**'
+    branches:
+      - main
+      - develop
+      - 'feature/**'
 
 jobs:
   build:
@@ -31,3 +32,5 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
+
+#CD 스크립트 추후 작성 예정
