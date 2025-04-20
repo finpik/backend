@@ -1,0 +1,36 @@
+name: Run Tests
+
+# 어떤 브랜치에 푸쉬될 때, 사용할 것인지
+# main과 develop만 했을 때, 오히려 문제가 될 수 있음
+# feature브랜치까지 커버해야 나중에 main develop에 푸쉬할 때 사이드 이펙트를 줄일 수 있음
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+
+jobs:
+  build:
+    # 어떤 OS 를 사용하여 돌릴 것인지
+    runs-on: ubuntu-latest
+
+    #코드를 Runner 환경으로 가져와야 함
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 어떤 JDK를 사용할지 -> 프로젝트와 맞춰줘야 함
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Run tests
+        run: ./gradlew test
+
+#CD 스크립트 추후 작성 예정
