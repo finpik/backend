@@ -8,12 +8,12 @@ on:
     branches:
       - 'feature/**'
   pull_request:
-    test:
+    branches:
       - main
       - develop
 
 jobs:
-  build:
+  test:
     # 어떤 OS 를 사용하여 돌릴 것인지
     runs-on: ubuntu-latest
 
