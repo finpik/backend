@@ -12,7 +12,7 @@ public class FailTest {
         //given
 
         //when
-
+        int a = 1;
         //then
         Assertions.assertEquals(1, 2);
     }
