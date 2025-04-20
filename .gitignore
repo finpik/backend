@@ -9,7 +9,6 @@
 # Gradle
 .gradle/
 build/
-/gradle
 
 # 환경 설정 파일 (민감 정보 보호)
 *.env
