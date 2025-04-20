@@ -6,9 +6,11 @@ name: Run Tests
 on:
   push:
     branches:
+      - 'feature/**'
+  pull_request:
+    branches:
       - main
       - develop
-      - 'feature/**'
 
 jobs:
   build:
