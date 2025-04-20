@@ -1,6 +1,5 @@
 # Java 관련
 *.class
-*.jar
 *.war
 *.ear
 *.log
