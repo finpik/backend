@@ -21,7 +21,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     ) throws IOException {
         log.error("인증 실패: {}", authException.getMessage());
 
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         response.setContentType(HttpHeaderValues.APPLICATION_JSON);
         response.getWriter().write(ErrorMessage.AUTHORIZATION_SERVER_ERROR);
     }
