@@ -25,11 +25,19 @@ public class User {
     private LocalDateTime registrationDate;
 
     @Builder
-    public User(Long id, String username, String email, Gender gender, RegistrationType registrationType) {
+    public User(
+        Long id,
+        String username,
+        String email,
+        Gender gender,
+        RegistrationType registrationType,
+        LocalDateTime registrationDate
+    ) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.gender = gender;
         this.registrationType = registrationType == null ? RegistrationType.KAKAO : registrationType;
+        this.registrationDate = registrationDate;
     }
 }
