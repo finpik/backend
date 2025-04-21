@@ -1,5 +1,7 @@
 package com.loanpick.config.security;
 
+import com.loanpick.auth.oauth.CustomAuthenticationEntryPoint;
+import com.loanpick.auth.oauth.OAuth2FailureHandler;
 import com.loanpick.auth.oauth.OAuth2SuccessHandler;
 import com.loanpick.auth.oauth.service.KakaoOAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ public class SecurityConfig {
 
     private final KakaoOAuth2UserService kakaoOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2FailureHandler oAuth2FailureHandler;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,6 +38,9 @@ public class SecurityConfig {
                 oauth.userInfoEndpoint(user ->
                         user.userService(kakaoOAuth2UserService)
                     ).successHandler(oAuth2SuccessHandler)
+                    .failureHandler(oAuth2FailureHandler)
+            ).exceptionHandling(exception ->
+                exception.authenticationEntryPoint(authenticationEntryPoint)
             );
 
         return http.build();
