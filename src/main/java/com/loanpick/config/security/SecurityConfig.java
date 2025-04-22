@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.loanpick.auth.oauth.CustomAuthenticationEntryPoint;
-import com.loanpick.auth.oauth.OAuth2FailureHandler;
-import com.loanpick.auth.oauth.OAuth2SuccessHandler;
+import com.loanpick.auth.oauth.handler.OAuth2FailureHandler;
+import com.loanpick.auth.oauth.handler.OAuth2SuccessHandler;
 import com.loanpick.auth.oauth.service.KakaoOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login/oauth2/**", // 카카오 콜백 URL
                         "/oauth2/**", // 인가 시작 URL (`/oauth2/authorization/kakao`)
                         "/auth/**", // 사용자 정의 callback 또는 API
-                        "/favicon.ico", "/css/**", "/js/**" // 정적 리소스
+                        "/favicon.ico", "/css/**", "/js/**", // 정적 리소스
+                        "/graphql"
                 ).permitAll().anyRequest().permitAll())
                 .oauth2Login(oauth -> oauth.userInfoEndpoint(user -> user.userService(kakaoOAuth2UserService))
                         .successHandler(oAuth2SuccessHandler).failureHandler(oAuth2FailureHandler))
