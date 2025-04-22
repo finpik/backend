@@ -18,9 +18,11 @@ class CustomOAuth2UserTest {
 
         String email = "test@kakao.com";
         String provider = "kakao";
+        String userId = "12345";
+        String accessToken = "accessToken";
 
         // when
-        CustomOAuth2User user = new CustomOAuth2User(attributes, email, provider, "12345");
+        CustomOAuth2User user = new CustomOAuth2User(attributes, email, provider, userId, accessToken);
 
         // then
         assertEquals(email, user.getEmail());

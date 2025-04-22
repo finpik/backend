@@ -35,7 +35,12 @@ class KakaoOAuth2UserServiceTest {
         Map<String, Object> attributes = Map.of("id", "12345", "kakao_account",
                 Map.of("email", "test@kakao.com", "profile", Map.of("nickname", "홍길동")));
 
-        CustomOAuth2User fakeUser = new CustomOAuth2User(attributes, "test@kakao.com", "kakao", "12345");
+        String email = "test@kakao.com";
+        String provider = "kakao";
+        String userId = "12345";
+        String accessToken = "accessToken";
+
+        CustomOAuth2User fakeUser = new CustomOAuth2User(attributes, email, provider, userId, accessToken);
         KakaoOAuth2UserService spyService = Mockito.spy(kakaoOAuth2UserService);
         doReturn(fakeUser).when(spyService).loadUser(userRequest);
 
