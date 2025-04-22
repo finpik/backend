@@ -17,6 +17,7 @@ public class CustomOAuth2User implements OAuth2User {
     private final String email;
     private final String provider;
     private final String userId;
+    private final String accessToken;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -30,6 +31,6 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return userId;
+        return "";
     }
 }
