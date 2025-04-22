@@ -34,69 +34,76 @@ import jakarta.servlet.http.HttpServletResponse;
 @ExtendWith(MockitoExtension.class)
 class OAuth2SuccessHandlerTest {
 
-  @InjectMocks private OAuth2SuccessHandler oAuth2SuccessHandler;
+    @InjectMocks
+    private OAuth2SuccessHandler oAuth2SuccessHandler;
 
-  @Mock private JwtProvider jwtProvider;
+    @Mock
+    private JwtProvider jwtProvider;
 
-  @Mock private UserRepository userRepository;
+    @Mock
+    private UserRepository userRepository;
 
-  @Mock private HttpServletRequest request;
+    @Mock
+    private HttpServletRequest request;
 
-  @Mock private HttpServletResponse response;
+    @Mock
+    private HttpServletResponse response;
 
-  @Mock private Authentication authentication;
+    @Mock
+    private Authentication authentication;
 
-  @Mock private CustomOAuth2User oAuth2User;
+    @Mock
+    private CustomOAuth2User oAuth2User;
 
-  @Captor private ArgumentCaptor<String> jwtCaptor;
+    @Captor
+    private ArgumentCaptor<String> jwtCaptor;
 
-  @BeforeEach
-  void setup() {
-    oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository);
-  }
+    @BeforeEach
+    void setup() {
+        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository);
+    }
 
-  @DisplayName("로그인 성공 시 JWT를 헤더에 포함하여 응답한다.")
-  @Test
-  void addJwtToHeader() throws IOException {
-    // given
-    User user = User.builder().id(1L).email("user@test.com").username("loanpick").build();
+    @DisplayName("로그인 성공 시 JWT를 헤더에 포함하여 응답한다.")
+    @Test
+    void addJwtToHeader() throws IOException {
+        // given
+        User user = User.builder().id(1L).email("user@test.com").username("loanpick").build();
 
-    when(authentication.getPrincipal()).thenReturn(oAuth2User);
-    when(oAuth2User.getEmail()).thenReturn("user@test.com");
-    when(userRepository.findByEmail("user@test.com")).thenReturn(Optional.of(user));
-    when(jwtProvider.createToken(any(), any(), any())).thenReturn("test.jwt.token");
+        when(authentication.getPrincipal()).thenReturn(oAuth2User);
+        when(oAuth2User.getEmail()).thenReturn("user@test.com");
+        when(userRepository.findByEmail("user@test.com")).thenReturn(Optional.of(user));
+        when(jwtProvider.createToken(any(), any(), any())).thenReturn("test.jwt.token");
 
-    // mock response
-    doNothing().when(response).setHeader(anyString(), anyString());
+        // mock response
+        doNothing().when(response).setHeader(anyString(), anyString());
 
-    // when
-    oAuth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);
+        // when
+        oAuth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);
 
-    // then
-    assertAll(
-        () -> verify(response).setHeader("Authorization", "Bearer test.jwt.token"),
-        () -> verify(response).setStatus(HttpServletResponse.SC_OK));
-  }
+        // then
+        assertAll(() -> verify(response).setHeader("Authorization", "Bearer test.jwt.token"),
+                () -> verify(response).setStatus(HttpServletResponse.SC_OK));
+    }
 
-  @Test
-  @DisplayName("사용자가 존재하지 않으면 회원가입 유도 응답을 보낸다.")
-  void returnsSignUpNeeded() throws IOException {
-    // given
-    when(authentication.getPrincipal()).thenReturn(oAuth2User);
-    when(oAuth2User.getEmail()).thenReturn("not_exist_user@test.com");
-    when(userRepository.findByEmail("not_exist_user@test.com")).thenReturn(Optional.empty());
+    @DisplayName("사용자가 존재하지 않으면 회원가입 유도 응답을 보낸다.")
+    @Test
+    void returnsSignUpNeeded() throws IOException {
+        // given
+        when(authentication.getPrincipal()).thenReturn(oAuth2User);
+        when(oAuth2User.getEmail()).thenReturn("not_exist_user@test.com");
+        when(userRepository.findByEmail("not_exist_user@test.com")).thenReturn(Optional.empty());
 
-    PrintWriter writer = mock(PrintWriter.class);
-    when(response.getWriter()).thenReturn(writer);
+        PrintWriter writer = mock(PrintWriter.class);
+        when(response.getWriter()).thenReturn(writer);
 
-    // when
-    oAuth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);
+        // when
+        oAuth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);
 
-    // then
-    assertAll(
-        () -> verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND),
-        () -> verify(response).setContentType("application/json"),
-        () -> verify(response).setCharacterEncoding("UTF-8"),
-        () -> verify(writer).write(ErrorMessage.SIGN_UP_NEEDED));
-  }
+        // then
+        assertAll(
+            () -> verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND),
+            () -> verify(response).setContentType("application/json"),
+            () -> verify(response).setCharacterEncoding("UTF-8"),
+            () -> verify(writer).write(ErrorMessage.SIGN_UP_NEEDED));
+    }
 }

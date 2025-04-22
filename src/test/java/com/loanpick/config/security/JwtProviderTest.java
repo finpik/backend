@@ -16,28 +16,22 @@ import io.jsonwebtoken.Claims;
 
 class JwtProviderTest {
 
-  @DisplayName("만들어진 User 객체로 Token을 만들 수 있다.")
-  @Test
-  void createToken() {
-    // given
-    User user =
-        User.builder()
-            .id(1L)
-            .username("loanpick")
-            .email("loanpick@gmail.com")
-            .gender(Gender.MALE)
-            .registrationType(RegistrationType.KAKAO)
-            .build();
-    Date now = new Date();
-    Date expiry = new Date(now.getTime() + 3600_000); // 1시간
+    @DisplayName("만들어진 User 객체로 Token을 만들 수 있다.")
+    @Test
+    void createToken() {
+        // given
+        User user = User.builder().id(1L).username("loanpick").email("loanpick@gmail.com").gender(Gender.MALE)
+                .registrationType(RegistrationType.KAKAO).build();
+        Date now = new Date();
+        Date expiry = new Date(now.getTime() + 3600_000); // 1시간
 
-    JwtProvider jwtProvider = new JwtProvider();
+        JwtProvider jwtProvider = new JwtProvider();
 
-    // when
-    String token = jwtProvider.createToken(user, now, expiry);
-    Claims claims = jwtProvider.parseToken(token);
+        // when
+        String token = jwtProvider.createToken(user, now, expiry);
+        Claims claims = jwtProvider.parseToken(token);
 
-    // then
-    assertEquals(user.getEmail(), claims.get("email"));
-  }
+        // then
+        assertEquals(user.getEmail(), claims.get("email"));
+    }
 }

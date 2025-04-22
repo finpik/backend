@@ -8,14 +8,14 @@ import com.loanpick.profile.resolver.result.ProfileResult;
 @Controller
 public class ProfileResolver implements ProfileApi {
 
-  @Override
-  public ProfileResult createProfile(CreateProfileInput input) {
+    @Override
+    public ProfileResult createProfile(CreateProfileInput input) {
 
-    return null;
-  }
+        return null;
+    }
 
-  @Override
-  public ProfileResult profileByUserId(long id) {
-    return null;
-  }
+    @Override
+    public ProfileResult profileByUserId(long id) {
+        return null;
+    }
 }

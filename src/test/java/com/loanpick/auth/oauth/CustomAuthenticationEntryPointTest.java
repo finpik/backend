@@ -21,15 +21,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @ExtendWith(MockitoExtension.class)
 class CustomAuthenticationEntryPointTest {
 
-  private final CustomAuthenticationEntryPoint entryPoint = new CustomAuthenticationEntryPoint();
+    private final CustomAuthenticationEntryPoint entryPoint = new CustomAuthenticationEntryPoint();
 
-  @Mock private HttpServletRequest request;
+    @Mock
+    private HttpServletRequest request;
 
-  @Mock private HttpServletResponse response;
+    @Mock
+    private HttpServletResponse response;
 
-  @Mock private AuthenticationException exception;
+    @Mock
+    private AuthenticationException exception;
 
-  @DisplayName("인증중 서버 에러시 500 상태 코드와 에러 메시지를 반환한다.")
+    @DisplayName("인증중 서버 에러시 500 상태 코드와 에러 메시지를 반환한다.")
   @Test
   void commence() throws IOException {
     // given

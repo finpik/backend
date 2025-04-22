@@ -7,5 +7,5 @@ import com.loanpick.user.resolver.input.CreateUserInput;
 
 @Controller
 public interface UserApi {
-  void createUser(@Argument CreateUserInput input);
+    void createUser(@Argument CreateUserInput input);
 }
