@@ -11,7 +11,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserResolver implements UserApi {
 
-  @Override
-  @MutationMapping
-  public void createUser(CreateUserInput input) {}
+    @Override
+    @MutationMapping
+    public void createUser(CreateUserInput input) {
+    }
 }

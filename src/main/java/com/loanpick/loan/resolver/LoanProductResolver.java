@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoanProductResolver implements LoanProductApi {
 
-  @Override
-  @QueryMapping
-  public LoanProductResult loanProducts() {
-    return null;
-  }
+    @Override
+    @QueryMapping
+    public LoanProductResult loanProducts() {
+        return null;
+    }
 }

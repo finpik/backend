@@ -6,7 +6,7 @@ import com.loanpick.profile.resolver.input.CreateProfileInput;
 import com.loanpick.profile.resolver.result.ProfileResult;
 
 public interface ProfileApi {
-  ProfileResult createProfile(@Argument CreateProfileInput input);
+    ProfileResult createProfile(@Argument CreateProfileInput input);
 
-  ProfileResult profileByUserId(@Argument long id);
+    ProfileResult profileByUserId(@Argument long id);
 }

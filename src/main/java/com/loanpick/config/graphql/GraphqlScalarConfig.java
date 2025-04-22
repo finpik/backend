@@ -9,13 +9,9 @@ import graphql.scalars.ExtendedScalars;
 @Configuration
 public class GraphqlScalarConfig {
 
-  @Bean
-  public RuntimeWiringConfigurer runtimeWiringConfigurer() {
-    return wiringBuilder ->
-        wiringBuilder
-            .scalar(ExtendedScalars.GraphQLLong)
-            .scalar(ExtendedScalars.DateTime)
-            .scalar(ExtendedScalars.Date)
-            .scalar(ExtendedScalars.LocalTime);
-  }
+    @Bean
+    public RuntimeWiringConfigurer runtimeWiringConfigurer() {
+        return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.GraphQLLong).scalar(ExtendedScalars.DateTime)
+                .scalar(ExtendedScalars.Date).scalar(ExtendedScalars.LocalTime);
+    }
 }
