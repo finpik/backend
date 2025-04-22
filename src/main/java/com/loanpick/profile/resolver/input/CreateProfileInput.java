@@ -4,7 +4,7 @@ import com.loanpick.profile.entity.CardDelinquency;
 import com.loanpick.profile.entity.LoanUsageStatus;
 
 public record CreateProfileInput(
-    String job ,
+    String job,
     String workplaceName,
     String employmentForm,
     int income,
@@ -15,6 +15,4 @@ public record CreateProfileInput(
     int totalLoanUsageAmount,
     String purposeOfLoan,
     int desiredLoanAmount,
-    String creditGradeStatus
-) {
-}
+    String creditGradeStatus) {}
