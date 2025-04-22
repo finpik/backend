@@ -6,6 +6,4 @@ public record ProfileResult(
     String creditGradeStatus,
     int loanProductUsageCount,
     int totalLoanUsageAmount,
-    int desiredLoanAmount
-) {
-}
+    int desiredLoanAmount) {}
