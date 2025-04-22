@@ -33,21 +33,21 @@ class CustomAuthenticationEntryPointTest {
     private AuthenticationException exception;
 
     @DisplayName("인증중 서버 에러시 500 상태 코드와 에러 메시지를 반환한다.")
-  @Test
-  void commence() throws IOException {
-    // given
-    when(exception.getMessage()).thenReturn("Unauthorized");
+    @Test
+    void commence() throws IOException {
+        // given
+        when(exception.getMessage()).thenReturn("Unauthorized");
 
-    PrintWriter writer = mock(PrintWriter.class);
-    when(response.getWriter()).thenReturn(writer);
+        PrintWriter writer = mock(PrintWriter.class);
+        when(response.getWriter()).thenReturn(writer);
 
-    // when
-    entryPoint.commence(request, response, exception);
+        // when
+        entryPoint.commence(request, response, exception);
 
-    // then
-    assertAll(
-        () -> verify(response).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR),
-        () -> verify(response).setContentType(HttpHeaderValues.APPLICATION_JSON),
-        () -> verify(writer).write(ErrorMessage.AUTHORIZATION_SERVER_ERROR));
-  }
+        // then
+        assertAll(
+            () -> verify(response).setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR),
+            () -> verify(response).setContentType(HttpHeaderValues.APPLICATION_JSON),
+            () -> verify(writer).write(ErrorMessage.AUTHORIZATION_SERVER_ERROR));
+    }
 }

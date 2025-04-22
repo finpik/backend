@@ -2,11 +2,12 @@ package com.loanpick.auth.oauth.handler;
 
 import java.io.IOException;
 
-import com.loanpick.auth.oauth.ErrorMessage;
-import com.loanpick.auth.oauth.HttpHeaderValues;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
+
+import com.loanpick.auth.oauth.ErrorMessage;
+import com.loanpick.auth.oauth.HttpHeaderValues;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
