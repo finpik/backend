@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.auth.oauth.handler.OAuth2SuccessHandler;
+import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
+import com.loanpick.redis.service.CustomRedisService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,12 +59,17 @@ class OAuth2SuccessHandlerTest {
     @Mock
     private CustomOAuth2User oAuth2User;
 
+    @Mock
+    private CustomRedisService customRedisService;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Captor
     private ArgumentCaptor<String> jwtCaptor;
 
     @BeforeEach
     void setup() {
-        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository);
+        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository, customRedisService, objectMapper);
     }
 
     @DisplayName("로그인 성공 시 JWT를 헤더에 포함하여 응답한다.")
@@ -91,19 +100,29 @@ class OAuth2SuccessHandlerTest {
         // given
         when(authentication.getPrincipal()).thenReturn(oAuth2User);
         when(oAuth2User.getEmail()).thenReturn("not_exist_user@test.com");
+        when(oAuth2User.getUserId()).thenReturn("4848484");
+        when(oAuth2User.getProvider()).thenReturn("kakao");
         when(userRepository.findByEmail("not_exist_user@test.com")).thenReturn(Optional.empty());
 
         PrintWriter writer = mock(PrintWriter.class);
         when(response.getWriter()).thenReturn(writer);
+
+        OAuth2Response oAuth2Response = OAuth2Response.builder()
+            .id(oAuth2User.getUserId())
+            .provider(oAuth2User.getProvider())
+            .build();
+
+        String json = objectMapper.writeValueAsString(oAuth2Response);
 
         // when
         oAuth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);
 
         // then
         assertAll(
-            () -> verify(response).setStatus(HttpServletResponse.SC_NOT_FOUND),
+            () -> verify(response).setStatus(HttpServletResponse.SC_OK),
             () -> verify(response).setContentType("application/json"),
             () -> verify(response).setCharacterEncoding("UTF-8"),
-            () -> verify(writer).write(ErrorMessage.SIGN_UP_NEEDED));
+            () -> verify(writer).write(json)
+        );
     }
 }
