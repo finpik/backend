@@ -24,9 +24,9 @@ configurations {
 
 spotless {
     java {
-        googleJavaFormat('1.17.0')
+        eclipse()
         trimTrailingWhitespace()
-        indentWithSpaces(2)
+        indentWithSpaces(4)
         endWithNewline()
         removeUnusedImports()
         importOrder(

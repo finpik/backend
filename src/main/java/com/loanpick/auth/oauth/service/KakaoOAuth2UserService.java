@@ -18,14 +18,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class KakaoOAuth2UserService extends DefaultOAuth2UserService {
 
-  @Override
-  public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-    OAuth2User oAuth2User = super.loadUser(userRequest);
-    Map<String, Object> attributes = oAuth2User.getAttributes();
+    @Override
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        OAuth2User oAuth2User = super.loadUser(userRequest);
+        Map<String, Object> attributes = oAuth2User.getAttributes();
 
-    String provider = userRequest.getClientRegistration().getRegistrationId();
-    OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(provider, attributes);
+        String provider = userRequest.getClientRegistration().getRegistrationId();
+        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(provider, attributes);
 
-    return new CustomOAuth2User(attributes, userInfo.getEmail(), provider, userInfo.getUserId());
-  }
+        return new CustomOAuth2User(attributes, userInfo.getEmail(), provider, userInfo.getUserId());
+    }
 }

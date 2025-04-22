@@ -1,9 +1,9 @@
 package com.loanpick.auth.oauth.vo;
 
 public interface OAuth2UserInfo {
-  String getProviderId();
+    String getProviderId();
 
-  String getEmail();
+    String getEmail();
 
-  String getUserId();
+    String getUserId();
 }

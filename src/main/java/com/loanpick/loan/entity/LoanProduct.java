@@ -1,3 +1,4 @@
 package com.loanpick.loan.entity;
 
-public class LoanProduct {}
+public class LoanProduct {
+}
