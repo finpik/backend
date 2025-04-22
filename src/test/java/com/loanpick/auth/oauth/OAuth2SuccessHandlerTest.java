@@ -12,10 +12,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.loanpick.auth.oauth.handler.OAuth2SuccessHandler;
-import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
-import com.loanpick.redis.service.CustomRedisService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,8 +23,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.auth.oauth.handler.OAuth2SuccessHandler;
+import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
 import com.loanpick.auth.oauth.jwt.JwtProvider;
 import com.loanpick.auth.oauth.service.dto.CustomOAuth2User;
+import com.loanpick.redis.service.CustomRedisService;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 
