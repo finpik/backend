@@ -22,10 +22,11 @@ public class KakaoOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
+        String accessToken = userRequest.getAccessToken().getTokenValue();
 
         String provider = userRequest.getClientRegistration().getRegistrationId();
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(provider, attributes);
 
-        return new CustomOAuth2User(attributes, userInfo.getEmail(), provider, userInfo.getUserId());
+        return new CustomOAuth2User(attributes, userInfo.getEmail(), provider, userInfo.getUserId(), accessToken);
     }
 }
