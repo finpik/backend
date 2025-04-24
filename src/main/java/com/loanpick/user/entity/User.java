@@ -1,5 +1,6 @@
 package com.loanpick.user.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -32,16 +33,19 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RegistrationType registrationType;
 
+    private LocalDate dateOfBirth;
+
     private LocalDateTime registrationDate;
 
     @Builder
     public User(Long id, String username, String email, Gender gender, RegistrationType registrationType,
-            LocalDateTime registrationDate) {
+            LocalDateTime registrationDate, LocalDate dateOfBirth) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.gender = gender;
         this.registrationType = registrationType == null ? RegistrationType.KAKAO : registrationType;
         this.registrationDate = registrationDate;
+        this.dateOfBirth = dateOfBirth;
     }
 }
