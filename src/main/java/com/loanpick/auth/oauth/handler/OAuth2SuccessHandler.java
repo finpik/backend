@@ -39,20 +39,19 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String email = oAuth2User.getEmail();
         String oauthUserId = oAuth2User.getUserId();
         String provider = oAuth2User.getProvider();
-        String accessToken = oAuth2User.getAccessToken();
 
         Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isPresent()) {
             responseSuccessLogin(response, getJwtToken(user.get()));
         } else {
-            saveOAuthAuthenticationToRedis(oauthUserId, accessToken, provider);
+            saveOAuthAuthenticationToRedis(oauthUserId, email, provider);
             responseSignUpUser(response, oauthUserId, provider);
         }
     }
 
     private void saveOAuthAuthenticationToRedis(String oauthUserId, String data, String provider) {
-        customRedisService.saveAuthenticationForSignUp(oauthUserId, provider, data, Duration.ofMinutes(FIVE_MINUTE));
+        customRedisService.saveEmailForSignUp(oauthUserId, provider, data, Duration.ofMinutes(FIVE_MINUTE));
     }
 
     private String getJwtToken(User user) {
