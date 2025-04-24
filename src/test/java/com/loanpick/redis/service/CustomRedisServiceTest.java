@@ -16,15 +16,15 @@ class CustomRedisServiceTest {
 
     @DisplayName("userId와 provider를 가지고 AceesToken을 저장한 것을 조회할 수 있다.")
     @Test
-    void saveAuthenticationForSignUp() {
+    void saveEmailForSignUp() {
         // given
         String userId = "userId";
         String providerId = "providerId";
         String accessToken = "accessToken";
 
         // when
-        customRedisService.saveAuthenticationForSignUp(userId, providerId, accessToken, Duration.ofSeconds(10));
-        String savedAccessToken = customRedisService.getAuthenticationForSignUp(userId, providerId);
+        customRedisService.saveEmailForSignUp(userId, providerId, accessToken, Duration.ofSeconds(10));
+        String savedAccessToken = customRedisService.getEmailByCustomId(userId, providerId);
 
         // then
         assertEquals(accessToken, savedAccessToken);
