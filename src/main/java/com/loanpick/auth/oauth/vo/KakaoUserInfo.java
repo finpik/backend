@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.constant.ConstantValue;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,20 +14,21 @@ public class KakaoUserInfo implements OAuth2UserInfo {
 
     @Override
     public String getProviderId() {
-        return attributes.get("id").toString();
+        return attributes.get(ConstantValue.USER_ID_FROM_VENDOR).toString();
     }
 
     @Override
     public String getEmail() {
         ObjectMapper mapper = new ObjectMapper();
 
-        Map<String, Object> account = mapper.convertValue(attributes.get("kakao_account"), new TypeReference<>() {
-        });
-        return (String) account.get("email");
+        Map<String, Object> account = mapper.convertValue(attributes.get(ConstantValue.KAKAO_ACCOUNT),
+                new TypeReference<>() {
+                });
+        return (String) account.get(ConstantValue.EMAIL);
     }
 
     @Override
     public String getUserId() {
-        return attributes.get("id").toString();
+        return attributes.get(ConstantValue.USER_ID_FROM_VENDOR).toString();
     }
 }
