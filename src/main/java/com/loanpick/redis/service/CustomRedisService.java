@@ -14,12 +14,12 @@ public class CustomRedisService {
     private static final String AUTHENTICATION_PREFIX = "authentication:";
     private static final String COLON = ":";
 
-    public void saveAuthenticationForSignUp(String id, String provider, String data, Duration ttl) {
+    public void saveEmailForSignUp(String id, String provider, String data, Duration ttl) {
         String customKey = AUTHENTICATION_PREFIX + id + COLON + provider;
         redisTemplate.opsForValue().set(customKey, data, ttl);
     }
 
-    public String getAuthenticationForSignUp(String id, String provider) {
+    public String getEmailByCustomId(String id, String provider) {
         String customKey = AUTHENTICATION_PREFIX + id + COLON + provider;;
         return redisTemplate.opsForValue().get(customKey);
     }
