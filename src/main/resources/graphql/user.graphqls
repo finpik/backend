@@ -1,18 +1,20 @@
 type Mutation {
-    createUser(user: CreateUserInput!): UserResult!
+    createUser(input: CreateUserInput!): CreateUserResult!
 }
 
 input CreateUserInput {
-    name: String!
-    birth: String
-    gender: Gender,
+    username: String!
+    dateOfBirth: Date!
+    gender: Gender
+    provider: String!
+    id: String!
 }
 
-type UserResult {
+type CreateUserResult {
     id: ID
-    name: String
-    birth: String
-    gender: Gender,
+    username: String
+    dateOfBirth: String
+    gender: Gender
 }
 
 enum Gender {
