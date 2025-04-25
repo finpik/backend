@@ -12,6 +12,13 @@ jobs:
     # 어떤 OS 를 사용하여 돌릴 것인지
     runs-on: ubuntu-latest
 
+    #GitHub 러너에서 테스트시 필요한 레디스 이미지 추가
+    services:
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+
     #코드를 Runner 환경으로 가져와야 함
     steps:
       - name: Checkout code
