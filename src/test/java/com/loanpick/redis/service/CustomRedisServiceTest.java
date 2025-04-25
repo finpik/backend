@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+import com.loanpick.LoanPickApplication;
+import com.loanpick.config.redis.RedisConfig;
+
+@SpringBootTest(classes = {LoanPickApplication.class, RedisConfig.class})
 @ActiveProfiles("test")
 class CustomRedisServiceTest {
     @Autowired

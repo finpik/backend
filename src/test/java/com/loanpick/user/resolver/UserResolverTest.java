@@ -15,8 +15,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.LoanPickApplication;
+import com.loanpick.config.redis.RedisConfig;
 
-@SpringBootTest
+@SpringBootTest(classes = {LoanPickApplication.class, RedisConfig.class})
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class CreateUserMutationTest {
