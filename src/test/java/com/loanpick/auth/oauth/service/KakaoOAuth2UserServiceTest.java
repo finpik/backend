@@ -17,10 +17,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.auth.oauth.service.dto.CustomOAuth2User;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class KakaoOAuth2UserServiceTest {
     @InjectMocks
     KakaoOAuth2UserService kakaoOAuth2UserService;
