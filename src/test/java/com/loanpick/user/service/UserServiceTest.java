@@ -22,7 +22,7 @@ import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 import com.loanpick.user.service.dto.CreateUserDto;
 
-@SpringBootTest(classes = {LoanPickApplication.class, RedisConfig.class})
+@SpringBootTest
 @ActiveProfiles("test") // test 설정 사용 시
 class UserServiceIntegrationTest {
 
