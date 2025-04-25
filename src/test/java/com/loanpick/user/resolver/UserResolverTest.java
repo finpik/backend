@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Map;
 
-import com.loanpick.config.TestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.LoanPickApplication;
 
-@SpringBootTest(classes = TestConfig.class)
+@SpringBootTest(classes = LoanPickApplication.class)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 class CreateUserMutationTest {

@@ -8,20 +8,20 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import com.loanpick.config.TestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.loanpick.LoanPickApplication;
 import com.loanpick.redis.service.CustomRedisService;
 import com.loanpick.user.entity.Gender;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 import com.loanpick.user.service.dto.CreateUserDto;
 
-@SpringBootTest(classes = TestConfig.class)
+@SpringBootTest(classes = LoanPickApplication.class)
 @ActiveProfiles("test") // test 설정 사용 시
 class UserServiceIntegrationTest {
 
