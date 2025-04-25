@@ -52,6 +52,6 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests
-        run: ./gradlew test
+        run: ./gradlew test --stacktrace
 
 #CD 스크립트 추후 작성 예정
