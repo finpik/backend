@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.Duration;
 
-import com.loanpick.LoanPickApplication;
+import com.loanpick.config.TestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 
-@SpringBootTest(classes = LoanPickApplication.class)
+@SpringBootTest(classes = TestConfig.class)
 @ActiveProfiles("test")
 class CustomRedisServiceTest {
     @Autowired
