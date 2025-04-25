@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.redis.service.CustomRedisService;
@@ -24,6 +25,7 @@ import com.loanpick.user.service.dto.CreateUserDto;
 @SpringBootTest
 @ActiveProfiles("test") // test 설정 사용 시
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+@ComponentScan(basePackages = "com.loanpick")
 class UserServiceIntegrationTest {
 
     @Autowired
