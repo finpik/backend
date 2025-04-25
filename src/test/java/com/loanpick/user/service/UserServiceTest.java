@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.loanpick.LoanPickApplication;
-import com.loanpick.config.redis.RedisConfig;
 import com.loanpick.redis.service.CustomRedisService;
 import com.loanpick.user.entity.Gender;
 import com.loanpick.user.entity.User;
