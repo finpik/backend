@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.auth.oauth.handler.OAuth2FailureHandler;
 
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class OAuth2FailureHandlerTest {
     @InjectMocks
     private OAuth2FailureHandler oAuth2FailureHandler;

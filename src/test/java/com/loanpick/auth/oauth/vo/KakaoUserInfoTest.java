@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class KakaoUserInfoTest {
 
     @DisplayName("kakao user로 되어 있는 user info에서 알맞은 email을 뽑아낼 수 있다.")

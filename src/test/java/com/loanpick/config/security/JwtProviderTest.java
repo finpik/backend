@@ -6,6 +6,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.auth.oauth.jwt.JwtProvider;
 import com.loanpick.user.entity.Gender;
@@ -14,6 +15,7 @@ import com.loanpick.user.entity.User;
 
 import io.jsonwebtoken.Claims;
 
+@ActiveProfiles("test")
 class JwtProviderTest {
 
     @DisplayName("만들어진 User 객체로 Token을 만들 수 있다.")

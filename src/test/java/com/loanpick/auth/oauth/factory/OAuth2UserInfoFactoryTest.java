@@ -6,10 +6,12 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.auth.oauth.vo.KakaoUserInfo;
 import com.loanpick.auth.oauth.vo.OAuth2UserInfo;
 
+@ActiveProfiles("test")
 class OAuth2UserInfoFactoryTest {
 
     @DisplayName("provider (kakao)의 이름에 따라 관련된 UserInfo 객체를 리턴한다.")
