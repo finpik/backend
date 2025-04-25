@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: loandly
+  #h2
+  datasource:
+    datasource:
+      url: jdbc:h2:mem:testdb
+      driver-class-name: org.h2.Driver
+      username: sa
+      password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  #jpa
+  jpa:
+    hibernate:
+      ddl-auto: create-drop    # create, update, none 등
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  #redis
+  cache:
+    type: redis
+    redis:
+      host: localhost
+      port: 6379
+#Log
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web.client.RestTemplate: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.oauth2.client: DEBUG
+    org.springframework.security.oauth2.client.endpoint: DEBUG
+
+fin-pick:
+  jwt:
+    secretKey: ${SECRET_KEY}
