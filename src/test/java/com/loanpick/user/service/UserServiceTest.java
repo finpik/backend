@@ -14,13 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.loanpick.LoanPickApplication;
+import com.loanpick.config.redis.RedisConfig;
 import com.loanpick.redis.service.CustomRedisService;
 import com.loanpick.user.entity.Gender;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 import com.loanpick.user.service.dto.CreateUserDto;
 
-@SpringBootTest
+@SpringBootTest(classes = {LoanPickApplication.class, RedisConfig.class})
 @ActiveProfiles("test") // test 설정 사용 시
 class UserServiceIntegrationTest {
 
