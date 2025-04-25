@@ -35,7 +35,3 @@ logging:
     org.springframework.security.oauth2: DEBUG
     org.springframework.security.oauth2.client: DEBUG
     org.springframework.security.oauth2.client.endpoint: DEBUG
-
-fin-pick:
-  jwt:
-    secretKey: ${SECRET_KEY}
