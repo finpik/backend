@@ -20,7 +20,7 @@ import com.loanpick.LoanPickApplication;
 @SpringBootTest(classes = LoanPickApplication.class)
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-class CreateUserMutationTest {
+class UserResolverTest {
 
     @Autowired
     private MockMvc mockMvc;
