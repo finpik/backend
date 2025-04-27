@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.loanpick.auth.oauth.CustomAuthenticationEntryPoint;
+import com.loanpick.auth.oauth.entrypoint.CustomAuthenticationEntryPoint;
 import com.loanpick.auth.oauth.handler.OAuth2FailureHandler;
 import com.loanpick.auth.oauth.handler.OAuth2SuccessHandler;
 import com.loanpick.auth.oauth.service.KakaoOAuth2UserService;

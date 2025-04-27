@@ -10,7 +10,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.loanpick.auth.oauth.HttpHeaderValues;
+import com.loanpick.auth.oauth.constants.HttpHeaderValues;
 import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
 import com.loanpick.auth.oauth.jwt.JwtProvider;
 import com.loanpick.auth.oauth.service.dto.CustomOAuth2User;
