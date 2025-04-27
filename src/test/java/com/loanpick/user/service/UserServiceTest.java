@@ -23,7 +23,7 @@ import com.loanpick.user.service.dto.CreateUserDto;
 
 @SpringBootTest(classes = LoanPickApplication.class)
 @ActiveProfiles("test") // test 설정 사용 시
-class UserServiceIntegrationTest {
+class UserServiceTest {
 
     @Autowired
     private UserService userService;
