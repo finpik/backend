@@ -1,4 +1,4 @@
-package com.loanpick.auth.oauth;
+package com.loanpick.auth.oauth.constants;
 
 public class ErrorMessage {
     public static final String AUTHORIZATION_FAIL = "OAuth2 인증에 실패 했습니다.";

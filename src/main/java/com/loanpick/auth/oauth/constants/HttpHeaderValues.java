@@ -1,4 +1,4 @@
-package com.loanpick.auth.oauth;
+package com.loanpick.auth.oauth.constants;
 
 public class HttpHeaderValues {
     public static final String APPLICATION_JSON = "application/json";
