@@ -1,0 +1,22 @@
+name: Sync main to develop
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create PR from main to develop
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: "main"
+          destination_branch: "develop"
+          pr_title: "자동화: main -> develop 동기화"
+          pr_body: "main이 업데이트되어 develop을 최신화합니다."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
