@@ -25,10 +25,6 @@ public class GlobalExceptionResolver extends DataFetcherExceptionResolverAdapter
     private GraphQLExceptionHandler<Throwable> findHandler(Class<? extends Throwable> exceptionType) {
         GraphQLExceptionHandler<? extends Throwable> handler = handlerRegistry.getHandler(exceptionType);
 
-        if (handler == null) {
-            throw new RuntimeException("No suitable handler found for exception type: " + exceptionType.getName());
-        }
-
         @SuppressWarnings("unchecked")
         GraphQLExceptionHandler<Throwable> castedHandler = (GraphQLExceptionHandler<Throwable>) handler;
         return castedHandler;
