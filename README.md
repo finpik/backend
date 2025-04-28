@@ -10,7 +10,9 @@
 # 작업 목록
 EPIC: LS-0
 Features
-- feature/LP-1: 카카오 회원가입, 로그인에 사용되는 인가, 인증 시스템 구현
-- feature/LP-2: CI 관련 스크립트, 린트 추가
-- feature/LP-3: 유저 회원가입 기능 추가 
-- feature/LP-4: 자체 발급한 토큰을 사용하는 인증 시스템 구현
+- feature/FP-1: 카카오 회원가입, 로그인에 사용되는 인가, 인증 시스템 구현
+- feature/FP-2: CI 관련 스크립트, 린트 추가
+- feature/FP-3: 유저 회원가입 기능 추가 
+- feature/FP-4: 글로벌 예외 처리
+- feature/FP-5: 유저 토큰 처리
+- feature/FP-6: 유저 프로필 생성 기능
