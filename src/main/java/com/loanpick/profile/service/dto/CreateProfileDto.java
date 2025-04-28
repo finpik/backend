@@ -19,6 +19,7 @@ public record CreateProfileDto(String workplaceName, EmploymentForm employmentFo
     public Profile toEntity() {
         return Profile.builder().desiredLoanAmount(desiredLoanAmount).loanProductUsageStatus(loanProductUsageStatus)
                 .totalLoanUsageAmount(totalLoanUsageAmount).creditScore(creditScore)
+                .loanProductUsageCount(loanProductUsageCount).creditGradeStatus(creditGradeStatus)
                 .creditGradeStatus(creditGradeStatus).loanProductUsageStatus(loanProductUsageStatus)
                 .purposeOfLoan(purposeOfLoan).workplaceName(workplaceName).employmentForm(employmentForm).income(income)
                 .profileName(profileName).employmentDate(employmentDate).employmentStatus(employmentStatus).build();
