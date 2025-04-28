@@ -5,12 +5,16 @@ import java.util.Map;
 import com.loanpick.error.enums.ErrorCode;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public class BusinessException extends RuntimeException {
+    private final String message;
     private final ErrorCode errorCode;
+
+    public BusinessException(ErrorCode errorCode) {
+        this.message = errorCode.getMessage();
+        this.errorCode = errorCode;
+    }
 
     public Map<String, Object> getExtensions() {
         return Map.of("code", errorCode.getCode(), "httpStatusErrorCode", errorCode.getStatus().name(),
