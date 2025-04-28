@@ -4,9 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Set;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import com.loanpick.error.dispatcher.GraphQLExceptionHandlerDispatcher;
 import com.loanpick.error.handler.GraphQLExceptionHandler;
-import com.loanpick.error.handler.impl.DefaultExceptionHandler;
+
 import graphql.GraphQLError;
 import graphql.execution.ExecutionStepInfo;
 import graphql.execution.ResultPath;
@@ -14,11 +20,6 @@ import graphql.language.Field;
 import graphql.language.SourceLocation;
 import graphql.schema.DataFetchingEnvironment;
 import jakarta.validation.ConstraintViolationException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Set;
 
 class GlobalExceptionResolverTest {
 
@@ -39,8 +40,8 @@ class GlobalExceptionResolverTest {
         ConstraintViolationException ex = new ConstraintViolationException(Set.of());
 
         @SuppressWarnings("unchecked")
-        GraphQLExceptionHandler<ConstraintViolationException> mockHandler =
-            (GraphQLExceptionHandler<ConstraintViolationException>) mock(GraphQLExceptionHandler.class);
+        GraphQLExceptionHandler<ConstraintViolationException> mockHandler = (GraphQLExceptionHandler<ConstraintViolationException>) mock(
+                GraphQLExceptionHandler.class);
 
         GraphQLError mockGraphQLError = mock(GraphQLError.class);
         when(mockHandler.handle(ex, mockEnv)).thenReturn(mockGraphQLError);
@@ -76,8 +77,8 @@ class GlobalExceptionResolverTest {
         GraphQLExceptionHandlerDispatcher mockDispatcher = mock(GraphQLExceptionHandlerDispatcher.class);
 
         @SuppressWarnings("unchecked")
-        GraphQLExceptionHandler<Throwable> defaultHandler =
-            (GraphQLExceptionHandler<Throwable>) mock(GraphQLExceptionHandler.class);
+        GraphQLExceptionHandler<Throwable> defaultHandler = (GraphQLExceptionHandler<Throwable>) mock(
+                GraphQLExceptionHandler.class);
         GraphQLError mockGraphQLError = mock(GraphQLError.class);
 
         when(mockDispatcher.getHandler(Throwable.class)).thenReturn(defaultHandler);

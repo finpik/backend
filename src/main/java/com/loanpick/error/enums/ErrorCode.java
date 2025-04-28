@@ -15,9 +15,8 @@ public enum ErrorCode {
     METHOD_ARGUMENT_NOT_VALID_EXCEPTION("입력값 검증 실패", "METHOD_ARGUMENT_NOT_VALID_EXCEPTION", HttpStatus.BAD_REQUEST),
     // --------- 글로벌 에러처리 끝-------
 
-    //Test
-    TEST_EXCEPTION("test용 에러", "TEST_EXCEPTION", HttpStatus.BAD_REQUEST),
-    ;
+    // Test
+    TEST_EXCEPTION("test용 에러", "TEST_EXCEPTION", HttpStatus.BAD_REQUEST),;
 
     private final String message;
     private final String code;

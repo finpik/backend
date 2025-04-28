@@ -1,24 +1,25 @@
 package com.loanpick.error.handler.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
+
 import graphql.GraphQLError;
 import graphql.execution.ExecutionStepInfo;
 import graphql.execution.ResultPath;
 import graphql.language.Field;
 import graphql.language.SourceLocation;
 import graphql.schema.DataFetchingEnvironment;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class BusinessExceptionHandlerTest {
     private final BusinessExceptionHandler businessExceptionHandler = new BusinessExceptionHandler();
@@ -27,10 +28,7 @@ class BusinessExceptionHandlerTest {
     @Test
     void handleBusinessException() {
         // given
-        Map<String, Object> extensions = Map.of(
-            "code", "BUSINESS_ERROR",
-            "reason", "DuplicatedUser"
-        );
+        Map<String, Object> extensions = Map.of("code", "BUSINESS_ERROR", "reason", "DuplicatedUser");
         BusinessException businessException = new BusinessException(ErrorCode.TEST_EXCEPTION);
 
         DataFetchingEnvironment mockEnv = mock(DataFetchingEnvironment.class);
@@ -48,11 +46,9 @@ class BusinessExceptionHandlerTest {
         Map<String, Object> actualExtensions = graphQLError.getExtensions();
 
         // then
-        Assertions.assertAll(
-            () -> assertThat(graphQLError.getMessage()).isEqualTo("test용 에러"),
-            () -> assertThat(actualExtensions).isNotNull(),
-            () -> assertThat(actualExtensions.get("httpStatusErrorCode")).isEqualTo("BAD_REQUEST"),
-            () -> assertThat(actualExtensions.get("httpStatusCode")).isEqualTo(400)
-        );
+        Assertions.assertAll(() -> assertThat(graphQLError.getMessage()).isEqualTo("test용 에러"),
+                () -> assertThat(actualExtensions).isNotNull(),
+                () -> assertThat(actualExtensions.get("httpStatusErrorCode")).isEqualTo("BAD_REQUEST"),
+                () -> assertThat(actualExtensions.get("httpStatusCode")).isEqualTo(400));
     }
 }
