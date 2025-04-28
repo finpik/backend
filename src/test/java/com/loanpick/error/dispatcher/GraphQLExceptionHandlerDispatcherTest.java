@@ -4,13 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.loanpick.error.handler.GraphQLExceptionHandler;
-import com.loanpick.error.handler.impl.DefaultExceptionHandler;
-import jakarta.validation.ConstraintViolationException;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import com.loanpick.error.handler.GraphQLExceptionHandler;
+import com.loanpick.error.handler.impl.DefaultExceptionHandler;
+
+import jakarta.validation.ConstraintViolationException;
 
 class GraphQLExceptionHandlerDispatcherTest {
 
@@ -19,19 +21,19 @@ class GraphQLExceptionHandlerDispatcherTest {
     void getHandler_whenHandlerRegistered() {
         // given
         @SuppressWarnings("unchecked")
-        GraphQLExceptionHandler<ConstraintViolationException> constraintHandler =
-            (GraphQLExceptionHandler<ConstraintViolationException>) mock(GraphQLExceptionHandler.class);
+        GraphQLExceptionHandler<ConstraintViolationException> constraintHandler = (GraphQLExceptionHandler<ConstraintViolationException>) mock(
+                GraphQLExceptionHandler.class);
 
         DefaultExceptionHandler defaultHandler = mock(DefaultExceptionHandler.class);
 
         when(constraintHandler.supportedExceptionType()).thenReturn(ConstraintViolationException.class);
 
-        GraphQLExceptionHandlerDispatcher dispatcher = new GraphQLExceptionHandlerDispatcher(
-            List.of(constraintHandler), defaultHandler
-        );
+        GraphQLExceptionHandlerDispatcher dispatcher = new GraphQLExceptionHandlerDispatcher(List.of(constraintHandler),
+                defaultHandler);
 
         // when
-        GraphQLExceptionHandler<ConstraintViolationException> handler = dispatcher.getHandler(ConstraintViolationException.class);
+        GraphQLExceptionHandler<ConstraintViolationException> handler = dispatcher
+                .getHandler(ConstraintViolationException.class);
 
         // then
         assertThat(handler).isEqualTo(constraintHandler);
@@ -42,9 +44,7 @@ class GraphQLExceptionHandlerDispatcherTest {
     void getHandler_whenNoHandlerRegistered() {
         // given
         DefaultExceptionHandler defaultHandler = mock(DefaultExceptionHandler.class);
-        GraphQLExceptionHandlerDispatcher dispatcher = new GraphQLExceptionHandlerDispatcher(
-            List.of(), defaultHandler
-        );
+        GraphQLExceptionHandlerDispatcher dispatcher = new GraphQLExceptionHandlerDispatcher(List.of(), defaultHandler);
 
         // when
         GraphQLExceptionHandler<Throwable> handler = dispatcher.getHandler(Throwable.class);
@@ -58,16 +58,15 @@ class GraphQLExceptionHandlerDispatcherTest {
     void getHandler_whenParentHandlerExists() {
         // given
         @SuppressWarnings("unchecked")
-        GraphQLExceptionHandler<RuntimeException> runtimeHandler =
-            (GraphQLExceptionHandler<RuntimeException>) mock(GraphQLExceptionHandler.class);
+        GraphQLExceptionHandler<RuntimeException> runtimeHandler = (GraphQLExceptionHandler<RuntimeException>) mock(
+                GraphQLExceptionHandler.class);
 
         DefaultExceptionHandler defaultHandler = mock(DefaultExceptionHandler.class);
 
         when(runtimeHandler.supportedExceptionType()).thenReturn(RuntimeException.class);
 
-        GraphQLExceptionHandlerDispatcher dispatcher = new GraphQLExceptionHandlerDispatcher(
-            List.of(runtimeHandler), defaultHandler
-        );
+        GraphQLExceptionHandlerDispatcher dispatcher = new GraphQLExceptionHandlerDispatcher(List.of(runtimeHandler),
+                defaultHandler);
 
         // when
         GraphQLExceptionHandler<IllegalStateException> handler = dispatcher.getHandler(IllegalStateException.class);

@@ -1,20 +1,23 @@
 package com.loanpick.error.handler.impl;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import com.loanpick.error.enums.ErrorCode;
+
 import graphql.GraphQLError;
 import graphql.execution.ExecutionStepInfo;
 import graphql.execution.ResultPath;
 import graphql.language.Field;
 import graphql.language.SourceLocation;
 import graphql.schema.DataFetchingEnvironment;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-import java.util.Map;
 
 class DefaultExceptionHandlerTest {
 
