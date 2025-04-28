@@ -3,15 +3,16 @@ package com.loanpick.profile.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
 
 class ProfileTest {
 
@@ -34,37 +35,26 @@ class ProfileTest {
         LocalDate employmentDate = LocalDate.of(2020, 1, 1);
 
         // when
-        Profile profile = Profile.builder()
-            .desiredLoanAmount(desiredLoanAmount)
-            .loanProductUsageCount(loanProductUsageCount)
-            .totalLoanUsageAmount(totalLoanUsageAmount)
-            .creditScore(creditScore)
-            .income(income)
-            .workplaceName(workplaceName)
-            .profileName(profileName)
-            .employmentForm(employmentForm)
-            .loanProductUsageStatus(loanProductUsageStatus)
-            .purposeOfLoan(purposeOfLoan)
-            .employmentStatus(employmentStatus)
-            .creditGradeStatus(creditGradeStatus)
-            .employmentDate(employmentDate)
-            .build();
+        Profile profile = Profile.builder().desiredLoanAmount(desiredLoanAmount)
+                .loanProductUsageCount(loanProductUsageCount).totalLoanUsageAmount(totalLoanUsageAmount)
+                .creditScore(creditScore).income(income).workplaceName(workplaceName).profileName(profileName)
+                .employmentForm(employmentForm).loanProductUsageStatus(loanProductUsageStatus)
+                .purposeOfLoan(purposeOfLoan).employmentStatus(employmentStatus).creditGradeStatus(creditGradeStatus)
+                .employmentDate(employmentDate).build();
 
         // then
-        assertAll(
-            () -> assertThat(profile.getDesiredLoanAmount()).isEqualTo(desiredLoanAmount),
-            () -> assertThat(profile.getLoanProductUsageCount()).isEqualTo(loanProductUsageCount),
-            () -> assertThat(profile.getTotalLoanUsageAmount()).isEqualTo(totalLoanUsageAmount),
-            () -> assertThat(profile.getCreditScore()).isEqualTo(creditScore),
-            () -> assertThat(profile.getIncome()).isEqualTo(income),
-            () -> assertThat(profile.getWorkplaceName()).isEqualTo(workplaceName),
-            () -> assertThat(profile.getProfileName()).isEqualTo(profileName),
-            () -> assertThat(profile.getEmploymentForm()).isEqualTo(employmentForm),
-            () -> assertThat(profile.getLoanProductUsageStatus()).isEqualTo(loanProductUsageStatus),
-            () -> assertThat(profile.getPurposeOfLoan()).isEqualTo(purposeOfLoan),
-            () -> assertThat(profile.getEmploymentStatus()).isEqualTo(employmentStatus),
-            () -> assertThat(profile.getCreditGradeStatus()).isEqualTo(creditGradeStatus),
-            () -> assertThat(profile.getEmploymentDate()).isEqualTo(employmentDate)
-        );
+        assertAll(() -> assertThat(profile.getDesiredLoanAmount()).isEqualTo(desiredLoanAmount),
+                () -> assertThat(profile.getLoanProductUsageCount()).isEqualTo(loanProductUsageCount),
+                () -> assertThat(profile.getTotalLoanUsageAmount()).isEqualTo(totalLoanUsageAmount),
+                () -> assertThat(profile.getCreditScore()).isEqualTo(creditScore),
+                () -> assertThat(profile.getIncome()).isEqualTo(income),
+                () -> assertThat(profile.getWorkplaceName()).isEqualTo(workplaceName),
+                () -> assertThat(profile.getProfileName()).isEqualTo(profileName),
+                () -> assertThat(profile.getEmploymentForm()).isEqualTo(employmentForm),
+                () -> assertThat(profile.getLoanProductUsageStatus()).isEqualTo(loanProductUsageStatus),
+                () -> assertThat(profile.getPurposeOfLoan()).isEqualTo(purposeOfLoan),
+                () -> assertThat(profile.getEmploymentStatus()).isEqualTo(employmentStatus),
+                () -> assertThat(profile.getCreditGradeStatus()).isEqualTo(creditGradeStatus),
+                () -> assertThat(profile.getEmploymentDate()).isEqualTo(employmentDate));
     }
 }

@@ -2,21 +2,23 @@ package com.loanpick.profile.resolver.input;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
+import java.util.Set;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 public class CreateProfileInputValidationTest {
     private static Validator validator;
@@ -28,28 +30,18 @@ public class CreateProfileInputValidationTest {
     }
 
     private CreateProfileInput.CreateProfileInputBuilder validInputBuilder() {
-        return CreateProfileInput.builder()
-            .employmentStatus(EmploymentStatus.EMPLOYEE)
-            .workplaceName("회사")
-            .employmentForm(EmploymentForm.FULL_TIME)
-            .income(50000000)
-            .employmentDate(LocalDate.of(2020, 1, 1))
-            .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES)
-            .desiredLoanAmount(10000000)
-            .loanProductUsageStatus(LoanProductUsageStatus.USING)
-            .loanProductUsageCount(1)
-            .totalLoanUsageAmount(10000000)
-            .creditScore(800)
-            .creditGradeStatus(CreditGradeStatus.UPPER)
-            .profileName("내 프로필");
+        return CreateProfileInput.builder().employmentStatus(EmploymentStatus.EMPLOYEE).workplaceName("회사")
+                .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
+                .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).desiredLoanAmount(10000000)
+                .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(1)
+                .totalLoanUsageAmount(10000000).creditScore(800).creditGradeStatus(CreditGradeStatus.UPPER)
+                .profileName("내 프로필");
     }
 
     @DisplayName("employmentStatus가 null이면 실패한다")
     @Test
     void validateEmploymentStatus_null() {
-        CreateProfileInput input = validInputBuilder()
-            .employmentStatus(null)
-            .build();
+        CreateProfileInput input = validInputBuilder().employmentStatus(null).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -59,9 +51,7 @@ public class CreateProfileInputValidationTest {
     @DisplayName("purposeOfLoan이 null이면 실패한다")
     @Test
     void validatePurposeOfLoan_null() {
-        CreateProfileInput input = validInputBuilder()
-            .purposeOfLoan(null)
-            .build();
+        CreateProfileInput input = validInputBuilder().purposeOfLoan(null).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -71,9 +61,7 @@ public class CreateProfileInputValidationTest {
     @DisplayName("desiredLoanAmount가 0 미만이면 실패한다")
     @Test
     void validateDesiredLoanAmount_negative() {
-        CreateProfileInput input = validInputBuilder()
-            .desiredLoanAmount(-1000)
-            .build();
+        CreateProfileInput input = validInputBuilder().desiredLoanAmount(-1000).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -83,9 +71,7 @@ public class CreateProfileInputValidationTest {
     @DisplayName("loanProductUsageStatus가 null이면 실패한다")
     @Test
     void validateLoanProductUsageStatus_null() {
-        CreateProfileInput input = validInputBuilder()
-            .loanProductUsageStatus(null)
-            .build();
+        CreateProfileInput input = validInputBuilder().loanProductUsageStatus(null).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -95,9 +81,7 @@ public class CreateProfileInputValidationTest {
     @DisplayName("loanProductUsageCount가 0 미만이면 실패한다")
     @Test
     void validateLoanProductUsageCount_negative() {
-        CreateProfileInput input = validInputBuilder()
-            .loanProductUsageCount(-1)
-            .build();
+        CreateProfileInput input = validInputBuilder().loanProductUsageCount(-1).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -107,9 +91,7 @@ public class CreateProfileInputValidationTest {
     @DisplayName("totalLoanUsageAmount가 0 미만이면 실패한다")
     @Test
     void validateTotalLoanUsageAmount_negative() {
-        CreateProfileInput input = validInputBuilder()
-            .totalLoanUsageAmount(-5000)
-            .build();
+        CreateProfileInput input = validInputBuilder().totalLoanUsageAmount(-5000).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -119,9 +101,7 @@ public class CreateProfileInputValidationTest {
     @DisplayName("profileName이 blank면 실패한다")
     @Test
     void validateProfileName_blank() {
-        CreateProfileInput input = validInputBuilder()
-            .profileName("")
-            .build();
+        CreateProfileInput input = validInputBuilder().profileName("").build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
@@ -131,9 +111,8 @@ public class CreateProfileInputValidationTest {
     @DisplayName("profileName이 14자를 초과하면 실패한다")
     @Test
     void validateProfileName_tooLong() {
-        CreateProfileInput input = validInputBuilder()
-            .profileName("123456789012345") // 15자
-            .build();
+        CreateProfileInput input = validInputBuilder().profileName("123456789012345") // 15자
+                .build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 

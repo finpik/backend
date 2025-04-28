@@ -1,10 +1,13 @@
 package com.loanpick.profile.entity;
 
+import java.time.LocalDate;
+
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.EmploymentStatus;
-import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
+import com.loanpick.profile.entity.enums.PurposeOfLoan;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,8 +18,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -59,13 +60,10 @@ public class Profile {
     private LocalDate employmentDate;
 
     @Builder
-    public Profile(
-        int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount,
-        int creditScore, CreditGradeStatus creditGradeStatus, int income, String workplaceName,
-        EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus,
-        PurposeOfLoan purposeOfLoan, LocalDate employmentDate, String profileName,
-        EmploymentStatus employmentStatus
-    ) {
+    public Profile(int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount, int creditScore,
+            CreditGradeStatus creditGradeStatus, int income, String workplaceName, EmploymentForm employmentForm,
+            LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan, LocalDate employmentDate,
+            String profileName, EmploymentStatus employmentStatus) {
         this.desiredLoanAmount = desiredLoanAmount;
         this.loanProductUsageCount = loanProductUsageCount;
         this.totalLoanUsageAmount = totalLoanUsageAmount;
