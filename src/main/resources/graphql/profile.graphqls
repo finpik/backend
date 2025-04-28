@@ -1,43 +1,66 @@
 extend type Mutation {
-    createProfile(profile: CreateProfileInput!): ProfileResult!
+    createProfile(input: CreateProfileInput!): ProfileResult!
 }
 
 input CreateProfileInput {
-    job: String!
-    workplaceName: String!
-    employmentForm: String!
-    income: Int!
-    employmentDate: String!
-    cardDelinquency: CardDelinquency!
-    loanUsageStatus: LoanUsageStatus!
-    loanProductUsageCount: Int
-    totalLoanUsageAmount: Int
-    purposeOfLoan: String!
+    employmentStatus: EmploymentStatus!
+    workplaceName: String
+    employmentForm: EmploymentForm
+    income: Int
+    employmentDate: Date
+    purposeOfLoan: PurposeOfLoan!
     desiredLoanAmount: Int!
-    creditGradeStatus: String!
+    loanProductUsageStatus: LoanProductUsageStatus!
+    loanProductUsageCount: Int!
+    totalLoanUsageAmount: Int!
+    creditScore: Int
+    creditGradeStatus: CreditGradeStatus
+    profileName: String!
 }
 
 type ProfileResult {
-    purposeOfLoan: String
-    job: String
-    creditGradeStatus: String
-    loanProductUsageCount: Int
-    totalLoanUsageAmount: Int
-    desiredLoanAmount: Int
-}
-
-enum CardDelinquency {
-    YES, NO
+    purposeOfLoan: PurposeOfLoan!
+    employmentStatus: EmploymentStatus!
+    creditGradeStatus: CreditGradeStatus!
+    loanProductUsageCount: Int!
+    totalLoanUsageAmount: Int!
+    desiredLoanAmount: Int!
 }
 
 enum LoanUsageStatus {
     USING, NOT_USING
 }
 
-enum PurposeOfLoan {
-    LIVING_EXPENSES, STUDENT_LOAN, RESIDENTIAL_LOAN,
-    STARTUP_LOAN, EMERGENCY_LOAN, CONSUMER_LOAN, REPAY_EXISTING_LOAN,
-    ETC
+enum EmploymentStatus {
+    EMPLOYEE
+    SELF_EMPLOYED
+    PUBLIC_SERVANT
+    UNEMPLOYED
+    OTHER
 }
 
+enum EmploymentForm {
+    FULL_TIME
+    CONTRACT
+}
+
+enum PurposeOfLoan {
+    LIVING_EXPENSES
+    TUITION
+    HOUSING
+    BUSINESS_FUNDS
+    MEDICAL_OR_EMERGENCY
+    LOAN_REPAYMENT
+}
+
+enum LoanProductUsageStatus {
+    USING
+    NOT_USING
+}
+
+enum CreditGradeStatus {
+    UPPER
+    MIDDLE
+    LOWER
+}
 
