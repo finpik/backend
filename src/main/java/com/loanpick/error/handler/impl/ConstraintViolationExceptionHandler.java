@@ -25,8 +25,9 @@ public class ConstraintViolationExceptionHandler implements GraphQLExceptionHand
     public GraphQLError handle(ConstraintViolationException ex, DataFetchingEnvironment env) {
         List<Map<String, String>> fieldErrors = getFieldErrors(ex);
 
-        return GraphqlErrorBuilder.newError(env).message(ex.getMessage()).errorType(GraphQLErrorType.CONSTRAINT_VIOLATION_EXCEPTION)
-                .extensions(getExtensions(fieldErrors)).build();
+        return GraphqlErrorBuilder.newError(env).message(ex.getMessage())
+                .errorType(GraphQLErrorType.CONSTRAINT_VIOLATION_EXCEPTION).extensions(getExtensions(fieldErrors))
+                .build();
     }
 
     private List<Map<String, String>> getFieldErrors(ConstraintViolationException cve) {
