@@ -1,11 +1,13 @@
 package com.loanpick.profile.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.repository.ProfileRepository;
 import com.loanpick.profile.service.dto.CreateProfileDto;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
