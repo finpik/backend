@@ -11,7 +11,9 @@ import com.loanpick.error.handler.GraphQLExceptionHandler;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
 import graphql.schema.DataFetchingEnvironment;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class DefaultExceptionHandler implements GraphQLExceptionHandler<Throwable> {
 
@@ -22,6 +24,7 @@ public class DefaultExceptionHandler implements GraphQLExceptionHandler<Throwabl
 
     @Override
     public GraphQLError handle(Throwable ex, DataFetchingEnvironment env) {
+        log.error(ex.getMessage(), ex);
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
 
         return GraphqlErrorBuilder.newError(env).message("서버 내부 오류가 발생했습니다.")
