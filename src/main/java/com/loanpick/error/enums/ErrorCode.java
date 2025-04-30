@@ -16,7 +16,10 @@ public enum ErrorCode {
     // --------- 글로벌 에러처리 끝-------
 
     // Test
-    TEST_EXCEPTION("test용 에러", "TEST_EXCEPTION", HttpStatus.BAD_REQUEST),;
+    TEST_EXCEPTION("test용 에러", "TEST_EXCEPTION", HttpStatus.BAD_REQUEST),
+
+    // User
+    EXISTING_USER("이미 존재하는 유저입니다.", "USR-0001", HttpStatus.BAD_REQUEST),;
 
     private final String message;
     private final String code;
