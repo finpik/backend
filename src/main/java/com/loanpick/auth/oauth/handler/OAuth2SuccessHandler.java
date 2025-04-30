@@ -3,6 +3,7 @@ package com.loanpick.auth.oauth.handler;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final CustomRedisService customRedisService;
     private final ObjectMapper objectMapper;
     private static final int FIVE_MINUTE = 300_000;
+    private static final String ACCESS_TOKEN = "access_token";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -60,10 +62,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return jwtProvider.createToken(user, now, expiry);
     }
 
-    private void responseSuccessLogin(HttpServletResponse response, String jwt) {
-        // JSON 응답
-        response.setHeader(HttpHeaderValues.AUTHORIZATION, HttpHeaderValues.BEARER + jwt);
+    private void responseSuccessLogin(HttpServletResponse response, String jwt) throws IOException {
         response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType(HttpHeaderValues.APPLICATION_JSON);
+        response.setCharacterEncoding(HttpHeaderValues.UTF_8);
+
+        String body = objectMapper.writeValueAsString(Map.of(ACCESS_TOKEN, jwt));
+        response.getWriter().write(body);
     }
 
     private void responseSignUpUser(HttpServletResponse response, String id, String provider) throws IOException {

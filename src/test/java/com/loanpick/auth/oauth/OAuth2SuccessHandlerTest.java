@@ -1,15 +1,16 @@
 package com.loanpick.auth.oauth;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -85,15 +86,22 @@ class OAuth2SuccessHandlerTest {
         when(userRepository.findByEmail("user@test.com")).thenReturn(Optional.of(user));
         when(jwtProvider.createToken(any(), any(), any())).thenReturn("test.jwt.token");
 
-        // mock response
-        doNothing().when(response).setHeader(anyString(), anyString());
+        // mock response writer
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(printWriter);
 
         // when
         oAuth2SuccessHandler.onAuthenticationSuccess(request, response, authentication);
 
+        // flush writer to finalize string
+        printWriter.flush();
+
         // then
-        assertAll(() -> verify(response).setHeader("Authorization", "Bearer test.jwt.token"),
-                () -> verify(response).setStatus(HttpServletResponse.SC_OK));
+        String expectedJson = new ObjectMapper().writeValueAsString(Map.of("access_token", "test.jwt.token"));
+        assertAll(() -> verify(response).setStatus(HttpServletResponse.SC_OK),
+                () -> verify(response).setContentType("application/json"),
+                () -> assertEquals(expectedJson, stringWriter.toString()));
     }
 
     @DisplayName("사용자가 존재하지 않으면 회원가입 유도 응답을 보낸다.")
