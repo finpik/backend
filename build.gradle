@@ -24,7 +24,7 @@ configurations {
 
 spotless {
     java {
-        eclipse()
+        eclipse().configFile('config/formatter/eclipse-java-formatter.xml')
         trimTrailingWhitespace()
         indentWithSpaces(4)
         endWithNewline()
@@ -40,7 +40,6 @@ spotless {
         target 'src/**/*.java'
     }
 }
-
 checkstyle {
     toolVersion = '10.23.0' // 원하는 버전 사용
     configFile = file("config/checkstyle/checkstyle.xml") // 설정 파일 경로

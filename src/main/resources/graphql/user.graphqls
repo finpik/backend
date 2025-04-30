@@ -11,10 +11,11 @@ input CreateUserInput {
 }
 
 type CreateUserResult {
-    id: ID
-    username: String
-    dateOfBirth: String
-    gender: Gender
+    id: ID!
+    username: String!
+    dateOfBirth: String!
+    gender: Gender!
+    token: String!
 }
 
 enum Gender {
