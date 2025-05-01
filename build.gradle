@@ -38,6 +38,7 @@ spotless {
                 'static'
         )
         target 'src/**/*.java'
+        toggleOffOn()
     }
 }
 checkstyle {
