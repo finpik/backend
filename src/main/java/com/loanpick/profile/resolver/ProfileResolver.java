@@ -19,19 +19,16 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @MutationMapping
-    public ProfileResult createProfile(@Argument @Valid CreateProfileInput input) {
-        Profile profile = profileService.createProfile(input.toDto());
+    public ProfileResult createProfile(@Argument @Valid CreateProfileInput input, User user) {
+        Profile profile = profileService.createProfile(input.toDto(user));
 
-        return ProfileResult.builder().purposeOfLoan(profile.getPurposeOfLoan())
-                .creditGradeStatus(profile.getCreditGradeStatus())
-                .loanProductUsageCount(profile.getLoanProductUsageCount())
-                .totalLoanUsageAmount(profile.getTotalLoanUsageAmount())
-                .desiredLoanAmount(profile.getDesiredLoanAmount()).employmentStatus(profile.getEmploymentStatus())
-                .build();
+        return ProfileResult.of(profile);
     }
 
     @Override
-    public ProfileResult profileByUserId(@Argument long id) {
-        return null;
+    public List<ProfileResult> profileByUserId(User user) {
+        List<Profile> profileList = profileService.getAllProfiles(user);
+
+        return profileList.stream().map(ProfileResult::of).toList();
     }
 }
