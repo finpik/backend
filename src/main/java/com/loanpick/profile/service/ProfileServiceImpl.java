@@ -1,6 +1,8 @@
 package com.loanpick.profile.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,8 @@ import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.repository.ProfileRepository;
 import com.loanpick.profile.service.dto.CreateProfileDto;
+import com.loanpick.profile.service.dto.UpdateProfileDto;
+import com.loanpick.profile.service.dto.UpdateProfileSequenceDto;
 import com.loanpick.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +45,16 @@ public class ProfileServiceImpl implements ProfileService {
 
     private void validateProfileCountLimit(List<Profile> profileList) {
         if (isNotLessThanLimit(profileList.size())) {
+    @Override
+    @Transactional
+    public Profile updateProfile(UpdateProfileDto dto) {
+        Profile savedEntity = findProfileBy(dto.id());
+        Profile changedEntity = dto.toEntity();
+
+        savedEntity.updateProfile(changedEntity);
+
+        return savedEntity;
+    }
             log.error("[ProfileService] - limit reached");
             throw new BusinessException(ErrorCode.EXCEEDING_PROFILE_COUNT_LIMIT);
         }
