@@ -33,13 +33,23 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     public List<ProfileResult> profileByUserId(User user) {
-        List<Profile> profileList = profileService.getAllProfiles(user);
+        List<Profile> profileList = profileService.getProfileListBy(user);
+
+        return profileList.stream().map(ProfileResult::of).toList();
+    }
+
     @Override
     public ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input) {
         Profile profile = profileService.updateProfile(input.toDto());
 
         return ProfileResult.of(profile);
     }
+
+    @Override
+    public List<ProfileResult> updateProfileSequence(@Argument @Valid List<UpdateProfileSequenceInput> input,
+            User user) {
+        List<UpdateProfileSequenceDto> dtos = input.stream().map(UpdateProfileSequenceInput::toDto).toList();
+        List<Profile> profileList = profileService.updateProfileSequence(dtos, user);
 
         return profileList.stream().map(ProfileResult::of).toList();
     }

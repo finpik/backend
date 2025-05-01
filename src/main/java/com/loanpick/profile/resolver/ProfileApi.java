@@ -16,5 +16,8 @@ public interface ProfileApi {
     ProfileResult createProfile(@Argument @Valid CreateProfileInput input, User user);
 
     List<ProfileResult> profileByUserId(User user);
+
     ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input);
+
+    List<ProfileResult> updateProfileSequence(@Argument @Valid List<UpdateProfileSequenceInput> input, User user);
 }
