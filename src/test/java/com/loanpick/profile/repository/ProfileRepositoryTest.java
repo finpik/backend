@@ -4,8 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
+import com.loanpick.user.entity.Gender;
+import com.loanpick.user.entity.RegistrationType;
+import com.loanpick.user.entity.User;
+import com.loanpick.user.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,13 +31,17 @@ class ProfileRepositoryTest {
     @Autowired
     private ProfileRepository profileRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @AfterEach
     void tearDown() {
         profileRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
     }
 
-    @Test
     @DisplayName("Profile 저장 후 조회가 가능하다")
+    @Test
     void saveAndFindProfile() {
         // given
         Profile profile = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
@@ -65,5 +74,42 @@ class ProfileRepositoryTest {
                 () -> assertThat(foundProfile.get().getEmploymentStatus()).isEqualTo(profile.getEmploymentStatus()),
                 () -> assertThat(foundProfile.get().getCreditGradeStatus()).isEqualTo(profile.getCreditGradeStatus()),
                 () -> assertThat(foundProfile.get().getEmploymentDate()).isEqualTo(profile.getEmploymentDate()));
+    }
+
+    @DisplayName("유저 기준 프로필을 조회할 수 있다.")
+    @Test
+    void findByUser() {
+        //given
+        User user = User.builder().username("findpick").email("finpick@gmail.com").gender(Gender.MALE)
+            .registrationType(RegistrationType.KAKAO).build();
+
+        User savedUser = userRepository.save(user);
+
+        Profile profileFirst = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
+            .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
+            .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
+            .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
+            .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+            .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
+
+        Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
+            .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
+            .profileName("프로필2").employmentForm(EmploymentForm.FULL_TIME)
+            .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
+            .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+            .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(1).build();
+
+        List<Profile> profileList = List.of(profileFirst, profileSecond);
+        profileRepository.saveAll(profileList);
+
+        //when
+        List<Profile> foundProfileList = profileRepository.findByUser(savedUser);
+
+        //then
+        assertAll(
+            () -> assertThat(2).isEqualTo(profileList.size()),
+            () -> assertThat("프로필1").isEqualTo(foundProfileList.get(0).getProfileName()),
+            () -> assertThat("프로필2").isEqualTo(foundProfileList.get(1).getProfileName())
+        );
     }
 }
