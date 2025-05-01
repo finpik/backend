@@ -8,8 +8,8 @@ import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
-
 import com.loanpick.user.entity.User;
+
 import lombok.Builder;
 
 @Builder
@@ -23,7 +23,7 @@ public record CreateProfileDto(String workplaceName, EmploymentForm employmentFo
                 .loanProductUsageCount(loanProductUsageCount).creditGradeStatus(creditGradeStatus)
                 .creditGradeStatus(creditGradeStatus).loanProductUsageStatus(loanProductUsageStatus)
                 .purposeOfLoan(purposeOfLoan).workplaceName(workplaceName).employmentForm(employmentForm).income(income)
-                .profileName(profileName).employmentDate(employmentDate).employmentStatus(employmentStatus)
-                .user(user).build();
+                .profileName(profileName).employmentDate(employmentDate).employmentStatus(employmentStatus).user(user)
+                .build();
     }
 }
