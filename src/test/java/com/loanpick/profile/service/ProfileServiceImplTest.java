@@ -180,33 +180,33 @@ class ProfileServiceImplTest {
     @DisplayName("유저로 조회하면 관련된 프로필이 조회된다.")
     @Test
     void getAllProfiles() {
-        //given
+        // given
         User user = User.builder().username("findpick").email("finpick@gmail.com").gender(Gender.MALE)
-            .registrationType(RegistrationType.KAKAO).build();
+                .registrationType(RegistrationType.KAKAO).build();
 
         User savedUser = userRepository.save(user);
 
         Profile profileFirst = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
-            .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
-            .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
-            .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-            .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
-            .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
+                .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
+                .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
+                .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
+                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
 
         Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
-            .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
-            .profileName("프로필2").employmentForm(EmploymentForm.FULL_TIME)
-            .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-            .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
-            .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(1).build();
+                .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
+                .profileName("프로필2").employmentForm(EmploymentForm.FULL_TIME)
+                .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
+                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(1).build();
 
         List<Profile> profileList = List.of(profileFirst, profileSecond);
         profileRepository.saveAll(profileList);
 
-        //when
+        // when
         List<Profile> foundProfileList = profileService.getAllProfiles(savedUser);
 
-        //then
+        // then
         assertThat(2).isEqualTo(foundProfileList.size());
     }
 }
