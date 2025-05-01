@@ -7,13 +7,18 @@ import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
+import com.loanpick.user.entity.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jdk.jfr.Description;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +47,9 @@ public class Profile {
 
     private String profileName;
 
+    @Description("프로필의 보여지는 순번")
+    private int seq;
+
     @Enumerated(EnumType.STRING)
     private EmploymentForm employmentForm;
 
@@ -67,7 +75,7 @@ public class Profile {
     public Profile(int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount, int creditScore,
             CreditGradeStatus creditGradeStatus, int income, String workplaceName, EmploymentForm employmentForm,
             LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan, LocalDate employmentDate,
-            String profileName, EmploymentStatus employmentStatus) {
+            String profileName, EmploymentStatus employmentStatus, User user, int seq) {
         this.desiredLoanAmount = desiredLoanAmount;
         this.loanProductUsageCount = loanProductUsageCount;
         this.totalLoanUsageAmount = totalLoanUsageAmount;
@@ -81,5 +89,11 @@ public class Profile {
         this.employmentDate = employmentDate;
         this.profileName = profileName;
         this.employmentStatus = employmentStatus;
+        this.user = user;
+        this.seq = seq;
+    }
+
+    public void balanceSequence() {
+        seq++;
     }
 }
