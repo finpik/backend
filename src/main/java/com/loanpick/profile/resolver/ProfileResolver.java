@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.resolver.input.CreateProfileInput;
+import com.loanpick.profile.resolver.input.UpdateProfileInput;
+import com.loanpick.profile.resolver.input.UpdateProfileSequenceInput;
 import com.loanpick.profile.resolver.result.ProfileResult;
 import com.loanpick.profile.service.ProfileService;
+import com.loanpick.profile.service.dto.UpdateProfileSequenceDto;
 import com.loanpick.user.entity.User;
 
 import jakarta.validation.Valid;
@@ -31,6 +34,12 @@ public class ProfileResolver implements ProfileApi {
     @Override
     public List<ProfileResult> profileByUserId(User user) {
         List<Profile> profileList = profileService.getAllProfiles(user);
+    @Override
+    public ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input) {
+        Profile profile = profileService.updateProfile(input.toDto());
+
+        return ProfileResult.of(profile);
+    }
 
         return profileList.stream().map(ProfileResult::of).toList();
     }
