@@ -71,11 +71,16 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
 
+    //@formatter:off
     @Builder
-    public Profile(int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount, int creditScore,
-            CreditGradeStatus creditGradeStatus, int income, String workplaceName, EmploymentForm employmentForm,
-            LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan, LocalDate employmentDate,
-            String profileName, EmploymentStatus employmentStatus, User user, int seq) {
+    public Profile(
+        int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount,
+        int creditScore, CreditGradeStatus creditGradeStatus, int income,
+        String workplaceName, EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus,
+        PurposeOfLoan purposeOfLoan, LocalDate employmentDate, String profileName,
+        EmploymentStatus employmentStatus, User user, int seq, Long id
+    ) {
+        this.id = id;
         this.desiredLoanAmount = desiredLoanAmount;
         this.loanProductUsageCount = loanProductUsageCount;
         this.totalLoanUsageAmount = totalLoanUsageAmount;
@@ -96,6 +101,7 @@ public class Profile {
     public void balanceSequence() {
         seq++;
     }
+
     public void updateProfile(Profile profile) {
         this.desiredLoanAmount = profile.getDesiredLoanAmount();
         this.loanProductUsageCount = profile.getLoanProductUsageCount();
@@ -110,5 +116,9 @@ public class Profile {
         this.employmentDate = profile.getEmploymentDate();
         this.profileName = profile.getProfileName();
         this.employmentStatus = profile.getEmploymentStatus();
+    }
+
+    public void updateSequence(int seq) {
+        this.seq = seq;
     }
 }
