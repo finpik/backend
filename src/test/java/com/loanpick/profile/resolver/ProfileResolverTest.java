@@ -39,7 +39,7 @@ class ProfileResolverTest {
                 .loanProductUsageCount(2).totalLoanUsageAmount(10000000).creditScore(800)
                 .creditGradeStatus(CreditGradeStatus.UPPER).profileName("프로필1").build();
 
-        Profile profile = Profile.builder().employmentStatus(input.employmentStatus())
+        Profile profile = Profile.builder().id(1L).employmentStatus(input.employmentStatus())
                 .workplaceName(input.workplaceName()).employmentForm(input.employmentForm()).income(input.income())
                 .employmentDate(input.employmentDate()).purposeOfLoan(input.purposeOfLoan())
                 .desiredLoanAmount(input.desiredLoanAmount()).loanProductUsageStatus(input.loanProductUsageStatus())
@@ -72,17 +72,17 @@ class ProfileResolverTest {
         User user = User.builder().id(1L).username("loanpick").email("loanpick@gmail.com").gender(Gender.MALE)
                 .registrationType(RegistrationType.KAKAO).build();
 
-        Profile profile1 = Profile.builder().profileName("프로필1").employmentStatus(EmploymentStatus.EMPLOYEE)
+        Profile profile1 = Profile.builder().id(1L).profileName("프로필1").employmentStatus(EmploymentStatus.EMPLOYEE)
                 .purposeOfLoan(PurposeOfLoan.HOUSING).creditGradeStatus(CreditGradeStatus.UPPER)
                 .loanProductUsageCount(2).totalLoanUsageAmount(10000000).desiredLoanAmount(5000000).build();
 
-        Profile profile2 = Profile.builder().profileName("프로필2").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+        Profile profile2 = Profile.builder().id(2L).profileName("프로필2").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
                 .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).creditGradeStatus(CreditGradeStatus.LOWER)
                 .loanProductUsageCount(1).totalLoanUsageAmount(3000000).desiredLoanAmount(2000000).build();
 
         List<Profile> profileList = List.of(profile1, profile2);
 
-        when(profileService.getAllProfiles(user)).thenReturn(profileList);
+        when(profileService.getProfileListBy(user)).thenReturn(profileList);
 
         // when
         List<ProfileResult> result = profileResolver.profileByUserId(user);

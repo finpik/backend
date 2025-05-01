@@ -179,7 +179,7 @@ class ProfileServiceImplTest {
 
     @DisplayName("유저로 조회하면 관련된 프로필이 조회된다.")
     @Test
-    void getAllProfiles() {
+    void getProfileListBy() {
         // given
         User user = User.builder().username("findpick").email("finpick@gmail.com").gender(Gender.MALE)
                 .registrationType(RegistrationType.KAKAO).build();
@@ -204,7 +204,7 @@ class ProfileServiceImplTest {
         profileRepository.saveAll(profileList);
 
         // when
-        List<Profile> foundProfileList = profileService.getAllProfiles(savedUser);
+        List<Profile> foundProfileList = profileService.getProfileListBy(savedUser);
 
         // then
         assertThat(2).isEqualTo(foundProfileList.size());
