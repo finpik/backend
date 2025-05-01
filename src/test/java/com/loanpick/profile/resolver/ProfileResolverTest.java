@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,8 @@ class ProfileResolverTest {
     private final ProfileService profileService = mock(ProfileService.class);
     private final ProfileResolver profileResolver = new ProfileResolver(profileService);
 
-    @Test
     @DisplayName("createProfile 호출 시 ProfileResult로 변환된다")
+    @Test
     void createProfile() {
         // given
         CreateProfileInput input = CreateProfileInput.builder().employmentStatus(EmploymentStatus.EMPLOYEE)
@@ -62,5 +63,34 @@ class ProfileResolverTest {
                 () -> assertThat(result.totalLoanUsageAmount()).isEqualTo(profile.getTotalLoanUsageAmount()),
                 () -> assertThat(result.desiredLoanAmount()).isEqualTo(profile.getDesiredLoanAmount()),
                 () -> assertThat(result.employmentStatus()).isEqualTo(profile.getEmploymentStatus()));
+    }
+
+    @Test
+    @DisplayName("profileByUserId 호출 시 Profile 리스트가 ProfileResult 리스트로 변환된다")
+    void profileByUserId() {
+        // given
+        User user = User.builder().id(1L).username("loanpick").email("loanpick@gmail.com").gender(Gender.MALE)
+                .registrationType(RegistrationType.KAKAO).build();
+
+        Profile profile1 = Profile.builder().profileName("프로필1").employmentStatus(EmploymentStatus.EMPLOYEE)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).creditGradeStatus(CreditGradeStatus.UPPER)
+                .loanProductUsageCount(2).totalLoanUsageAmount(10000000).desiredLoanAmount(5000000).build();
+
+        Profile profile2 = Profile.builder().profileName("프로필2").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).creditGradeStatus(CreditGradeStatus.LOWER)
+                .loanProductUsageCount(1).totalLoanUsageAmount(3000000).desiredLoanAmount(2000000).build();
+
+        List<Profile> profileList = List.of(profile1, profile2);
+
+        when(profileService.getAllProfiles(user)).thenReturn(profileList);
+
+        // when
+        List<ProfileResult> result = profileResolver.profileByUserId(user);
+
+        // then
+        assertAll(() -> assertThat(result).hasSize(2), () -> assertThat(result.get(0).profileName()).isEqualTo("프로필1"),
+                () -> assertThat(result.get(1).profileName()).isEqualTo("프로필2"),
+                () -> assertThat(result.get(0).purposeOfLoan()).isEqualTo(profile1.getPurposeOfLoan()),
+                () -> assertThat(result.get(1).creditGradeStatus()).isEqualTo(profile2.getCreditGradeStatus()));
     }
 }
