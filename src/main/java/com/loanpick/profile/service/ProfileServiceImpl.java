@@ -31,7 +31,7 @@ public class ProfileServiceImpl implements ProfileService {
     public Profile createProfile(CreateProfileDto dto) {
         Profile entity = dto.toEntity();
         List<Profile> profileList = getProfileListBy(dto.user());
-        validateProfileCountLimit(profileList);
+        validateProfileCountLimit(profileList.size());
         balanceProfileSequence(profileList);
 
         return profileRepository.save(entity);
@@ -39,12 +39,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Profile> getAllProfiles(User user) {
-        return getProfileListBy(user);
+    public List<Profile> getProfileListBy(User user) {
+        return findProfileListBy(user);
     }
 
-    private void validateProfileCountLimit(List<Profile> profileList) {
-        if (isNotLessThanLimit(profileList.size())) {
     @Override
     @Transactional
     public Profile updateProfile(UpdateProfileDto dto) {
@@ -55,6 +53,27 @@ public class ProfileServiceImpl implements ProfileService {
 
         return savedEntity;
     }
+
+    @Override
+    @Transactional
+    public List<Profile> updateProfileSequence(List<UpdateProfileSequenceDto> dtos, User user) {
+        Map<Long, Profile> foundProfileMap = profileRepository
+                .findAllById(dtos.stream().map(UpdateProfileSequenceDto::id).toList()).stream()
+                .collect(Collectors.toMap(Profile::getId, profile -> profile));
+
+        dtos.forEach(dto -> {
+            Profile profile = foundProfileMap.get(dto.id());
+            validateProfileOwner(profile, user);
+
+            validateProfileCountLimit(dto.seq());
+            profile.updateSequence(dto.seq());
+        });
+
+        return foundProfileMap.values().stream().toList();
+    }
+
+    private void validateProfileCountLimit(int count) {
+        if (isNotLessThanLimit(count)) {
             log.error("[ProfileService] - limit reached");
             throw new BusinessException(ErrorCode.EXCEEDING_PROFILE_COUNT_LIMIT);
         }
@@ -67,11 +86,21 @@ public class ProfileServiceImpl implements ProfileService {
         profileList.forEach(Profile::balanceSequence);
     }
 
-    private List<Profile> getProfileListBy(User user) {
+    private List<Profile> findProfileListBy(User user) {
         return profileRepository.findByUser(user);
     }
 
     private boolean isNotLessThanLimit(int count) {
         return count >= PROFILE_LIMIT_NUMBER;
+    }
+
+    private Profile findProfileBy(long id) {
+        return profileRepository.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PROFILE));
+    }
+
+    private void validateProfileOwner(Profile profile, User user) {
+        if (profile.getUser().equals(user)) {
+            throw new BusinessException(ErrorCode.NOT_PROFILE_OWNER);
+        }
     }
 }
