@@ -19,6 +19,9 @@ import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.resolver.input.CreateProfileInput;
 import com.loanpick.profile.resolver.result.ProfileResult;
 import com.loanpick.profile.service.ProfileService;
+import com.loanpick.user.entity.Gender;
+import com.loanpick.user.entity.RegistrationType;
+import com.loanpick.user.entity.User;
 
 class ProfileResolverTest {
     private final ProfileService profileService = mock(ProfileService.class);
@@ -43,10 +46,13 @@ class ProfileResolverTest {
                 .creditScore(input.creditScore()).creditGradeStatus(input.creditGradeStatus())
                 .profileName(input.profileName()).build();
 
-        when(profileService.createProfile(input.toDto())).thenReturn(profile);
+        User user = User.builder().id(1L).username("loanpick").email("loanpick@gmail.com").gender(Gender.MALE)
+                .registrationType(RegistrationType.KAKAO).build();
+
+        when(profileService.createProfile(input.toDto(user))).thenReturn(profile);
 
         // when
-        ProfileResult result = profileResolver.createProfile(input);
+        ProfileResult result = profileResolver.createProfile(input, user);
 
         // then
         assertAll(() -> assertThat(result).isNotNull(),
