@@ -59,6 +59,10 @@ public class Profile {
 
     private LocalDate employmentDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
     public Profile(int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount, int creditScore,
             CreditGradeStatus creditGradeStatus, int income, String workplaceName, EmploymentForm employmentForm,
