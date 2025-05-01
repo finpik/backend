@@ -36,8 +36,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional(readOnly = true)
     public List<Profile> getAllProfiles(User user) {
-        return profileRepository.findByUser(user);
+        return getProfileListBy(user);
     }
+
     private void validateProfileCountLimit(List<Profile> profileList) {
         if (isNotLessThanLimit(profileList.size())) {
             log.error("[ProfileService] - limit reached");
