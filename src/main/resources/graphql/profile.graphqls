@@ -2,6 +2,10 @@ extend type Mutation {
     createProfile(input: CreateProfileInput!): ProfileResult!
 }
 
+extend type Query {
+    profileByUserId: [ProfileResult]!
+}
+
 input CreateProfileInput {
     employmentStatus: EmploymentStatus!
     workplaceName: String
