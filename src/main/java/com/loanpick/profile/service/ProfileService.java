@@ -12,7 +12,9 @@ public interface ProfileService {
 
     Profile createProfile(CreateProfileDto dto);
 
-    List<Profile> getAllProfiles(User user);
+    List<Profile> getProfileListBy(User user);
 
     Profile updateProfile(UpdateProfileDto dto);
+
+    List<Profile> updateProfileSequence(List<UpdateProfileSequenceDto> dto, User user);
 }
