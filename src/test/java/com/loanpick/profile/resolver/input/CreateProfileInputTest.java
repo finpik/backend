@@ -14,12 +14,18 @@ import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.service.dto.CreateProfileDto;
+import com.loanpick.user.entity.Gender;
+import com.loanpick.user.entity.RegistrationType;
+import com.loanpick.user.entity.User;
 
 class CreateProfileInputTest {
     @Test
     @DisplayName("CreateProfileInput에서 toDto() 호출 시 값이 정상 매핑된다")
     void toDto_success() {
         // given
+        User user = User.builder().id(1L).username("findpick").email("finpick@gmail.com").gender(Gender.MALE)
+                .registrationType(RegistrationType.KAKAO).build();
+
         CreateProfileInput input = CreateProfileInput.builder().employmentStatus(EmploymentStatus.EMPLOYEE)
                 .workplaceName("Sample Company").employmentForm(EmploymentForm.FULL_TIME).income(60000000)
                 .employmentDate(LocalDate.of(2020, 1, 15)).purposeOfLoan(PurposeOfLoan.HOUSING)
@@ -28,7 +34,7 @@ class CreateProfileInputTest {
                 .creditGradeStatus(CreditGradeStatus.UPPER).profileName("프로필A").build();
 
         // when
-        CreateProfileDto dto = input.toDto();
+        CreateProfileDto dto = input.toDto(user);
 
         // then
         Assertions.assertAll(() -> assertThat(dto).isNotNull(),

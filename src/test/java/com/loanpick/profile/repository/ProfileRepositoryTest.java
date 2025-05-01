@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
@@ -20,13 +21,14 @@ import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 
 @DataJpaTest
+@ActiveProfiles("test")
 class ProfileRepositoryTest {
     @Autowired
     private ProfileRepository profileRepository;
 
     @AfterEach
     void tearDown() {
-        profileRepository.deleteAll();
+        profileRepository.deleteAllInBatch();
     }
 
     @Test
