@@ -96,4 +96,19 @@ public class Profile {
     public void balanceSequence() {
         seq++;
     }
+    public void updateProfile(Profile profile) {
+        this.desiredLoanAmount = profile.getDesiredLoanAmount();
+        this.loanProductUsageCount = profile.getLoanProductUsageCount();
+        this.totalLoanUsageAmount = profile.getTotalLoanUsageAmount();
+        this.creditScore = profile.getCreditScore();
+        this.creditGradeStatus = profile.getCreditGradeStatus();
+        this.income = profile.getIncome();
+        this.workplaceName = profile.getWorkplaceName();
+        this.employmentForm = profile.getEmploymentForm();
+        this.loanProductUsageStatus = profile.getLoanProductUsageStatus();
+        this.purposeOfLoan = profile.getPurposeOfLoan();
+        this.employmentDate = profile.getEmploymentDate();
+        this.profileName = profile.getProfileName();
+        this.employmentStatus = profile.getEmploymentStatus();
+    }
 }
