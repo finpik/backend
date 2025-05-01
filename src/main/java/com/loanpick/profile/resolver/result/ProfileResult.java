@@ -10,7 +10,7 @@ import lombok.Builder;
 @Builder
 public record ProfileResult(PurposeOfLoan purposeOfLoan, EmploymentStatus employmentStatus,
         CreditGradeStatus creditGradeStatus, int loanProductUsageCount, int totalLoanUsageAmount, int desiredLoanAmount,
-        int seq) {
+        int seq, String profileName) {
 
     public static ProfileResult of(Profile profile) {
         return ProfileResult.builder().purposeOfLoan(profile.getPurposeOfLoan())
@@ -18,6 +18,6 @@ public record ProfileResult(PurposeOfLoan purposeOfLoan, EmploymentStatus employ
                 .loanProductUsageCount(profile.getLoanProductUsageCount())
                 .totalLoanUsageAmount(profile.getTotalLoanUsageAmount())
                 .desiredLoanAmount(profile.getDesiredLoanAmount()).employmentStatus(profile.getEmploymentStatus())
-                .seq(profile.getSeq()).build();
+                .profileName(profile.getProfileName()).seq(profile.getSeq()).build();
     }
 }

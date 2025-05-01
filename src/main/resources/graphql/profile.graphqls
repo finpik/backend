@@ -29,6 +29,7 @@ type ProfileResult {
     loanProductUsageCount: Int!
     totalLoanUsageAmount: Int!
     desiredLoanAmount: Int!
+    profileName: String!
 }
 
 enum LoanUsageStatus {
