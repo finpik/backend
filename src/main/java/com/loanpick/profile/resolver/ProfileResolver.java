@@ -1,5 +1,7 @@
 package com.loanpick.profile.resolver;
 
+import java.util.List;
+
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.resolver.input.CreateProfileInput;
 import com.loanpick.profile.resolver.result.ProfileResult;
 import com.loanpick.profile.service.ProfileService;
+import com.loanpick.user.entity.User;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
