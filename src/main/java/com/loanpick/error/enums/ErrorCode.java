@@ -21,9 +21,8 @@ public enum ErrorCode {
     // User
     EXISTING_USER("이미 존재하는 유저입니다.", "USR-0001", HttpStatus.BAD_REQUEST),
 
-    //Profile
-    EXCEEDING_PROFILE_COUNT_LIMIT("제한된 프로파일 개수보다 많이 생성할 수 없습니다.", "PRF-0001", HttpStatus.BAD_REQUEST),
-    ;
+    // Profile
+    EXCEEDING_PROFILE_COUNT_LIMIT("제한된 프로파일 개수보다 많이 생성할 수 없습니다.", "PRF-0001", HttpStatus.BAD_REQUEST),;
 
     private final String message;
     private final String code;
