@@ -1,7 +1,10 @@
 package com.loanpick.config.filter;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -37,7 +40,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             long userId = jwtProvider.getUserId(token);
             User user = userRepository.findById(userId).orElseThrow();
 
+            // Authentication 객체 생성
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, List.of());
+
             request.setAttribute(USER, user);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         chain.doFilter(request, response);
