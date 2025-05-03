@@ -2,10 +2,13 @@ package com.loanpick.profile.entity;
 
 import java.time.LocalDate;
 
+import com.loanpick.error.enums.ErrorCode;
+import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
+import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.user.entity.User;
 
@@ -18,6 +21,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jdk.jfr.Description;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,28 +32,29 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {@UniqueConstraint(name = "userid_seq_uk", columnNames = {"user_id", "seq"})})
 public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int desiredLoanAmount;
+    private Integer desiredLoanAmount;
 
-    private int loanProductUsageCount;
+    private Integer loanProductUsageCount;
 
-    private int totalLoanUsageAmount;
+    private Integer totalLoanUsageAmount;
 
-    private int creditScore;
+    private Integer creditScore;
 
-    private int income;
+    private Integer income;
 
     private String workplaceName;
 
     private String profileName;
 
     @Description("프로필의 보여지는 순번")
-    private int seq;
+    private Integer seq;
 
     @Enumerated(EnumType.STRING)
     private EmploymentForm employmentForm;
@@ -65,6 +71,9 @@ public class Profile {
     @Enumerated(EnumType.STRING)
     private EmploymentStatus employmentStatus;
 
+    @Enumerated(EnumType.STRING)
+    private ProfileColor profileColor;
+
     private LocalDate employmentDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -74,12 +83,14 @@ public class Profile {
     //@formatter:off
     @Builder
     public Profile(
-        int desiredLoanAmount, int loanProductUsageCount, int totalLoanUsageAmount,
-        int creditScore, CreditGradeStatus creditGradeStatus, int income,
+        Integer desiredLoanAmount, Integer loanProductUsageCount, Integer totalLoanUsageAmount,
+        Integer creditScore, CreditGradeStatus creditGradeStatus, Integer income, Integer seq,
         String workplaceName, EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus,
         PurposeOfLoan purposeOfLoan, LocalDate employmentDate, String profileName,
-        EmploymentStatus employmentStatus, User user, int seq, Long id
+        EmploymentStatus employmentStatus, User user, Long id, ProfileColor profileColor
     ) {
+        validateInfoRelatedEmploymentStatus(employmentStatus, income, workplaceName, employmentDate);
+
         this.id = id;
         this.desiredLoanAmount = desiredLoanAmount;
         this.loanProductUsageCount = loanProductUsageCount;
@@ -95,30 +106,72 @@ public class Profile {
         this.profileName = profileName;
         this.employmentStatus = employmentStatus;
         this.user = user;
-        this.seq = seq;
-    }
-
-    public void balanceSequence() {
-        seq++;
+        this.profileColor = profileColor;
+        this.seq = seq == null ? 0 : seq;
     }
 
     public void updateProfile(Profile profile) {
+        updateInfoRelatedEmploymentStatus(
+            profile.getEmploymentStatus(), profile.getIncome(),
+            profile.getWorkplaceName(), profile.getEmploymentDate()
+        );
+
         this.desiredLoanAmount = profile.getDesiredLoanAmount();
         this.loanProductUsageCount = profile.getLoanProductUsageCount();
         this.totalLoanUsageAmount = profile.getTotalLoanUsageAmount();
         this.creditScore = profile.getCreditScore();
         this.creditGradeStatus = profile.getCreditGradeStatus();
-        this.income = profile.getIncome();
-        this.workplaceName = profile.getWorkplaceName();
         this.employmentForm = profile.getEmploymentForm();
         this.loanProductUsageStatus = profile.getLoanProductUsageStatus();
         this.purposeOfLoan = profile.getPurposeOfLoan();
-        this.employmentDate = profile.getEmploymentDate();
         this.profileName = profile.getProfileName();
-        this.employmentStatus = profile.getEmploymentStatus();
     }
 
-    public void updateSequence(int seq) {
+    public void updateSequence(Integer seq) {
         this.seq = seq;
+    }
+
+    private void validateInfoRelatedEmploymentStatus(
+        EmploymentStatus employmentStatus,
+        Integer income,
+        String workplaceName,
+        LocalDate employmentDate
+    ) {
+        if (employmentStatus == EmploymentStatus.EMPLOYEE) {
+            if (income == null || workplaceName == null || employmentDate == null) {
+                throw new BusinessException(ErrorCode.INVALID_EMPLOYMENT_INFO);
+            }
+        } else {
+            if (income != null || workplaceName != null || employmentDate != null) {
+                throw new BusinessException(ErrorCode.INVALID_NOT_EMPLOYMENT_INFO);
+            }
+        }
+    }
+
+    public void updateInfoRelatedEmploymentStatus(
+        EmploymentStatus employmentStatus,
+        Integer income,
+        String workplaceName,
+        LocalDate employmentDate
+    ) {
+        if (employmentStatus == EmploymentStatus.EMPLOYEE) {
+            if (income == null || workplaceName == null || employmentForm == null || employmentDate == null) {
+                throw new BusinessException(ErrorCode.INVALID_EMPLOYMENT_INFO);
+            } else {
+                this.employmentStatus = employmentStatus;
+                this.income = income;
+                this.workplaceName = workplaceName;
+                this.employmentDate = employmentDate;
+            }
+        } else {
+            this.employmentStatus = employmentStatus;
+            this.income = null;
+            this.workplaceName = null;
+            this.employmentDate = null;
+        }
+    }
+
+    public void changeProfileColor(ProfileColor profileColor) {
+        this.profileColor = profileColor;
     }
 }
