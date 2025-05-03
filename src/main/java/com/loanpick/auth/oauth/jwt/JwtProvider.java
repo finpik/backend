@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.loanpick.user.entity.User;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -29,5 +30,23 @@ public class JwtProvider {
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private Jws<Claims> validateToken(String token) {
+        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
+    }
+
+    public boolean isValid(String token) {
+        try {
+            validateToken(token); // 위의 메소드 이용
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public long getUserId(String token) {
+        Claims claims = parseToken(token);
+        return Long.parseLong(claims.getSubject());
     }
 }

@@ -8,9 +8,9 @@ import com.loanpick.user.entity.User;
 import lombok.Builder;
 
 @Builder
-public record CreateUserResult(Long id, String username, LocalDate dateOfBirth, Gender gender) {
-    public static CreateUserResult of(User user) {
+public record CreateUserResult(Long id, String username, LocalDate dateOfBirth, Gender gender, String token) {
+    public static CreateUserResult of(User user, String token) {
         return CreateUserResult.builder().id(user.getId()).username(user.getUsername())
-                .dateOfBirth(user.getDateOfBirth()).gender(user.getGender()).build();
+                .dateOfBirth(user.getDateOfBirth()).gender(user.getGender()).token(token).build();
     }
 }
