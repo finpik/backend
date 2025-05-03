@@ -3,7 +3,6 @@ package com.loanpick.profile.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,11 +44,10 @@ class ProfileRepositoryTest {
     void saveAndFindProfile() {
         // given
         Profile profile = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
-                .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
-                .profileName("내 프로필").employmentForm(EmploymentForm.FULL_TIME)
-                .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
-                .employmentDate(LocalDate.of(2020, 1, 1)).build();
+                .totalLoanUsageAmount(5000000).creditScore(750).profileName("내 프로필")
+                .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .creditGradeStatus(CreditGradeStatus.UPPER).build();
 
         // when
         Profile savedProfile = profileRepository.save(profile);
@@ -86,18 +84,16 @@ class ProfileRepositoryTest {
         User savedUser = userRepository.save(user);
 
         Profile profileFirst = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
-                .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
-                .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
-                .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
-                .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
+                .totalLoanUsageAmount(5000000).creditScore(750).profileName("프로필1")
+                .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .creditGradeStatus(CreditGradeStatus.UPPER).user(savedUser).seq(0).build();
 
         Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
-                .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
-                .profileName("프로필2").employmentForm(EmploymentForm.FULL_TIME)
-                .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
-                .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(1).build();
+                .totalLoanUsageAmount(5000000).creditScore(750).profileName("프로필2")
+                .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .creditGradeStatus(CreditGradeStatus.UPPER).user(savedUser).seq(1).build();
 
         List<Profile> profileList = List.of(profileFirst, profileSecond);
         profileRepository.saveAll(profileList);
