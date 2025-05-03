@@ -1,7 +1,11 @@
 package com.loanpick.profile.service;
 
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -12,10 +16,12 @@ import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.repository.ProfileRepository;
 import com.loanpick.profile.service.dto.CreateProfileDto;
+import com.loanpick.profile.service.dto.UpdateProfileColorDto;
 import com.loanpick.profile.service.dto.UpdateProfileDto;
 import com.loanpick.profile.service.dto.UpdateProfileSequenceDto;
 import com.loanpick.user.entity.User;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,15 +30,22 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
+    private final EntityManager entityManager;
     private static final int PROFILE_LIMIT_NUMBER = 4;
+    private static final int AVOID_SEQUENCE_NUMBER = 5;
 
     @Override
     @Transactional
     public Profile createProfile(CreateProfileDto dto) {
         Profile entity = dto.toEntity();
+
         List<Profile> profileList = getProfileListBy(dto.user());
         validateProfileCountLimit(profileList.size());
-        balanceProfileSequence(profileList);
+
+        Map<Long, Integer> previousIdSeqMap = memoryPreviousSequenceMap(profileList);
+        List<Profile> advoidedProfileList = avoidUniqueIndex(profileList);
+
+        balanceProfileSequence(advoidedProfileList, previousIdSeqMap);
 
         return profileRepository.save(entity);
     }
@@ -57,19 +70,33 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional
     public List<Profile> updateProfileSequence(List<UpdateProfileSequenceDto> dtos, User user) {
-        Map<Long, Profile> foundProfileMap = profileRepository
-                .findAllById(dtos.stream().map(UpdateProfileSequenceDto::id).toList()).stream()
-                .collect(Collectors.toMap(Profile::getId, profile -> profile));
+        validateDuplicate(dtos);
+        dtos.forEach(dto -> validateProfileCountLimit(dto.seq()));
 
-        dtos.forEach(dto -> {
-            Profile profile = foundProfileMap.get(dto.id());
-            validateProfileOwner(profile, user);
+        Map<Long, Integer> idSeqMap = dtos.stream()
+                .collect(Collectors.toMap(UpdateProfileSequenceDto::id, UpdateProfileSequenceDto::seq));
 
-            validateProfileCountLimit(dto.seq());
-            profile.updateSequence(dto.seq());
-        });
+        List<Profile> foundProfileList = profileRepository
+                .findAllById(dtos.stream().map(UpdateProfileSequenceDto::id).toList());
 
-        return foundProfileMap.values().stream().toList();
+        foundProfileList.forEach(profile -> validateProfileOwner(profile, user));
+
+        List<Profile> avoidedProfileList = avoidUniqueIndex(foundProfileList);
+
+        avoidedProfileList
+                .forEach(avoidedProfile -> avoidedProfile.updateSequence(idSeqMap.get(avoidedProfile.getId())));
+
+        return profileRepository.saveAll(avoidedProfileList);
+    }
+
+    @Override
+    @Transactional
+    public Profile updateProfileColor(UpdateProfileColorDto dto) {
+        Profile profile = findProfileBy(dto.id());
+
+        profile.changeProfileColor(dto.profileColor());
+
+        return profile;
     }
 
     private void validateProfileCountLimit(int count) {
@@ -79,11 +106,26 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
-    private void balanceProfileSequence(List<Profile> profileList) {
-        if (profileList.isEmpty())
+    private void balanceProfileSequence(List<Profile> profileList, Map<Long, Integer> previousIdSeqMap) {
+        if (profileList.isEmpty()) {
             return;
+        }
 
-        profileList.forEach(Profile::balanceSequence);
+        for (Profile profile : profileList) {
+            Integer seq = previousIdSeqMap.get(profile.getId());
+
+            profile.updateSequence(seq);
+        }
+
+        List<Profile> sortedProfileList = profileList.stream().sorted(Comparator.comparing(Profile::getSeq)).toList();
+
+        int start = 1;
+        for (Profile profile : sortedProfileList) {
+            profile.updateSequence(start);
+            start++;
+        }
+
+        profileRepository.saveAll(sortedProfileList);
     }
 
     private List<Profile> findProfileListBy(User user) {
@@ -102,5 +144,40 @@ public class ProfileServiceImpl implements ProfileService {
         if (profile.getUser().equals(user)) {
             throw new BusinessException(ErrorCode.NOT_PROFILE_OWNER);
         }
+    }
+
+    private void validateDuplicate(List<UpdateProfileSequenceDto> dtos) {
+        Set<Integer> seenSeqSet = new HashSet<>();
+        Set<Long> seenIdSet = new HashSet<>();
+
+        for (UpdateProfileSequenceDto dto : dtos) {
+            if (!seenIdSet.add(dto.id())) {
+                throw new BusinessException(ErrorCode.DUPLICATE_UPDATE_PROFILE_ID);
+            }
+
+            if (!seenSeqSet.add(dto.seq())) {
+                throw new BusinessException(ErrorCode.DUPLICATE_PROFILE_SEQ);
+            }
+        }
+    }
+
+    private List<Profile> avoidUniqueIndex(List<Profile> profileList) {
+        for (Profile profile : profileList) {
+            profile.updateSequence(profile.getSeq() - AVOID_SEQUENCE_NUMBER);
+        }
+
+        List<Profile> advoidedProfileList = profileRepository.saveAll(profileList);
+        entityManager.flush();
+
+        return advoidedProfileList;
+    }
+
+    private Map<Long, Integer> memoryPreviousSequenceMap(List<Profile> profileList) {
+        Map<Long, Integer> tempIdSeqMap = new HashMap<>();
+        for (Profile profile : profileList) {
+            tempIdSeqMap.put(profile.getId(), profile.getSeq());
+        }
+
+        return tempIdSeqMap;
     }
 }
