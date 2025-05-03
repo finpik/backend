@@ -12,10 +12,10 @@ import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import lombok.Builder;
 
 @Builder
-public record UpdateProfileDto(long id, EmploymentStatus employmentStatus, String workplaceName,
-        EmploymentForm employmentForm, int income, LocalDate employmentDate, PurposeOfLoan purposeOfLoan,
-        int desiredLoanAmount, LoanProductUsageStatus loanProductUsageStatus, int loanProductUsageCount,
-        int totalLoanUsageAmount, int creditScore, CreditGradeStatus creditGradeStatus, String profileName) {
+public record UpdateProfileDto(Long id, EmploymentStatus employmentStatus, String workplaceName,
+        EmploymentForm employmentForm, Integer income, LocalDate employmentDate, PurposeOfLoan purposeOfLoan,
+        Integer desiredLoanAmount, LoanProductUsageStatus loanProductUsageStatus, Integer loanProductUsageCount,
+        Integer totalLoanUsageAmount, Integer creditScore, CreditGradeStatus creditGradeStatus, String profileName) {
     public Profile toEntity() {
         return Profile.builder().desiredLoanAmount(desiredLoanAmount).loanProductUsageStatus(loanProductUsageStatus)
                 .totalLoanUsageAmount(totalLoanUsageAmount).creditScore(creditScore)
