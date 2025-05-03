@@ -20,4 +20,6 @@ public interface ProfileService {
     List<Profile> updateProfileSequence(List<UpdateProfileSequenceDto> dto, User user);
 
     Profile updateProfileColor(UpdateProfileColorDto dto);
+
+    List<Profile> deleteProfile(Long deletedId, User user);
 }

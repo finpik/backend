@@ -45,7 +45,8 @@ public class ProfileServiceImpl implements ProfileService {
         Map<Long, Integer> previousIdSeqMap = memoryPreviousSequenceMap(profileList);
         List<Profile> advoidedProfileList = avoidUniqueIndex(profileList);
 
-        balanceProfileSequence(advoidedProfileList, previousIdSeqMap);
+        int startSeq = 1;
+        balanceProfileSequence(advoidedProfileList, previousIdSeqMap, startSeq);
 
         return profileRepository.save(entity);
     }
@@ -99,6 +100,28 @@ public class ProfileServiceImpl implements ProfileService {
         return profile;
     }
 
+    @Override
+    @Transactional
+    public List<Profile> deleteProfile(Long deletedId, User user) {
+        List<Profile> foundProfileList = findProfileListBy(user);
+
+        foundProfileList.stream().filter(profile -> profile.getId().equals(deletedId)).findFirst()
+                .ifPresent(profile -> validateProfileOwner(profile, user));
+
+        profileRepository.deleteById(deletedId);
+
+        List<Profile> profileList = foundProfileList.stream().filter(profile -> !profile.getId().equals(deletedId))
+                .toList();
+
+        Map<Long, Integer> idSeqMap = memoryPreviousSequenceMap(profileList);
+        avoidUniqueIndex(profileList);
+
+        int startSeq = 0;
+        balanceProfileSequence(profileList, idSeqMap, startSeq);
+
+        return profileList;
+    }
+
     private void validateProfileCountLimit(int count) {
         if (isNotLessThanLimit(count)) {
             log.error("[ProfileService] - limit reached");
@@ -106,7 +129,7 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
-    private void balanceProfileSequence(List<Profile> profileList, Map<Long, Integer> previousIdSeqMap) {
+    private void balanceProfileSequence(List<Profile> profileList, Map<Long, Integer> previousIdSeqMap, int startSeq) {
         if (profileList.isEmpty()) {
             return;
         }
@@ -119,10 +142,9 @@ public class ProfileServiceImpl implements ProfileService {
 
         List<Profile> sortedProfileList = profileList.stream().sorted(Comparator.comparing(Profile::getSeq)).toList();
 
-        int start = 1;
         for (Profile profile : sortedProfileList) {
-            profile.updateSequence(start);
-            start++;
+            profile.updateSequence(startSeq);
+            startSeq++;
         }
 
         profileRepository.saveAll(sortedProfileList);
