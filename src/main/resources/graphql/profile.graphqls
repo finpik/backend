@@ -3,6 +3,7 @@ extend type Mutation {
     updateProfile(input: UpdateProfileInput!): ProfileResult!
     updateProfileSequence(input: [UpdateProfileSequenceInput]!): [ProfileResult]!
     updateProfileColor(input: UpdateProfileColorInput!): ProfileResult!
+    deleteProfile(deletedId: Long): [ProfileResult]!
 }
 
 extend type Query {
