@@ -49,7 +49,8 @@ public class ProfileResolver implements ProfileApi {
     }
 
     @Override
-    public ProfileResult profileById(Long id, User userInput) {
+    @QueryMapping
+    public ProfileResult profileById(@Argument Long id, User userInput) {
         User user = UserUtil.require(userInput);
 
         Profile profile = profileService.getProfileBy(id, user);
