@@ -2,10 +2,11 @@ extend type Mutation {
     createProfile(input: CreateProfileInput!): ProfileResult!
     updateProfile(input: UpdateProfileInput!): ProfileResult!
     updateProfileSequence(input: [UpdateProfileSequenceInput]!): [ProfileResult]!
+    updateProfileColor(input: UpdateProfileColorInput!): ProfileResult!
 }
 
 extend type Query {
-    profileByUserId: [ProfileResult]!
+    profileByUser: [ProfileResult]!
 }
 
 input CreateProfileInput {
@@ -22,6 +23,7 @@ input CreateProfileInput {
     creditScore: Int
     creditGradeStatus: CreditGradeStatus
     profileName: String!
+    profileColor: ProfileColor!
 }
 
 input UpdateProfileInput {
@@ -46,7 +48,13 @@ input UpdateProfileSequenceInput {
     seq: Int!
 }
 
+input UpdateProfileColorInput {
+    id: Long!
+    profileColor: ProfileColor!
+}
+
 type ProfileResult {
+    id: Long!
     purposeOfLoan: PurposeOfLoan!
     employmentStatus: EmploymentStatus!
     creditGradeStatus: CreditGradeStatus!
@@ -54,6 +62,8 @@ type ProfileResult {
     totalLoanUsageAmount: Int!
     desiredLoanAmount: Int!
     profileName: String!
+    seq: Int!
+    profileColor: ProfileColor!
 }
 
 enum LoanUsageStatus {
@@ -91,5 +101,16 @@ enum CreditGradeStatus {
     UPPER
     MIDDLE
     LOWER
+}
+
+enum ProfileColor {
+    RED_TWO
+    PINK_TWO
+    ORANGE_THREE
+    YELLOW_TWO
+    GREEN_TWO
+    BLUE_TWO
+    PURPLE_TWO
+    GRAY_TWO
 }
 
