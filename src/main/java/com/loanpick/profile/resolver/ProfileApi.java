@@ -26,4 +26,6 @@ public interface ProfileApi {
 
     ProfileResult updateProfileColor(@Argument @Valid UpdateProfileColorInput input,
             @ContextValue("user") User userInput);
+
+    List<ProfileResult> deleteProfile(@Argument Long deletedId, @ContextValue("user") User userInput);
 }

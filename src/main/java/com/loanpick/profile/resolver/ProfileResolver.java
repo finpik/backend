@@ -76,4 +76,14 @@ public class ProfileResolver implements ProfileApi {
 
         return ProfileResult.of(profileService.updateProfileColor(input.toDto()));
     }
+
+    @Override
+    @MutationMapping
+    public List<ProfileResult> deleteProfile(@Argument Long deletedId, User userInput) {
+        User user = UserUtil.require(userInput);
+
+        List<Profile> profileList = profileService.deleteProfile(deletedId, user);
+
+        return profileList.stream().map(ProfileResult::of).toList();
+    }
 }
