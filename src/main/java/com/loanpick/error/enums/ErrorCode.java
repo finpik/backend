@@ -20,11 +20,16 @@ public enum ErrorCode {
 
     // User
     EXISTING_USER("이미 존재하는 유저입니다.", "USR-0001", HttpStatus.BAD_REQUEST),
+    NOT_FOUND_USER("유저를 찾을 수 없습니다.", "USR-0002", HttpStatus.NOT_FOUND),
 
     // Profile
     EXCEEDING_PROFILE_COUNT_LIMIT("제한된 프로파일 개수보다 많이 생성할 수 없습니다.", "PRF-0001", HttpStatus.BAD_REQUEST),
     NOT_FOUND_PROFILE("프로필을 찾을 수 없습니다.", "PRF-0002", HttpStatus.NOT_FOUND),
-    NOT_PROFILE_OWNER("해당 프로필을 가진 유저가 아닙니다.", "PRF-0003", HttpStatus.BAD_REQUEST),;
+    NOT_PROFILE_OWNER("해당 프로필을 가진 유저가 아닙니다.", "PRF-0003", HttpStatus.BAD_REQUEST),
+    INVALID_EMPLOYMENT_INFO("직장인 선택시 관련 정보들이 전부 채워져야 합니다.", "PRF-0004", HttpStatus.BAD_REQUEST),
+    INVALID_NOT_EMPLOYMENT_INFO("직장인이 아닌데 관련 정보들이 채워져 있으면 안됩니다.", "PRF-0005", HttpStatus.BAD_REQUEST),
+    DUPLICATE_PROFILE_SEQ("프로필 순번이 중복이 될 수 없습니다.", "PRF-0006", HttpStatus.BAD_REQUEST),
+    DUPLICATE_UPDATE_PROFILE_ID("프로필을 중복해서 업데이트 할 수 없습니다.", "PRF-0007", HttpStatus.BAD_REQUEST),;
 
     private final String message;
     private final String code;
