@@ -49,6 +49,15 @@ public class ProfileResolver implements ProfileApi {
     }
 
     @Override
+    public ProfileResult profileById(Long id, User userInput) {
+        User user = UserUtil.require(userInput);
+
+        Profile profile = profileService.getProfileBy(id, user);
+
+        return ProfileResult.of(profile);
+    }
+
+    @Override
     @MutationMapping
     public ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input) {
         Profile profile = profileService.updateProfile(input.toDto());
