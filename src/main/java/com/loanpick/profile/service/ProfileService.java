@@ -22,4 +22,6 @@ public interface ProfileService {
     Profile updateProfileColor(UpdateProfileColorDto dto);
 
     List<Profile> deleteProfile(Long deletedId, User user);
+
+    Profile getProfileBy(Long id, User user);
 }

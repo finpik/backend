@@ -122,6 +122,14 @@ public class ProfileServiceImpl implements ProfileService {
         return profileList;
     }
 
+    @Override
+    public Profile getProfileBy(Long id, User user) {
+        Profile foundProfile = findProfileBy(id);
+        validateProfileOwner(foundProfile, user);
+
+        return foundProfile;
+    }
+
     private void validateProfileCountLimit(int count) {
         if (isNotLessThanLimit(count)) {
             log.error("[ProfileService] - limit reached");
