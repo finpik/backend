@@ -1,4 +1,4 @@
-name: Create PR main → develop
+name: Sync main to develop
 
 on:
   push:
@@ -10,21 +10,38 @@ permissions:
   pull-requests: write
 
 jobs:
-  create-pull-request:
+  sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Create PR from main to develop
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch branches
+        run: git fetch origin develop
+
+      - name: Create sync branch
+        run: |
+          git checkout -b sync-main-to-develop
+          git merge origin/develop --no-edit || echo "Merge conflict! Please resolve manually."
+
+      - name: Push sync branch
+        run: git push -f origin sync-main-to-develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+
+      - name: Create PR
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           base: develop
-          branch: sync-main-to-develop-automated
-          title: "자동화: main → develop 최신화 PR"
+          branch: sync-main-to-develop
+          title: "자동화: main → develop 병합 PR"
           body: |
-            main 브랜치 업데이트로 인한 develop 최신화를 위한 자동 PR입니다.
+            이 PR은 `main` 브랜치의 변경 사항을 `develop`에 동기화하기 위한 자동화입니다.
