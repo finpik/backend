@@ -7,7 +7,7 @@ import com.loanpick.user.entity.User;
 public class UserUtil {
     public static User require(User user) {
         if (user == null) {
-            throw new BusinessException(ErrorCode.NOT_FOUND_USER);
+            throw new BusinessException(ErrorCode.INVALID_ACCESS_TOKEN);
         }
         return user;
     }

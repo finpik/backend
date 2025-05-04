@@ -30,8 +30,8 @@ public class ProfileResolver implements ProfileApi {
     @Override
     @MutationMapping
     public ProfileResult createProfile(@Argument @Valid CreateProfileInput input,
-            @ContextValue("user") User userInput) {
-        User user = UserUtil.require(userInput);
+            @ContextValue(value = "user", required = false) User userInput) {
+        User user = validateUser(userInput);
 
         Profile profile = profileService.createProfile(input.toDto(user));
 
@@ -40,8 +40,8 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @QueryMapping
-    public List<ProfileResult> profileByUser(@ContextValue("user") User userInput) {
-        User user = UserUtil.require(userInput);
+    public List<ProfileResult> profileByUser(@ContextValue(value = "user", required = false) User userInput) {
+        User user = validateUser(userInput);
 
         List<Profile> profileList = profileService.getProfileListBy(user);
 
@@ -50,8 +50,9 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @QueryMapping
-    public ProfileResult profileById(@Argument Long id, User userInput) {
-        User user = UserUtil.require(userInput);
+    public ProfileResult profileById(@Argument Long id,
+            @ContextValue(value = "user", required = false) User userInput) {
+        User user = validateUser(userInput);
 
         Profile profile = profileService.getProfileBy(id, user);
 
@@ -60,7 +61,9 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @MutationMapping
-    public ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input) {
+    public ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input,
+            @ContextValue(value = "user", required = false) User userInput) {
+        validateUser(userInput);
         Profile profile = profileService.updateProfile(input.toDto());
 
         return ProfileResult.of(profile);
@@ -69,8 +72,8 @@ public class ProfileResolver implements ProfileApi {
     @Override
     @MutationMapping
     public List<ProfileResult> updateProfileSequence(@Argument @Valid List<UpdateProfileSequenceInput> input,
-            @ContextValue("user") User userInput) {
-        User user = UserUtil.require(userInput);
+            @ContextValue(value = "user", required = false) User userInput) {
+        User user = validateUser(userInput);
 
         List<UpdateProfileSequenceDto> dtos = input.stream().map(UpdateProfileSequenceInput::toDto).toList();
         List<Profile> profileList = profileService.updateProfileSequence(dtos, user);
@@ -81,19 +84,24 @@ public class ProfileResolver implements ProfileApi {
     @Override
     @MutationMapping
     public ProfileResult updateProfileColor(@Argument @Valid UpdateProfileColorInput input,
-            @ContextValue("user") User userInput) {
-        UserUtil.require(userInput);
+            @ContextValue(value = "user", required = false) User userInput) {
+        validateUser(userInput);
 
         return ProfileResult.of(profileService.updateProfileColor(input.toDto()));
     }
 
     @Override
     @MutationMapping
-    public List<ProfileResult> deleteProfile(@Argument Long deletedId, User userInput) {
-        User user = UserUtil.require(userInput);
+    public List<ProfileResult> deleteProfile(@Argument Long deletedId,
+            @ContextValue(value = "user", required = false) User userInput) {
+        User user = validateUser(userInput);
 
         List<Profile> profileList = profileService.deleteProfile(deletedId, user);
 
         return profileList.stream().map(ProfileResult::of).toList();
+    }
+
+    public User validateUser(User userInput) {
+        return UserUtil.require(userInput);
     }
 }
