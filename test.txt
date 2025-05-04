@@ -1,0 +1,101 @@
+mutation {
+    createUser(
+        input: {
+            username: "산성"
+            dateOfBirth: "1993-12-14"
+            gender: MALE
+            provider: "kakao"
+            id: "4223701556"
+        }
+    ) {
+        id
+        username
+        dateOfBirth
+        gender
+        token
+    }
+}
+
+mutation {
+    createProfile(
+        input: {
+            employmentStatus: EMPLOYEE
+            workplaceName: "ABC Corp"
+            employmentForm: FULL_TIME
+            income: 60000000
+            employmentDate: "2020-01-01"
+            purposeOfLoan: HOUSING
+            desiredLoanAmount: 5000000
+            loanProductUsageStatus: USING
+            loanProductUsageCount: 2
+            totalLoanUsageAmount: 10000000
+            creditScore: 800
+            creditGradeStatus: UPPER
+            profileName: "내 첫 프로필"
+            profileColor: PINK_TWO
+        }
+    ) {
+        id
+        profileName
+        employmentStatus
+        purposeOfLoan
+        creditGradeStatus
+        loanProductUsageCount
+        totalLoanUsageAmount
+        desiredLoanAmount
+        seq
+    }
+}
+
+mutation {
+    updateProfile(
+        input: {
+            id: 0
+            employmentStatus: EMPLOYEE
+            workplaceName: "ABC Corp"
+            employmentForm: FULL_TIME
+            income: 60000000
+            employmentDate: "2020-01-01"
+            purposeOfLoan: HOUSING
+            desiredLoanAmount: 5000000
+            loanProductUsageStatus: USING
+            loanProductUsageCount: 2
+            totalLoanUsageAmount: 10000000
+            creditScore: 800
+            creditGradeStatus: UPPER
+            profileName: "내 첫 프로필"
+        }
+    ) {
+        id
+        profileName
+        employmentStatus
+        purposeOfLoan
+        creditGradeStatus
+        loanProductUsageCount
+        totalLoanUsageAmount
+        desiredLoanAmount
+        seq
+    }
+}
+
+mutation UpdateProfileSequence {
+    updateProfileSequence(input: [{
+        id: 1,
+        seq: 0
+    },
+    {
+        id:2,
+        seq:2
+    }]) {
+        id
+        purposeOfLoan
+        employmentStatus
+        creditGradeStatus
+        loanProductUsageCount
+        totalLoanUsageAmount
+        desiredLoanAmount
+        profileName
+        seq
+        profileColor
+    }
+}

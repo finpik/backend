@@ -1,12 +1,16 @@
-name: Auto Merge main to develop
+name: Create PR main → develop
 
 on:
   push:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  sync-main-to-develop:
+  create-pull-request:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,20 +19,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Fetch branches
-        run: |
-          git fetch origin
-          git checkout develop
-          git pull origin develop
-
-      - name: Merge main into develop
-        run: |
-          git merge origin/main --no-edit
-          git push origin develop
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create PR from main to develop
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: main
+          destination_branch: develop
+          pr_title: "자동화: main → develop 최신화 PR"
+          pr_body: |
+            main 브랜치 업데이트로 인한 develop 최신화를 위한 자동 PR입니다.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
