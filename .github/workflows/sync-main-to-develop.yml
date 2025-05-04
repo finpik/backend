@@ -1,16 +1,20 @@
-name: Sync main to develop
+ame: Create PR main → develop
 
 on:
   push:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  sync-branches:
+  create-pull-request:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -20,6 +24,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
           base: develop
-          branch: main
+          branch: sync-main-to-develop-automated
           title: "자동화: main → develop 최신화 PR"
-          body: "main 브랜치 업데이트로 인한 develop 최신화를 위한 자동 PR입니다."
+          body: |
+            main 브랜치 업데이트로 인한 develop 최신화를 위한 자동 PR입니다.
