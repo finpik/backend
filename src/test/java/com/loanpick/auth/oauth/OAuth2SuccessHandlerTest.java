@@ -17,8 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -29,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loanpick.auth.oauth.handler.OAuth2SuccessHandler;
 import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
 import com.loanpick.auth.oauth.jwt.JwtProvider;
+import com.loanpick.auth.oauth.service.AuthService;
 import com.loanpick.auth.oauth.service.dto.CustomOAuth2User;
 import com.loanpick.redis.service.CustomRedisService;
 import com.loanpick.user.entity.User;
@@ -65,17 +64,18 @@ class OAuth2SuccessHandlerTest {
     @Mock
     private CustomRedisService customRedisService;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Mock
+    private AuthService authService;
 
-    @Captor
-    private ArgumentCaptor<String> jwtCaptor;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setup() {
-        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository, customRedisService, objectMapper);
+        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository, customRedisService, objectMapper,
+                authService);
     }
 
-    @DisplayName("로그인 성공 시 JWT를 헤더에 포함하여 응답한다.")
+    @DisplayName("로그인 성공 시 JWT를 바디에 포함하여 응답한다.")
     @Test
     void addJwtToHeader() throws IOException {
         // given
@@ -84,7 +84,7 @@ class OAuth2SuccessHandlerTest {
         when(authentication.getPrincipal()).thenReturn(oAuth2User);
         when(oAuth2User.getEmail()).thenReturn("user@test.com");
         when(userRepository.findByEmail("user@test.com")).thenReturn(Optional.of(user));
-        when(jwtProvider.createToken(any(), any(), any())).thenReturn("test.jwt.token");
+        when(jwtProvider.createAccessToken(any())).thenReturn("test.jwt.token");
 
         // mock response writer
         StringWriter stringWriter = new StringWriter();
@@ -98,7 +98,7 @@ class OAuth2SuccessHandlerTest {
         printWriter.flush();
 
         // then
-        String expectedJson = new ObjectMapper().writeValueAsString(Map.of("access_token", "test.jwt.token"));
+        String expectedJson = new ObjectMapper().writeValueAsString(Map.of("accessToken", "test.jwt.token"));
         assertAll(() -> verify(response).setStatus(HttpServletResponse.SC_OK),
                 () -> verify(response).setContentType("application/json"),
                 () -> assertEquals(expectedJson, stringWriter.toString()));

@@ -1,10 +1,11 @@
 package com.loanpick.config.filter;
 
-import java.io.IOException;
-import java.util.List;
+import static com.loanpick.util.Values.BEGIN_INDEX;
+import static com.loanpick.util.Values.REFRESH_TOKEN;
+import static com.loanpick.util.Values.USER;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.io.IOException;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,9 +28,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
-    private static final String USER = "user";
-    private static final int BEGIN_INDEX = 7;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
@@ -40,11 +38,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             long userId = jwtProvider.getUserId(token);
             User user = userRepository.findById(userId).orElseThrow();
 
-            // Authentication 객체 생성
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, List.of());
-
             request.setAttribute(USER, user);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
+        if (request.getCookies() != null) {
+            for (var cookie : request.getCookies()) {
+                if (REFRESH_TOKEN.equals(cookie.getName())) {
+                    request.setAttribute(REFRESH_TOKEN, cookie.getValue());
+                }
+            }
         }
 
         chain.doFilter(request, response);

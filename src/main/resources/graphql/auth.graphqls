@@ -1,0 +1,8 @@
+extend type Mutation {
+    refresh: AuthResult!
+}
+
+type AuthResult {
+    accessToken: String!
+}
+

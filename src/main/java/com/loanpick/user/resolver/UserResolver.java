@@ -28,7 +28,7 @@ public class UserResolver implements UserApi {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + 300_000);
 
-        String token = jwtProvider.createToken(user, now, expiry);
+        String token = jwtProvider.createAccessToken(user, now, expiry);
 
         return CreateUserResult.of(user, token);
     }

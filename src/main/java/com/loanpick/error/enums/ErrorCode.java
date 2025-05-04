@@ -18,6 +18,10 @@ public enum ErrorCode {
     // Test
     TEST_EXCEPTION("test용 에러", "TEST_EXCEPTION", HttpStatus.BAD_REQUEST),
 
+    // Auth
+    INVALID_REFRESH_TOKEN("유효한 Refresh Token이 아닙니다.", "ATH-0001", HttpStatus.UNAUTHORIZED),
+    INVALID_ACCESS_TOKEN("유효한 Access Token이 아닙니다. 재발급 해주세요.", "ATH-0002", HttpStatus.UNAUTHORIZED),
+
     // User
     EXISTING_USER("이미 존재하는 유저입니다.", "USR-0001", HttpStatus.BAD_REQUEST),
     NOT_FOUND_USER("유저를 찾을 수 없습니다.", "USR-0002", HttpStatus.NOT_FOUND),

@@ -15,19 +15,22 @@ import com.loanpick.user.entity.User;
 import jakarta.validation.Valid;
 
 public interface ProfileApi {
-    ProfileResult createProfile(@Argument @Valid CreateProfileInput input, @ContextValue("user") User userInput);
+    ProfileResult createProfile(@Argument @Valid CreateProfileInput input,
+            @ContextValue(value = "user", required = false) User userInput);
 
-    List<ProfileResult> profileByUser(@ContextValue("user") User userInput);
+    List<ProfileResult> profileByUser(@ContextValue(value = "user", required = false) User userInput);
 
-    ProfileResult profileById(@Argument Long id, @ContextValue("user") User userInput);
+    ProfileResult profileById(@Argument Long id, @ContextValue(value = "user", required = false) User userInput);
 
-    ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input);
+    ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input,
+            @ContextValue(value = "user", required = false) User userInput);
 
     List<ProfileResult> updateProfileSequence(@Argument @Valid List<UpdateProfileSequenceInput> input,
-            @ContextValue("user") User userInput);
+            @ContextValue(value = "user", required = false) User userInput);
 
     ProfileResult updateProfileColor(@Argument @Valid UpdateProfileColorInput input,
-            @ContextValue("user") User userInput);
+            @ContextValue(value = "user", required = false) User userInput);
 
-    List<ProfileResult> deleteProfile(@Argument Long deletedId, @ContextValue("user") User userInput);
+    List<ProfileResult> deleteProfile(@Argument Long deletedId,
+            @ContextValue(value = "user", required = false) User userInput);
 }
