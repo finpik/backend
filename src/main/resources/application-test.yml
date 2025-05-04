@@ -26,11 +26,10 @@ spring:
             user-name-attribute: id
   #h2
   datasource:
-    datasource:
-      url: jdbc:h2:mem:testdb
-      driver-class-name: org.h2.Driver
-      username: sa
-      password:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   h2:
     console:
       enabled: true
@@ -52,8 +51,8 @@ spring:
 #Log
 logging:
   level:
-    org.springframework.security: DEBUG
     org.springframework.web.client.RestTemplate: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    org.springframework.security.oauth2.client: DEBUG
-    org.springframework.security.oauth2.client.endpoint: DEBUG
+
+fin-pick:
+  jwt:
+    secretKey: testtesttesttesttesttesttesttesttest
