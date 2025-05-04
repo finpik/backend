@@ -26,5 +26,5 @@ jobs:
           destination_branch: develop
           pr_title: "자동화: main → develop 최신화 PR"
           pr_body: |
-            main 브랜치 업데이트로 인한 develop 최신화를 위한 자동 PR입니다. 테스트
+            main 브랜치 업데이트로 인한 develop 최신화를 위한 자동 PR입니다.
           github_token: ${{ secrets.GITHUB_TOKEN }}
