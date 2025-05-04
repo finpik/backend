@@ -1,4 +1,4 @@
-ame: Create PR main → develop
+name: Create PR main → develop
 
 on:
   push:
