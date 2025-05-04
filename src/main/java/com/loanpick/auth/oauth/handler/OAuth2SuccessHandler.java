@@ -89,7 +89,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private void setRefreshTokenOnCookie(HttpServletResponse response, String refreshToken) {
         Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN, refreshToken);
         refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(false);
+        refreshTokenCookie.setSecure(true);
         refreshTokenCookie.setPath(GRAPHQL_URL);
         refreshTokenCookie.setMaxAge(FOURTEEN_DAYS_SEC);
         response.addCookie(refreshTokenCookie);
