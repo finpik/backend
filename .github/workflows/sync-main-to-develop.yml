@@ -1,4 +1,4 @@
-name: Sync main to develop
+name: Auto Merge main to develop
 
 on:
   push:
@@ -6,19 +6,29 @@ on:
       - main
 
 jobs:
-  create-pull-request:
+  sync-main-to-develop:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Create PR from main to develop
-        uses: repo-sync/pull-request@v2
-        with:
-          source_branch: "main"
-          destination_branch: "develop"
-          pr_title: "자동화: main -> develop 동기화"
-          pr_body: "main이 업데이트되어 develop을 최신화합니다."
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch branches
+        run: |
+          git fetch origin
+          git checkout develop
+          git pull origin develop
+
+      - name: Merge main into develop
+        run: |
+          git merge origin/main --no-edit
+          git push origin develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
