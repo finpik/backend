@@ -17,3 +17,4 @@ Features
 - feature/FP-5: 유저 토큰 처리
 - feature/FP-6: 유저 프로필 기능
 - feature/FP-7: Refresh토큰 기능
+- feature/FP-8: 대출 상품 관련 기능
