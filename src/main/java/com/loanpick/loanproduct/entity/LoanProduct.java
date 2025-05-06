@@ -1,6 +1,6 @@
-package com.loanpick.loan.entity;
+package com.loanpick.loanproduct.entity;
 
-import com.loanpick.loan.entity.enums.LoanPeriodUnit;
+import com.loanpick.loanproduct.entity.enums.LoanPeriodUnit;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

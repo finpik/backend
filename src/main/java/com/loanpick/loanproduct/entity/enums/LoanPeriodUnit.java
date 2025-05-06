@@ -1,4 +1,4 @@
-package com.loanpick.loan.entity.enums;
+package com.loanpick.loanproduct.entity.enums;
 
 import lombok.Getter;
 
