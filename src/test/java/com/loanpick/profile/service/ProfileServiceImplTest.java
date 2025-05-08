@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.loanpick.profile.entity.enums.Occupation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,6 @@ import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.repository.ProfileRepository;
@@ -78,7 +78,7 @@ class ProfileServiceImplTest {
                 () -> assertThat(savedProfile.getEmploymentForm()).isEqualTo(dto.employmentForm()),
                 () -> assertThat(savedProfile.getLoanProductUsageStatus()).isEqualTo(dto.loanProductUsageStatus()),
                 () -> assertThat(savedProfile.getPurposeOfLoan()).isEqualTo(dto.purposeOfLoan()),
-                () -> assertThat(savedProfile.getEmploymentStatus()).isEqualTo(dto.employmentStatus()),
+                () -> assertThat(savedProfile.getOccupation()).isEqualTo(dto.occupation()),
                 () -> assertThat(savedProfile.getCreditGradeStatus()).isEqualTo(dto.creditGradeStatus()),
                 () -> assertThat(savedProfile.getEmploymentDate()).isEqualTo(dto.employmentDate()));
     }
@@ -115,35 +115,35 @@ class ProfileServiceImplTest {
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
 
         Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필2").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(1).build();
 
         Profile profileThird = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필3").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(2).build();
 
         Profile profileFourth = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필4").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(3).build();
 
         CreateProfileDto dto = CreateProfileDto.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("새프로필").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).build();
 
         List<Profile> profileList = List.of(profileFirst, profileSecond, profileThird, profileFourth);
@@ -181,13 +181,13 @@ class ProfileServiceImplTest {
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
 
         Profile savedProfile = profileRepository.save(profile);
 
         UpdateProfileDto dto = UpdateProfileDto.builder().id(savedProfile.getId())
-                .employmentStatus(EmploymentStatus.EMPLOYEE).workplaceName("테스트 회사")
+                .employmentStatus(Occupation.EMPLOYEE).workplaceName("테스트 회사")
                 .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
                 .purposeOfLoan(PurposeOfLoan.LOAN_REPAYMENT).desiredLoanAmount(10000000)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(2)
@@ -299,14 +299,14 @@ class ProfileServiceImplTest {
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필1").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(0).build();
 
         Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).income(60000000).workplaceName("Sample Company")
                 .profileName("프로필2").employmentForm(EmploymentForm.FULL_TIME)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).purposeOfLoan(PurposeOfLoan.HOUSING)
-                .employmentStatus(EmploymentStatus.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
+                .employmentStatus(Occupation.EMPLOYEE).creditGradeStatus(CreditGradeStatus.UPPER)
                 .employmentDate(LocalDate.of(2020, 1, 1)).user(savedUser).seq(1).build();
 
         return List.of(profileFirst, profileSecond);
@@ -316,7 +316,7 @@ class ProfileServiceImplTest {
         return CreateProfileDto.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("새 프로필")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED).user(savedUser)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED).user(savedUser)
                 .creditGradeStatus(CreditGradeStatus.UPPER).build();
     }
 

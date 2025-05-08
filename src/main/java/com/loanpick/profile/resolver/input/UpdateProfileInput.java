@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
+import com.loanpick.profile.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.service.dto.UpdateProfileDto;
@@ -21,7 +21,7 @@ public record UpdateProfileInput(
     @NotNull(message = "프로필 id가 필요합니다.")
     Long id,
     @NotNull(message = "직업을 선택해 주세요.")
-    EmploymentStatus employmentStatus,
+    Occupation occupation,
     String workplaceName,
     EmploymentForm employmentForm,
     Integer income,
@@ -44,7 +44,7 @@ public record UpdateProfileInput(
     public UpdateProfileDto toDto() {
         return UpdateProfileDto.builder()
             .id(id)
-            .employmentStatus(employmentStatus)
+            .employmentStatus(occupation)
             .workplaceName(workplaceName)
             .employmentForm(employmentForm)
             .income(income)

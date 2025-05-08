@@ -6,7 +6,7 @@ import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
+import com.loanpick.profile.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
@@ -69,7 +69,7 @@ public class Profile {
     private PurposeOfLoan purposeOfLoan;
 
     @Enumerated(EnumType.STRING)
-    private EmploymentStatus employmentStatus;
+    private Occupation occupation;
 
     @Enumerated(EnumType.STRING)
     private ProfileColor profileColor;
@@ -87,9 +87,9 @@ public class Profile {
         Integer creditScore, CreditGradeStatus creditGradeStatus, Integer income, Integer seq,
         String workplaceName, EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus,
         PurposeOfLoan purposeOfLoan, LocalDate employmentDate, String profileName,
-        EmploymentStatus employmentStatus, User user, Long id, ProfileColor profileColor
+        Occupation occupation, User user, Long id, ProfileColor profileColor
     ) {
-        validateInfoRelatedEmploymentStatus(employmentStatus, income, workplaceName, employmentDate);
+        validateInfoRelatedEmploymentStatus(occupation, income, workplaceName, employmentDate);
 
         this.id = id;
         this.desiredLoanAmount = desiredLoanAmount;
@@ -104,7 +104,7 @@ public class Profile {
         this.purposeOfLoan = purposeOfLoan;
         this.employmentDate = employmentDate;
         this.profileName = profileName;
-        this.employmentStatus = employmentStatus;
+        this.occupation = occupation;
         this.user = user;
         this.profileColor = profileColor;
         this.seq = seq == null ? 0 : seq;
@@ -112,7 +112,7 @@ public class Profile {
 
     public void updateProfile(Profile profile) {
         updateInfoRelatedEmploymentStatus(
-            profile.getEmploymentStatus(), profile.getIncome(),
+            profile.getOccupation(), profile.getIncome(),
             profile.getWorkplaceName(), profile.getEmploymentDate()
         );
 
@@ -132,12 +132,12 @@ public class Profile {
     }
 
     private void validateInfoRelatedEmploymentStatus(
-        EmploymentStatus employmentStatus,
+        Occupation occupation,
         Integer income,
         String workplaceName,
         LocalDate employmentDate
     ) {
-        if (employmentStatus == EmploymentStatus.EMPLOYEE) {
+        if (occupation == Occupation.EMPLOYEE) {
             if (income == null || workplaceName == null || employmentDate == null) {
                 throw new BusinessException(ErrorCode.INVALID_EMPLOYMENT_INFO);
             }
@@ -149,22 +149,22 @@ public class Profile {
     }
 
     public void updateInfoRelatedEmploymentStatus(
-        EmploymentStatus employmentStatus,
+        Occupation occupation,
         Integer income,
         String workplaceName,
         LocalDate employmentDate
     ) {
-        if (employmentStatus == EmploymentStatus.EMPLOYEE) {
+        if (occupation == Occupation.EMPLOYEE) {
             if (income == null || workplaceName == null || employmentForm == null || employmentDate == null) {
                 throw new BusinessException(ErrorCode.INVALID_EMPLOYMENT_INFO);
             } else {
-                this.employmentStatus = employmentStatus;
+                this.occupation = occupation;
                 this.income = income;
                 this.workplaceName = workplaceName;
                 this.employmentDate = employmentDate;
             }
         } else {
-            this.employmentStatus = employmentStatus;
+            this.occupation = occupation;
             this.income = null;
             this.workplaceName = null;
             this.employmentDate = null;

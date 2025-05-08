@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Map;
 
+import com.loanpick.profile.entity.enums.Occupation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ import com.loanpick.config.TestGraphQLContextConfig;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.service.ProfileService;
@@ -50,7 +50,7 @@ class ProfileResolverTest {
         String query = """
                     mutation {
                       createProfile(input: {
-                        employmentStatus: PUBLIC_SERVANT,
+                        occupation: PUBLIC_SERVANT,
                         employmentForm: FULL_TIME,
                         purposeOfLoan: HOUSING,
                         desiredLoanAmount: 5000000,
@@ -69,7 +69,7 @@ class ProfileResolverTest {
                     }
                 """;
 
-        Profile mockProfile = Profile.builder().id(1L).employmentStatus(EmploymentStatus.PUBLIC_SERVANT)
+        Profile mockProfile = Profile.builder().id(1L).occupation(Occupation.PUBLIC_SERVANT)
                 .employmentForm(EmploymentForm.FULL_TIME).purposeOfLoan(PurposeOfLoan.HOUSING)
                 .desiredLoanAmount(5000000).loanProductUsageStatus(LoanProductUsageStatus.USING)
                 .loanProductUsageCount(2).totalLoanUsageAmount(10000000).creditScore(800)
@@ -94,18 +94,18 @@ class ProfileResolverTest {
                       profileByUser {
                         id
                         profileName
-                        employmentStatus
+                        occupation
                         purposeOfLoan
                         creditGradeStatus
                       }
                     }
                 """;
 
-        Profile profile1 = Profile.builder().id(1L).profileName("프로필1").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+        Profile profile1 = Profile.builder().id(1L).profileName("프로필1").occupation(Occupation.SELF_EMPLOYED)
                 .purposeOfLoan(PurposeOfLoan.HOUSING).creditGradeStatus(CreditGradeStatus.UPPER)
                 .loanProductUsageCount(2).totalLoanUsageAmount(10000000).desiredLoanAmount(5000000).seq(0).build();
 
-        Profile profile2 = Profile.builder().id(2L).profileName("프로필2").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+        Profile profile2 = Profile.builder().id(2L).profileName("프로필2").occupation(Occupation.SELF_EMPLOYED)
                 .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).creditGradeStatus(CreditGradeStatus.LOWER)
                 .loanProductUsageCount(1).totalLoanUsageAmount(3000000).desiredLoanAmount(2000000).seq(1).build();
 
@@ -130,7 +130,7 @@ class ProfileResolverTest {
                 mutation {
                   updateProfile(input: {
                     id: 1,
-                    employmentStatus: EMPLOYEE,
+                    occupation: EMPLOYEE,
                     workplaceName: "회사",
                     employmentForm: FULL_TIME,
                     income: 50000000,
@@ -154,7 +154,7 @@ class ProfileResolverTest {
         String graphqlRequest = new ObjectMapper().writeValueAsString(body);
 
         Profile mockProfile = Profile.builder().id(1L).profileName("프로필수정")
-                .employmentStatus(EmploymentStatus.SELF_EMPLOYED).build();
+                .occupation(Occupation.SELF_EMPLOYED).build();
 
         when(profileService.updateProfile(any())).thenReturn(mockProfile);
 

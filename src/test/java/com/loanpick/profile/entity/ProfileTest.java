@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 
+import com.loanpick.profile.entity.enums.Occupation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 
@@ -30,7 +30,7 @@ class ProfileTest {
         EmploymentForm employmentForm = EmploymentForm.FULL_TIME;
         LoanProductUsageStatus loanProductUsageStatus = LoanProductUsageStatus.USING;
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.HOUSING;
-        EmploymentStatus employmentStatus = EmploymentStatus.SELF_EMPLOYED;
+        Occupation occupation = Occupation.SELF_EMPLOYED;
         CreditGradeStatus creditGradeStatus = CreditGradeStatus.UPPER;
 
         // when
@@ -38,7 +38,7 @@ class ProfileTest {
                 .loanProductUsageCount(loanProductUsageCount).totalLoanUsageAmount(totalLoanUsageAmount)
                 .creditScore(creditScore).profileName(profileName).employmentForm(employmentForm)
                 .loanProductUsageStatus(loanProductUsageStatus).purposeOfLoan(purposeOfLoan)
-                .employmentStatus(employmentStatus).creditGradeStatus(creditGradeStatus).build();
+                .employmentStatus(occupation).creditGradeStatus(creditGradeStatus).build();
 
         // then
         assertAll(() -> assertThat(profile.getDesiredLoanAmount()).isEqualTo(desiredLoanAmount),
@@ -49,7 +49,7 @@ class ProfileTest {
                 () -> assertThat(profile.getEmploymentForm()).isEqualTo(employmentForm),
                 () -> assertThat(profile.getLoanProductUsageStatus()).isEqualTo(loanProductUsageStatus),
                 () -> assertThat(profile.getPurposeOfLoan()).isEqualTo(purposeOfLoan),
-                () -> assertThat(profile.getEmploymentStatus()).isEqualTo(employmentStatus),
+                () -> assertThat(profile.getOccupation()).isEqualTo(occupation),
                 () -> assertThat(profile.getCreditGradeStatus()).isEqualTo(creditGradeStatus));
     }
 
@@ -59,7 +59,7 @@ class ProfileTest {
         // given
         // when
         // then
-        assertThatThrownBy(() -> Profile.builder().employmentStatus(EmploymentStatus.EMPLOYEE)
+        assertThatThrownBy(() -> Profile.builder().employmentStatus(Occupation.EMPLOYEE)
                 .workplaceName("Sample Company").employmentDate(LocalDate.of(2020, 1, 1)).build())
                 .hasMessage(ErrorCode.INVALID_EMPLOYMENT_INFO.getMessage());
     }

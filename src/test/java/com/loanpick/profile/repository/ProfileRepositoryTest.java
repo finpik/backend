@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import java.util.Optional;
 
+import com.loanpick.profile.entity.enums.Occupation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.user.entity.Gender;
@@ -46,7 +46,7 @@ class ProfileRepositoryTest {
         Profile profile = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("내 프로필")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED)
                 .creditGradeStatus(CreditGradeStatus.UPPER).build();
 
         // when
@@ -69,7 +69,7 @@ class ProfileRepositoryTest {
                 () -> assertThat(foundProfile.get().getLoanProductUsageStatus())
                         .isEqualTo(profile.getLoanProductUsageStatus()),
                 () -> assertThat(foundProfile.get().getPurposeOfLoan()).isEqualTo(profile.getPurposeOfLoan()),
-                () -> assertThat(foundProfile.get().getEmploymentStatus()).isEqualTo(profile.getEmploymentStatus()),
+                () -> assertThat(foundProfile.get().getOccupation()).isEqualTo(profile.getOccupation()),
                 () -> assertThat(foundProfile.get().getCreditGradeStatus()).isEqualTo(profile.getCreditGradeStatus()),
                 () -> assertThat(foundProfile.get().getEmploymentDate()).isEqualTo(profile.getEmploymentDate()));
     }
@@ -86,13 +86,13 @@ class ProfileRepositoryTest {
         Profile profileFirst = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("프로필1")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED)
                 .creditGradeStatus(CreditGradeStatus.UPPER).user(savedUser).seq(0).build();
 
         Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("프로필2")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED)
                 .creditGradeStatus(CreditGradeStatus.UPPER).user(savedUser).seq(1).build();
 
         List<Profile> profileList = List.of(profileFirst, profileSecond);

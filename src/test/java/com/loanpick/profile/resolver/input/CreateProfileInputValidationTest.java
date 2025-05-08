@@ -5,13 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.util.Set;
 
+import com.loanpick.profile.entity.enums.Occupation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 
@@ -30,7 +30,7 @@ public class CreateProfileInputValidationTest {
     }
 
     private CreateProfileInput.CreateProfileInputBuilder validInputBuilder() {
-        return CreateProfileInput.builder().employmentStatus(EmploymentStatus.EMPLOYEE).workplaceName("회사")
+        return CreateProfileInput.builder().employmentStatus(Occupation.EMPLOYEE).workplaceName("회사")
                 .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
                 .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).desiredLoanAmount(10000000)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(1)

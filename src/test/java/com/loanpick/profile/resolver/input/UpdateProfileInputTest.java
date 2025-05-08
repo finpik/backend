@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
+import com.loanpick.profile.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 
@@ -51,7 +51,7 @@ class UpdateProfileInputTest {
     }
 
     private static UpdateProfileInput.UpdateProfileInputBuilder validBuilder() {
-        return UpdateProfileInput.builder().id(1L).employmentStatus(EmploymentStatus.EMPLOYEE).workplaceName("회사")
+        return UpdateProfileInput.builder().id(1L).employmentStatus(Occupation.EMPLOYEE).workplaceName("회사")
                 .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
                 .purposeOfLoan(PurposeOfLoan.HOUSING).desiredLoanAmount(10000000)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(2)
