@@ -56,3 +56,7 @@ logging:
 fin-pick:
   jwt:
     secretKey: testtesttesttesttesttesttesttesttest
+  external:
+    recommend-ml:
+      base-url: "https://mock-url.com"
+
