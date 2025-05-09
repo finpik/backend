@@ -12,7 +12,7 @@ extend type Query {
 }
 
 input CreateProfileInput {
-    employmentStatus: EmploymentStatus!
+    occupation: Occupation!
     workplaceName: String
     employmentForm: EmploymentForm
     income: Int
@@ -30,7 +30,7 @@ input CreateProfileInput {
 
 input UpdateProfileInput {
     id: Long
-    employmentStatus: EmploymentStatus!
+    occupation: Occupation!
     workplaceName: String
     employmentForm: EmploymentForm
     income: Int
@@ -58,7 +58,7 @@ input UpdateProfileColorInput {
 type ProfileResult {
     id: Long!
     purposeOfLoan: PurposeOfLoan!
-    employmentStatus: EmploymentStatus!
+    occupation: Occupation!
     creditGradeStatus: CreditGradeStatus!
     loanProductUsageCount: Int!
     totalLoanUsageAmount: Int!
@@ -72,7 +72,7 @@ enum LoanUsageStatus {
     USING, NOT_USING
 }
 
-enum EmploymentStatus {
+enum Occupation {
     EMPLOYEE
     SELF_EMPLOYED
     PUBLIC_SERVANT
