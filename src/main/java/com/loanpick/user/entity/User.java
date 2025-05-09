@@ -2,6 +2,7 @@ package com.loanpick.user.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -47,5 +48,9 @@ public class User {
         this.registrationType = registrationType == null ? RegistrationType.KAKAO : registrationType;
         this.registrationDate = registrationDate;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Integer getAge() {
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 }
