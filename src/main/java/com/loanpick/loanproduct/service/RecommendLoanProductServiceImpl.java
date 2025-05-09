@@ -10,19 +10,20 @@ import com.loanpick.externalapi.recommend.result.RecommendLoanProductResult;
 import com.loanpick.loanproduct.service.dto.RecommendLoanProductProfileDto;
 import com.loanpick.redis.service.RecommendationRedisService;
 import com.loanpick.redis.service.dto.RecommendedLoanProductDto;
+import com.loanpick.redis.service.dto.RecommendedLoanProductDtoList;
 import com.loanpick.sse.service.SseEmitterService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-@Async
 public class RecommendLoanProductServiceImpl implements RecommendLoanProductService {
     private final RecommendLoanProductPort recommendLoanProductPort;
     private final RecommendationRedisService recommendationRedisService;
     private final SseEmitterService sseEmitterService;
 
     @Override
+    @Async
     public void recommendLoanProductAsync(RecommendLoanProductProfileDto dto) {
         List<RecommendLoanProductResult> recommendations = recommendLoanProductPort.getRecommendations(dto.toRequest());
 
@@ -31,5 +32,10 @@ public class RecommendLoanProductServiceImpl implements RecommendLoanProductServ
         recommendationRedisService.cacheRecommendation(dto.getProfileId(), dtos);
 
         sseEmitterService.notifyRecommendationCompleted(dto.getUser());
+    }
+
+    @Override
+    public RecommendedLoanProductDtoList getRecommendedLoanProducts(Long profileId) {
+        return recommendationRedisService.getRecommendations(profileId);
     }
 }
