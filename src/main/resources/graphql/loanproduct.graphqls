@@ -1,12 +1,11 @@
 type Query {
-    loanProducts: LoanProductResult!
+    getLoanProducts(profileId: Long!): [RecommendedLoanProductResult]!
 }
 
-type LoanProductResult {
+type RecommendedLoanProductResult {
     loanProductId: Long!
     productName: String!
-    maximumInterestRate: Float!
-    minimumInterestRate: Float!
-    maximumLoanLimit: Int!
-    provider: String!
+    minInterestRate: Float!
+    maxInterestRate: Float!
+    loanLimitAmount: Int!
 }
