@@ -30,7 +30,7 @@ public class CreateProfileInputValidationTest {
     }
 
     private CreateProfileInput.CreateProfileInputBuilder validInputBuilder() {
-        return CreateProfileInput.builder().employmentStatus(Occupation.EMPLOYEE).workplaceName("회사")
+        return CreateProfileInput.builder().occupation(Occupation.EMPLOYEE).workplaceName("회사")
                 .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
                 .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).desiredLoanAmount(10000000)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(1)
@@ -41,11 +41,11 @@ public class CreateProfileInputValidationTest {
     @DisplayName("employmentStatus가 null이면 실패한다")
     @Test
     void validateEmploymentStatus_null() {
-        CreateProfileInput input = validInputBuilder().employmentStatus(null).build();
+        CreateProfileInput input = validInputBuilder().occupation(null).build();
 
         Set<ConstraintViolation<CreateProfileInput>> violations = validator.validate(input);
 
-        assertThat(violations).anyMatch(v -> v.getPropertyPath().toString().equals("employmentStatus"));
+        assertThat(violations).anyMatch(v -> v.getPropertyPath().toString().equals("occupation"));
     }
 
     @DisplayName("purposeOfLoan이 null이면 실패한다")

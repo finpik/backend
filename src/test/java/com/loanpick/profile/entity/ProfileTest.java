@@ -37,8 +37,8 @@ class ProfileTest {
         Profile profile = Profile.builder().desiredLoanAmount(desiredLoanAmount)
                 .loanProductUsageCount(loanProductUsageCount).totalLoanUsageAmount(totalLoanUsageAmount)
                 .creditScore(creditScore).profileName(profileName).employmentForm(employmentForm)
-                .loanProductUsageStatus(loanProductUsageStatus).purposeOfLoan(purposeOfLoan)
-                .employmentStatus(occupation).creditGradeStatus(creditGradeStatus).build();
+                .loanProductUsageStatus(loanProductUsageStatus).purposeOfLoan(purposeOfLoan).occupation(occupation)
+                .creditGradeStatus(creditGradeStatus).build();
 
         // then
         assertAll(() -> assertThat(profile.getDesiredLoanAmount()).isEqualTo(desiredLoanAmount),
@@ -59,7 +59,7 @@ class ProfileTest {
         // given
         // when
         // then
-        assertThatThrownBy(() -> Profile.builder().employmentStatus(Occupation.EMPLOYEE).workplaceName("Sample Company")
+        assertThatThrownBy(() -> Profile.builder().occupation(Occupation.EMPLOYEE).workplaceName("Sample Company")
                 .employmentDate(LocalDate.of(2020, 1, 1)).build())
                 .hasMessage(ErrorCode.INVALID_EMPLOYMENT_INFO.getMessage());
     }

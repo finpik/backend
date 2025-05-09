@@ -26,7 +26,7 @@ class CreateProfileInputTest {
         User user = User.builder().id(1L).username("findpick").email("finpick@gmail.com").gender(Gender.MALE)
                 .registrationType(RegistrationType.KAKAO).build();
 
-        CreateProfileInput input = CreateProfileInput.builder().employmentStatus(Occupation.EMPLOYEE)
+        CreateProfileInput input = CreateProfileInput.builder().occupation(Occupation.EMPLOYEE)
                 .workplaceName("Sample Company").employmentForm(EmploymentForm.FULL_TIME).income(60000000)
                 .employmentDate(LocalDate.of(2020, 1, 15)).purposeOfLoan(PurposeOfLoan.HOUSING)
                 .desiredLoanAmount(30000000).loanProductUsageStatus(LoanProductUsageStatus.USING)

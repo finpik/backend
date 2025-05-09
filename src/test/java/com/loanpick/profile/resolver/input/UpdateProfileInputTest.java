@@ -39,7 +39,7 @@ class UpdateProfileInputTest {
 
     private static Stream<Arguments> invalidUpdateProfileInputs() {
         return Stream.of(arguments(validBuilder().id(null).build(), "id"),
-                arguments(validBuilder().employmentStatus(null).build(), "employmentStatus"),
+                arguments(validBuilder().occupation(null).build(), "employmentStatus"),
                 arguments(validBuilder().purposeOfLoan(null).build(), "purposeOfLoan"),
                 arguments(validBuilder().desiredLoanAmount(-1).build(), "desiredLoanAmount"),
                 arguments(validBuilder().loanProductUsageStatus(null).build(), "loanProductUsageStatus"),
@@ -51,7 +51,7 @@ class UpdateProfileInputTest {
     }
 
     private static UpdateProfileInput.UpdateProfileInputBuilder validBuilder() {
-        return UpdateProfileInput.builder().id(1L).employmentStatus(Occupation.EMPLOYEE).workplaceName("회사")
+        return UpdateProfileInput.builder().id(1L).occupation(Occupation.EMPLOYEE).workplaceName("회사")
                 .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
                 .purposeOfLoan(PurposeOfLoan.HOUSING).desiredLoanAmount(10000000)
                 .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(2)

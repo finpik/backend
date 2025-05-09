@@ -46,7 +46,7 @@ class ProfileRepositoryTest {
         Profile profile = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("내 프로필")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).occupation(Occupation.SELF_EMPLOYED)
                 .creditGradeStatus(CreditGradeStatus.UPPER).build();
 
         // when
@@ -86,13 +86,13 @@ class ProfileRepositoryTest {
         Profile profileFirst = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("프로필1")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).occupation(Occupation.SELF_EMPLOYED)
                 .creditGradeStatus(CreditGradeStatus.UPPER).user(savedUser).seq(0).build();
 
         Profile profileSecond = Profile.builder().desiredLoanAmount(10000000).loanProductUsageCount(2)
                 .totalLoanUsageAmount(5000000).creditScore(750).profileName("프로필2")
                 .employmentForm(EmploymentForm.FULL_TIME).loanProductUsageStatus(LoanProductUsageStatus.USING)
-                .purposeOfLoan(PurposeOfLoan.HOUSING).employmentStatus(Occupation.SELF_EMPLOYED)
+                .purposeOfLoan(PurposeOfLoan.HOUSING).occupation(Occupation.SELF_EMPLOYED)
                 .creditGradeStatus(CreditGradeStatus.UPPER).user(savedUser).seq(1).build();
 
         List<Profile> profileList = List.of(profileFirst, profileSecond);
