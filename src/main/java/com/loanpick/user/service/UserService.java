@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
-import com.loanpick.redis.service.CustomRedisService;
+import com.loanpick.redis.service.AuthRedisService;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 import com.loanpick.user.service.dto.CreateUserDto;
@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final CustomRedisService customRedisService;
+    private final AuthRedisService authRedisService;
 
     @Transactional
     public User createUser(CreateUserDto dto) {
-        String email = customRedisService.getEmailByCustomId(dto.id(), dto.provider());
+        String email = authRedisService.getEmailByCustomId(dto.id(), dto.provider());
         validateExistingUserBy(email);
 
         return userRepository.save(dto.toEntity(email));

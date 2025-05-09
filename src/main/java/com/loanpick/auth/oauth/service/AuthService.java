@@ -4,7 +4,7 @@ import java.time.Duration;
 
 import org.springframework.stereotype.Service;
 
-import com.loanpick.redis.service.CustomRedisService;
+import com.loanpick.redis.service.AuthRedisService;
 import com.loanpick.util.Values;
 
 import lombok.RequiredArgsConstructor;
@@ -12,13 +12,13 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final CustomRedisService customRedisService;
+    private final AuthRedisService authRedisService;
 
     public boolean isValid(long userId, String refreshToken) {
-        return customRedisService.isRefreshTokenValid(userId, refreshToken);
+        return authRedisService.isRefreshTokenValid(userId, refreshToken);
     }
 
     public void saveRefreshToken(long userId, String refreshToken) {
-        customRedisService.saveRefreshToken(userId, refreshToken, Duration.ofMillis(Values.FOURTEEN_DAYS_MILL));
+        authRedisService.saveRefreshToken(userId, refreshToken, Duration.ofMillis(Values.FOURTEEN_DAYS_MILL));
     }
 }

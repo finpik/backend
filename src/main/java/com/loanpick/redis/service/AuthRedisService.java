@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Service
 @RequiredArgsConstructor
-public class CustomRedisService {
+public class AuthRedisService {
     private final RedisTemplate<String, String> redisTemplate;
     private static final String AUTHENTICATION_PREFIX = "authentication:";
     private static final String REFRESH_TOKEN = "refresh_token:";
