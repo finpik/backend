@@ -2,10 +2,10 @@ package com.loanpick.profile.service.dto;
 
 import java.time.LocalDate;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;

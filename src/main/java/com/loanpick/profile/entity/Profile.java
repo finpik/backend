@@ -2,11 +2,11 @@ package com.loanpick.profile.entity;
 
 import java.time.LocalDate;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;

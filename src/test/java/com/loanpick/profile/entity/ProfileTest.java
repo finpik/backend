@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 
-import com.loanpick.common.entity.enums.Occupation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
@@ -59,8 +59,8 @@ class ProfileTest {
         // given
         // when
         // then
-        assertThatThrownBy(() -> Profile.builder().employmentStatus(Occupation.EMPLOYEE)
-                .workplaceName("Sample Company").employmentDate(LocalDate.of(2020, 1, 1)).build())
+        assertThatThrownBy(() -> Profile.builder().employmentStatus(Occupation.EMPLOYEE).workplaceName("Sample Company")
+                .employmentDate(LocalDate.of(2020, 1, 1)).build())
                 .hasMessage(ErrorCode.INVALID_EMPLOYMENT_INFO.getMessage());
     }
 }

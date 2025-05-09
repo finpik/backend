@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Map;
 
-import com.loanpick.common.entity.enums.Occupation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.config.TestGraphQLContextConfig;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
@@ -153,8 +153,8 @@ class ProfileResolverTest {
         Map<String, String> body = Map.of("query", query);
         String graphqlRequest = new ObjectMapper().writeValueAsString(body);
 
-        Profile mockProfile = Profile.builder().id(1L).profileName("프로필수정")
-                .occupation(Occupation.SELF_EMPLOYED).build();
+        Profile mockProfile = Profile.builder().id(1L).profileName("프로필수정").occupation(Occupation.SELF_EMPLOYED)
+                .build();
 
         when(profileService.updateProfile(any())).thenReturn(mockProfile);
 

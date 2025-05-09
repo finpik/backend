@@ -1,7 +1,8 @@
 package com.loanpick.sse.service;
 
-import com.loanpick.user.entity.User;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import com.loanpick.user.entity.User;
 
 public interface SseEmitterService {
     SseEmitter createSseEmitter(Long userId);

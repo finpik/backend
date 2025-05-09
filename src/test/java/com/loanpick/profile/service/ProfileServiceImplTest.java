@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.loanpick.common.entity.enums.Occupation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
 import com.loanpick.profile.entity.Profile;
@@ -186,13 +186,12 @@ class ProfileServiceImplTest {
 
         Profile savedProfile = profileRepository.save(profile);
 
-        UpdateProfileDto dto = UpdateProfileDto.builder().id(savedProfile.getId())
-                .employmentStatus(Occupation.EMPLOYEE).workplaceName("테스트 회사")
-                .employmentForm(EmploymentForm.FULL_TIME).income(50000000).employmentDate(LocalDate.of(2020, 1, 1))
-                .purposeOfLoan(PurposeOfLoan.LOAN_REPAYMENT).desiredLoanAmount(10000000)
-                .loanProductUsageStatus(LoanProductUsageStatus.USING).loanProductUsageCount(2)
-                .totalLoanUsageAmount(20000000).creditScore(800).creditGradeStatus(CreditGradeStatus.UPPER)
-                .profileName("바뀐 프로필").build();
+        UpdateProfileDto dto = UpdateProfileDto.builder().id(savedProfile.getId()).employmentStatus(Occupation.EMPLOYEE)
+                .workplaceName("테스트 회사").employmentForm(EmploymentForm.FULL_TIME).income(50000000)
+                .employmentDate(LocalDate.of(2020, 1, 1)).purposeOfLoan(PurposeOfLoan.LOAN_REPAYMENT)
+                .desiredLoanAmount(10000000).loanProductUsageStatus(LoanProductUsageStatus.USING)
+                .loanProductUsageCount(2).totalLoanUsageAmount(20000000).creditScore(800)
+                .creditGradeStatus(CreditGradeStatus.UPPER).profileName("바뀐 프로필").build();
 
         // when
         Profile chnagedProfile = profileService.updateProfile(dto);

@@ -12,9 +12,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 

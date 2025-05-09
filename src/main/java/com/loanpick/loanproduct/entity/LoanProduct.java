@@ -3,6 +3,7 @@ package com.loanpick.loanproduct.entity;
 import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.loanproduct.entity.enums.LoanPeriodUnit;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

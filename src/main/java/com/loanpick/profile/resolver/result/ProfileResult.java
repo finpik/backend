@@ -1,8 +1,8 @@
 package com.loanpick.profile.resolver.result;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
-import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 

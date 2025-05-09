@@ -8,13 +8,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.loanpick.loanproduct.service.RecommendLoanProductService;
-import com.loanpick.loanproduct.service.dto.RecommendLoanProductProfileDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
+import com.loanpick.loanproduct.service.RecommendLoanProductService;
+import com.loanpick.loanproduct.service.dto.RecommendLoanProductProfileDto;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.repository.ProfileRepository;
 import com.loanpick.profile.service.dto.CreateProfileDto;
@@ -53,9 +53,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         Profile savedProfile = profileRepository.save(entity);
 
-        recommendLoanProductService.recommendLoanProductAsync(
-            new RecommendLoanProductProfileDto(savedProfile)
-        );
+        recommendLoanProductService.recommendLoanProductAsync(new RecommendLoanProductProfileDto(savedProfile));
 
         return savedProfile;
     }

@@ -1,13 +1,14 @@
 package com.loanpick.sse;
 
-import com.loanpick.sse.service.SseEmitterService;
-import com.loanpick.user.entity.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import com.loanpick.sse.service.SseEmitterService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +22,7 @@ public class SseController {
         SseEmitter emitter = sseEmitterService.createSseEmitter(userId);
 
         try {
-            emitter.send(SseEmitter.event()
-                .name("connect")
-                .data("SSE 연결됨"));
+            emitter.send(SseEmitter.event().name("connect").data("SSE 연결됨"));
         } catch (Exception e) {
             emitter.completeWithError(e);
         }
