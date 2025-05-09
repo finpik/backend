@@ -4,6 +4,7 @@ public class Values {
     public static final int FOURTEEN_DAYS_MILL = 14 * 24 * 60 * 60 * 1000;
     public static final int FOURTEEN_DAYS_SEC = 2 * 24 * 60 * 60;
     public static final int FIFTEEN_MINUTE_MILL = 15 * 60 * 1000;
+    public static final long ONE_MINUTE_MILL = 60 * 1000;
     public static final String GRAPHQL_URL = "/graphql";
     public static final String REFRESH_TOKEN = "refreshToken";
     public static final String ACCESS_TOKEN = "accessToken";
