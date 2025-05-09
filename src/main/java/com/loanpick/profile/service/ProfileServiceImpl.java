@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.loanpick.loanproduct.service.RecommendLoanProductService;
+import com.loanpick.loanproduct.service.dto.RecommendLoanProductProfileDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
     private final EntityManager entityManager;
+    private final RecommendLoanProductService recommendLoanProductService;
     private static final int PROFILE_LIMIT_NUMBER = 4;
     private static final int AVOID_SEQUENCE_NUMBER = 5;
 
@@ -48,7 +51,13 @@ public class ProfileServiceImpl implements ProfileService {
         int startSeq = 1;
         balanceProfileSequence(advoidedProfileList, previousIdSeqMap, startSeq);
 
-        return profileRepository.save(entity);
+        Profile savedProfile = profileRepository.save(entity);
+
+        recommendLoanProductService.recommendLoanProductAsync(
+            new RecommendLoanProductProfileDto(savedProfile)
+        );
+
+        return savedProfile;
     }
 
     @Override
