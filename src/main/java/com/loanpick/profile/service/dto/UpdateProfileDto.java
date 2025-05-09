@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.Occupation;
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 
@@ -22,6 +22,6 @@ public record UpdateProfileDto(Long id, Occupation occupation, String workplaceN
                 .loanProductUsageCount(loanProductUsageCount).creditGradeStatus(creditGradeStatus)
                 .creditGradeStatus(creditGradeStatus).loanProductUsageStatus(loanProductUsageStatus)
                 .purposeOfLoan(purposeOfLoan).workplaceName(workplaceName).employmentForm(employmentForm).income(income)
-                .profileName(profileName).employmentDate(employmentDate).employmentStatus(occupation).build();
+                .profileName(profileName).employmentDate(employmentDate).occupation(occupation).build();
     }
 }

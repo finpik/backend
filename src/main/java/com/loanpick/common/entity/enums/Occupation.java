@@ -1,4 +1,4 @@
-package com.loanpick.profile.entity.enums;
+package com.loanpick.common.entity.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.loanpick.profile.resolver.result;
 
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
-import com.loanpick.profile.entity.enums.Occupation;
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 
@@ -31,7 +31,7 @@ public record ProfileResult(
             .loanProductUsageCount(profile.getLoanProductUsageCount())
             .totalLoanUsageAmount(profile.getTotalLoanUsageAmount())
             .desiredLoanAmount(profile.getDesiredLoanAmount())
-            .employmentStatus(profile.getOccupation())
+            .occupation(profile.getOccupation())
             .profileName(profile.getProfileName())
             .seq(profile.getSeq())
             .profileColor(profile.getProfileColor())

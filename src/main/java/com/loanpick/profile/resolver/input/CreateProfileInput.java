@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.Occupation;
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
@@ -61,7 +61,7 @@ public record CreateProfileInput(
             .creditGradeStatus(creditGradeStatus)
             .creditScore(creditScore)
             .profileName(profileName)
-            .employmentStatus(occupation)
+            .occupation(occupation)
             .profileColor(profileColor)
             .build();
     }

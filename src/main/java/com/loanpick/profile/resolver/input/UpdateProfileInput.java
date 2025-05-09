@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.Occupation;
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.service.dto.UpdateProfileDto;
@@ -44,7 +44,7 @@ public record UpdateProfileInput(
     public UpdateProfileDto toDto() {
         return UpdateProfileDto.builder()
             .id(id)
-            .employmentStatus(occupation)
+            .occupation(occupation)
             .workplaceName(workplaceName)
             .employmentForm(employmentForm)
             .income(income)
