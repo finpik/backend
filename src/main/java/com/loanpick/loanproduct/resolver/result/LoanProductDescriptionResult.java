@@ -2,9 +2,9 @@ package com.loanpick.loanproduct.resolver.result;
 
 import com.loanpick.loanproduct.entity.LoanProductDescription;
 
-import lombok.Builder;
+import lombok.Getter;
 
-@Builder
+@Getter
 public class LoanProductDescriptionResult {
     private final String interestRateGuide;
     private final String repaymentPeriod;
