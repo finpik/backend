@@ -10,8 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.Profile;
@@ -19,13 +17,13 @@ import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
+import com.loanpick.support.annotation.DataJpaQuerydslTest;
 import com.loanpick.user.entity.Gender;
 import com.loanpick.user.entity.RegistrationType;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 
-@DataJpaTest
-@ActiveProfiles("test")
+@DataJpaQuerydslTest
 class ProfileRepositoryTest {
     @Autowired
     private ProfileRepository profileRepository;
