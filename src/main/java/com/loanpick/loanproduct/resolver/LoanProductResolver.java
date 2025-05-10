@@ -9,7 +9,10 @@ import org.springframework.graphql.data.method.annotation.ContextValue;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import com.loanpick.loanproduct.entity.LoanProduct;
+import com.loanpick.loanproduct.resolver.result.LoanProductResult;
 import com.loanpick.loanproduct.resolver.result.RecommendedLoanProductResult;
+import com.loanpick.loanproduct.service.LoanProductService;
 import com.loanpick.loanproduct.service.RecommendLoanProductService;
 import com.loanpick.redis.service.dto.RecommendedLoanProductDtoList;
 import com.loanpick.user.entity.User;
@@ -20,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoanProductResolver implements LoanProductApi {
     private final RecommendLoanProductService recommendLoanProductService;
+    private final LoanProductService loanProductService;
 
     @Override
     @QueryMapping
@@ -31,5 +35,14 @@ public class LoanProductResolver implements LoanProductApi {
                 .getRecommendedLoanProducts(profileId);
 
         return recommendedLoanProductDtoList.dtos().stream().map(RecommendedLoanProductResult::of).toList();
+    }
+
+    @Override
+    public LoanProductResult getLoanProduct(User userInput, Long productId) {
+        require(userInput);
+
+        LoanProduct loanProduct = loanProductService.getLoanProduct(productId);
+
+        return new LoanProductResult(loanProduct);
     }
 }
