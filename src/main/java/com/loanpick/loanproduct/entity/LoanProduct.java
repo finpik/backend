@@ -29,7 +29,9 @@ public class LoanProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String productName;
+
+    private String bankName;
 
     private Float maxInterestRate;
 
