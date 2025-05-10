@@ -38,6 +38,7 @@ public class LoanProductResolver implements LoanProductApi {
     }
 
     @Override
+    @QueryMapping
     public LoanProductResult getLoanProduct(User userInput, Long productId) {
         require(userInput);
 
