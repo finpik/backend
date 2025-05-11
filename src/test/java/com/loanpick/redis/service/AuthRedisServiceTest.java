@@ -14,9 +14,9 @@ import com.loanpick.LoanPickApplication;
 
 @SpringBootTest(classes = LoanPickApplication.class)
 @ActiveProfiles("test")
-class CustomRedisServiceTest {
+class AuthRedisServiceTest {
     @Autowired
-    CustomRedisService customRedisService;
+    AuthRedisService authRedisService;
 
     @DisplayName("userId와 provider를 가지고 AccessToken을 저장한 것을 조회할 수 있다.")
     @Test
@@ -27,8 +27,8 @@ class CustomRedisServiceTest {
         String accessToken = "accessToken";
 
         // when
-        customRedisService.saveEmailForSignUp(userId, providerId, accessToken, Duration.ofSeconds(10));
-        String savedAccessToken = customRedisService.getEmailByCustomId(userId, providerId);
+        authRedisService.saveEmailForSignUp(userId, providerId, accessToken, Duration.ofSeconds(10));
+        String savedAccessToken = authRedisService.getEmailByCustomId(userId, providerId);
 
         // then
         assertEquals(accessToken, savedAccessToken);

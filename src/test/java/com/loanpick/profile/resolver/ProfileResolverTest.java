@@ -1,6 +1,7 @@
 package com.loanpick.profile.resolver;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,11 +23,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.config.TestGraphQLContextConfig;
+import com.loanpick.loanproduct.service.RecommendLoanProductService;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.service.ProfileService;
@@ -43,6 +45,9 @@ class ProfileResolverTest {
     @MockitoBean
     private ProfileService profileService;
 
+    @MockitoBean
+    private RecommendLoanProductService recommendLoanProductService;
+
     @DisplayName("GraphQL createProfile 요청이 제대로 들어간다")
     @Test
     void createProfileGraphqlRequest() throws Exception {
@@ -50,7 +55,7 @@ class ProfileResolverTest {
         String query = """
                     mutation {
                       createProfile(input: {
-                        employmentStatus: PUBLIC_SERVANT,
+                        occupation: PUBLIC_SERVANT,
                         employmentForm: FULL_TIME,
                         purposeOfLoan: HOUSING,
                         desiredLoanAmount: 5000000,
@@ -69,13 +74,14 @@ class ProfileResolverTest {
                     }
                 """;
 
-        Profile mockProfile = Profile.builder().id(1L).employmentStatus(EmploymentStatus.PUBLIC_SERVANT)
+        Profile mockProfile = Profile.builder().id(1L).occupation(Occupation.PUBLIC_SERVANT)
                 .employmentForm(EmploymentForm.FULL_TIME).purposeOfLoan(PurposeOfLoan.HOUSING)
                 .desiredLoanAmount(5000000).loanProductUsageStatus(LoanProductUsageStatus.USING)
                 .loanProductUsageCount(2).totalLoanUsageAmount(10000000).creditScore(800)
                 .creditGradeStatus(CreditGradeStatus.UPPER).profileName("프로필1").seq(0).build();
 
         when(profileService.createProfile(any())).thenReturn(mockProfile);
+        doNothing().when(recommendLoanProductService).recommendLoanProductAsync(any());
 
         // when & then
         mockMvc.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON)
@@ -94,22 +100,23 @@ class ProfileResolverTest {
                       profileByUser {
                         id
                         profileName
-                        employmentStatus
+                        occupation
                         purposeOfLoan
                         creditGradeStatus
                       }
                     }
                 """;
 
-        Profile profile1 = Profile.builder().id(1L).profileName("프로필1").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+        Profile profile1 = Profile.builder().id(1L).profileName("프로필1").occupation(Occupation.SELF_EMPLOYED)
                 .purposeOfLoan(PurposeOfLoan.HOUSING).creditGradeStatus(CreditGradeStatus.UPPER)
                 .loanProductUsageCount(2).totalLoanUsageAmount(10000000).desiredLoanAmount(5000000).seq(0).build();
 
-        Profile profile2 = Profile.builder().id(2L).profileName("프로필2").employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+        Profile profile2 = Profile.builder().id(2L).profileName("프로필2").occupation(Occupation.SELF_EMPLOYED)
                 .purposeOfLoan(PurposeOfLoan.LIVING_EXPENSES).creditGradeStatus(CreditGradeStatus.LOWER)
                 .loanProductUsageCount(1).totalLoanUsageAmount(3000000).desiredLoanAmount(2000000).seq(1).build();
 
         when(profileService.getProfileListBy(any())).thenReturn(List.of(profile1, profile2));
+        doNothing().when(recommendLoanProductService).recommendLoanProductAsync(any());
 
         // when & then
         mockMvc.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON)
@@ -130,7 +137,7 @@ class ProfileResolverTest {
                 mutation {
                   updateProfile(input: {
                     id: 1,
-                    employmentStatus: EMPLOYEE,
+                    occupation: EMPLOYEE,
                     workplaceName: "회사",
                     employmentForm: FULL_TIME,
                     income: 50000000,
@@ -153,10 +160,11 @@ class ProfileResolverTest {
         Map<String, String> body = Map.of("query", query);
         String graphqlRequest = new ObjectMapper().writeValueAsString(body);
 
-        Profile mockProfile = Profile.builder().id(1L).profileName("프로필수정")
-                .employmentStatus(EmploymentStatus.SELF_EMPLOYED).build();
+        Profile mockProfile = Profile.builder().id(1L).profileName("프로필수정").occupation(Occupation.SELF_EMPLOYED)
+                .build();
 
         when(profileService.updateProfile(any())).thenReturn(mockProfile);
+        doNothing().when(recommendLoanProductService).recommendLoanProductAsync(any());
 
         // when & then
         mockMvc.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON).content(graphqlRequest)).andDo(print())
@@ -178,6 +186,7 @@ class ProfileResolverTest {
         Profile profile2 = Profile.builder().id(2L).seq(1).build();
 
         when(profileService.updateProfileSequence(any(), any())).thenReturn(List.of(profile1, profile2));
+        doNothing().when(recommendLoanProductService).recommendLoanProductAsync(any());
 
         // when & then
         mockMvc.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON).content(graphqlRequest))

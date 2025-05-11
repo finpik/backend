@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
 import com.loanpick.profile.service.dto.CreateProfileDto;
@@ -26,7 +26,7 @@ class CreateProfileInputTest {
         User user = User.builder().id(1L).username("findpick").email("finpick@gmail.com").gender(Gender.MALE)
                 .registrationType(RegistrationType.KAKAO).build();
 
-        CreateProfileInput input = CreateProfileInput.builder().employmentStatus(EmploymentStatus.EMPLOYEE)
+        CreateProfileInput input = CreateProfileInput.builder().occupation(Occupation.EMPLOYEE)
                 .workplaceName("Sample Company").employmentForm(EmploymentForm.FULL_TIME).income(60000000)
                 .employmentDate(LocalDate.of(2020, 1, 15)).purposeOfLoan(PurposeOfLoan.HOUSING)
                 .desiredLoanAmount(30000000).loanProductUsageStatus(LoanProductUsageStatus.USING)
@@ -38,7 +38,7 @@ class CreateProfileInputTest {
 
         // then
         Assertions.assertAll(() -> assertThat(dto).isNotNull(),
-                () -> assertThat(dto.employmentStatus()).isEqualTo(input.employmentStatus()),
+                () -> assertThat(dto.occupation()).isEqualTo(input.occupation()),
                 () -> assertThat(dto.workplaceName()).isEqualTo(input.workplaceName()),
                 () -> assertThat(dto.employmentForm()).isEqualTo(input.employmentForm()),
                 () -> assertThat(dto.income()).isEqualTo(input.income()),

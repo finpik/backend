@@ -21,7 +21,7 @@ import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
 import com.loanpick.auth.oauth.jwt.JwtProvider;
 import com.loanpick.auth.oauth.service.AuthService;
 import com.loanpick.auth.oauth.service.dto.CustomOAuth2User;
-import com.loanpick.redis.service.CustomRedisService;
+import com.loanpick.redis.service.AuthRedisService;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 
@@ -36,7 +36,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
-    private final CustomRedisService customRedisService;
+    private final AuthRedisService authRedisService;
     private final ObjectMapper objectMapper;
     private final AuthService authService;
 
@@ -63,7 +63,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private void saveOAuthAuthenticationToRedis(String oauthUserId, String data, String provider) {
-        customRedisService.saveEmailForSignUp(oauthUserId, provider, data, Duration.ofMillis(FIFTEEN_MINUTE_MILL));
+        authRedisService.saveEmailForSignUp(oauthUserId, provider, data, Duration.ofMillis(FIFTEEN_MINUTE_MILL));
     }
 
     private String getAccessToken(User user) {

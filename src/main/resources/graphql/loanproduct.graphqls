@@ -1,12 +1,30 @@
 type Query {
-    loanProducts: LoanProductResult!
+    getLoanProducts(profileId: Long!): [RecommendedLoanProductResult]!
+    getLoanProduct(productId: Long!): LoanProductResult!
+}
+
+type RecommendedLoanProductResult {
+    loanProductId: Long!
+    productName: String!
+    minInterestRate: Float!
+    maxInterestRate: Float!
+    loanLimitAmount: Int!
 }
 
 type LoanProductResult {
-    loanProductId: Long!
     productName: String!
-    maximumInterestRate: Float!
-    minimumInterestRate: Float!
-    maximumLoanLimit: Int!
-    provider: String!
+    bankName: String!
+    loanLimitAmount: Int!
+    maxInterestRate: Float!
+    minInterestRate: Float!
+    loanPeriod: Int!
+    descriptionResult: LoanProductDescriptionResult!
+}
+
+type LoanProductDescriptionResult {
+    interestRateGuide: String!
+    repaymentPeriod: String!
+    creditLoanGuide: String!
+    loanFeeGuide: String!
+    notesOnLoan: String!
 }

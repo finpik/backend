@@ -29,7 +29,7 @@ import com.loanpick.auth.oauth.handler.reponse.OAuth2Response;
 import com.loanpick.auth.oauth.jwt.JwtProvider;
 import com.loanpick.auth.oauth.service.AuthService;
 import com.loanpick.auth.oauth.service.dto.CustomOAuth2User;
-import com.loanpick.redis.service.CustomRedisService;
+import com.loanpick.redis.service.AuthRedisService;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
 
@@ -62,7 +62,7 @@ class OAuth2SuccessHandlerTest {
     private CustomOAuth2User oAuth2User;
 
     @Mock
-    private CustomRedisService customRedisService;
+    private AuthRedisService authRedisService;
 
     @Mock
     private AuthService authService;
@@ -71,7 +71,7 @@ class OAuth2SuccessHandlerTest {
 
     @BeforeEach
     void setup() {
-        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository, customRedisService, objectMapper,
+        oAuth2SuccessHandler = new OAuth2SuccessHandler(jwtProvider, userRepository, authRedisService, objectMapper,
                 authService);
     }
 

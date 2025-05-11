@@ -2,9 +2,9 @@ package com.loanpick.profile.resolver.input;
 
 import java.time.LocalDate;
 
+import com.loanpick.common.entity.enums.Occupation;
 import com.loanpick.profile.entity.enums.CreditGradeStatus;
 import com.loanpick.profile.entity.enums.EmploymentForm;
-import com.loanpick.profile.entity.enums.EmploymentStatus;
 import com.loanpick.profile.entity.enums.LoanProductUsageStatus;
 import com.loanpick.profile.entity.enums.ProfileColor;
 import com.loanpick.profile.entity.enums.PurposeOfLoan;
@@ -21,7 +21,7 @@ import lombok.Builder;
 @Builder
 public record CreateProfileInput(
     @NotNull(message = "직업을 선택해 주세요.")
-    EmploymentStatus employmentStatus,
+    Occupation occupation,
     String workplaceName,
     EmploymentForm employmentForm,
     Integer income,
@@ -61,7 +61,7 @@ public record CreateProfileInput(
             .creditGradeStatus(creditGradeStatus)
             .creditScore(creditScore)
             .profileName(profileName)
-            .employmentStatus(employmentStatus)
+            .occupation(occupation)
             .profileColor(profileColor)
             .build();
     }

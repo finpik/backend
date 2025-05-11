@@ -33,7 +33,10 @@ public enum ErrorCode {
     INVALID_EMPLOYMENT_INFO("직장인 선택시 관련 정보들이 전부 채워져야 합니다.", "PRF-0004", HttpStatus.BAD_REQUEST),
     INVALID_NOT_EMPLOYMENT_INFO("직장인이 아닌데 관련 정보들이 채워져 있으면 안됩니다.", "PRF-0005", HttpStatus.BAD_REQUEST),
     DUPLICATE_PROFILE_SEQ("프로필 순번이 중복이 될 수 없습니다.", "PRF-0006", HttpStatus.BAD_REQUEST),
-    DUPLICATE_UPDATE_PROFILE_ID("프로필을 중복해서 업데이트 할 수 없습니다.", "PRF-0007", HttpStatus.BAD_REQUEST),;
+    DUPLICATE_UPDATE_PROFILE_ID("프로필을 중복해서 업데이트 할 수 없습니다.", "PRF-0007", HttpStatus.BAD_REQUEST),
+
+    // Loan Product
+    NOT_FOUND_LOAN_PRODUCT("대출 상품을 찾을 수 없습니다.", "LPD-0001", HttpStatus.NOT_FOUND),;
 
     private final String message;
     private final String code;

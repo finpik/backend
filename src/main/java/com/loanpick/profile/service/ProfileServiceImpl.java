@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.loanpick.error.enums.ErrorCode;
 import com.loanpick.error.exception.BusinessException;
+import com.loanpick.loanproduct.service.RecommendLoanProductService;
+import com.loanpick.loanproduct.service.dto.RecommendLoanProductProfileDto;
 import com.loanpick.profile.entity.Profile;
 import com.loanpick.profile.repository.ProfileRepository;
 import com.loanpick.profile.service.dto.CreateProfileDto;
@@ -31,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ProfileServiceImpl implements ProfileService {
     private final ProfileRepository profileRepository;
     private final EntityManager entityManager;
+    private final RecommendLoanProductService recommendLoanProductService;
     private static final int PROFILE_LIMIT_NUMBER = 4;
     private static final int AVOID_SEQUENCE_NUMBER = 5;
 
@@ -48,7 +51,11 @@ public class ProfileServiceImpl implements ProfileService {
         int startSeq = 1;
         balanceProfileSequence(advoidedProfileList, previousIdSeqMap, startSeq);
 
-        return profileRepository.save(entity);
+        Profile savedProfile = profileRepository.save(entity);
+
+        recommendLoanProductService.recommendLoanProductAsync(new RecommendLoanProductProfileDto(savedProfile));
+
+        return savedProfile;
     }
 
     @Override

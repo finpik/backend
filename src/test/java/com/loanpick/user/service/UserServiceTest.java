@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.loanpick.LoanPickApplication;
-import com.loanpick.redis.service.CustomRedisService;
+import com.loanpick.redis.service.AuthRedisService;
 import com.loanpick.user.entity.Gender;
 import com.loanpick.user.entity.User;
 import com.loanpick.user.repository.UserRepository;
@@ -32,7 +32,7 @@ class UserServiceTest {
     private UserRepository userRepository;
 
     @Autowired
-    private CustomRedisService customRedisService;
+    private AuthRedisService authRedisService;
 
     @Test
     @DisplayName("유저 생성 시 Redis에서 email을 받아와 DB에 저장한다")
@@ -41,7 +41,7 @@ class UserServiceTest {
         CreateUserDto dto = CreateUserDto.builder().username("홍길동").dateOfBirth(LocalDate.of(1990, 1, 1))
                 .gender(Gender.MALE).provider("kakao").id("123456").build();
 
-        customRedisService.saveEmailForSignUp("123456", "kakao", "test@kakao.com", Duration.ofMinutes(10));
+        authRedisService.saveEmailForSignUp("123456", "kakao", "test@kakao.com", Duration.ofMinutes(10));
 
         // when
         User savedUser = userService.createUser(dto);
