@@ -100,4 +100,12 @@ subprojects {
             showStackTraces true
         }
     }
+
+    sourceSets {
+        test {
+            resources {
+                srcDirs = ['src/test/resources']
+            }
+        }
+    }
 }
