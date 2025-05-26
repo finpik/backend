@@ -1,0 +1,33 @@
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  #Kakao Oauth2 로그인 정보
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: test-client-id
+            client-secret: test-secret
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            scope:
+              - account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+fin-pik:
+  jwt:
+    secretKey: dGVzdHRlc3R0ZXN0dGVzdHRlc3R0ZXN0dGVzdHRlc3Q=
+
+#Log
+logging:
+  level:
+    org.springframework.web.client.RestTemplate: DEBUG
