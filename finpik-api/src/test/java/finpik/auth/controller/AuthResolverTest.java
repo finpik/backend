@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,6 +28,7 @@ import jakarta.servlet.http.Cookie;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class AuthResolverTest {
 
     @Autowired
@@ -46,22 +48,21 @@ class AuthResolverTest {
     @DisplayName("ContextValue로 RefreshToken이 주입된다")
     @Test
     void refresh() throws Exception {
-        // Given
+        // given
         String fakeRefreshToken = "previous-refresh-token";
         String newAccessToken = "new-access-token";
         String newRefreshToken = "new-refresh-token";
 
         given(tokenUseCase.refresh(any())).willReturn(new TokenRefreshResultDto(newRefreshToken, newAccessToken));
 
-        // GraphQL 요청 페이로드
         String graphqlQuery = "{ \"query\": \"mutation { refresh { accessToken } }\" }";
 
-        // When
+        // when
+        // then
         mockMvc.perform(post("/graphql").contentType(MediaType.APPLICATION_JSON).content(graphqlQuery)
                 .cookie(new Cookie("refreshToken", fakeRefreshToken))).andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.refresh.accessToken").value(newAccessToken));
 
-        // Then
         verify(tokenUseCase).refresh(tokenCaptor.capture());
         assertThat(tokenCaptor.getValue()).isEqualTo(fakeRefreshToken);
     }
