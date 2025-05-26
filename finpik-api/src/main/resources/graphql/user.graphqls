@@ -1,0 +1,24 @@
+type Mutation {
+    signUp(input: SignUpInput!): SignUpResult!
+}
+
+input SignUpInput {
+    username: String!
+    dateOfBirth: Date!
+    gender: Gender
+    provider: String!
+    vendorId: String!
+}
+
+type SignUpResult {
+    userId: ID!
+    email: String!
+    username: String!
+    dateOfBirth: String!
+    gender: Gender!
+    accessToken: String!
+}
+
+enum Gender {
+    MALE, FEMALE
+}

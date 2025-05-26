@@ -1,0 +1,25 @@
+bootJar.enabled = true
+
+dependencies {
+    implementation project(":finpik-domain")
+    implementation project(":finpik-common")
+    implementation project(":finpik-infra")
+    implementation project(":finpik-external")
+
+    //heart beat check
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //validate
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //graphql
+    implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    testImplementation 'org.springframework.graphql:spring-graphql-test'
+    implementation 'com.graphql-java:graphql-java-extended-scalars:22.0'
+
+    //transactional
+    implementation("org.springframework:spring-tx")
+}

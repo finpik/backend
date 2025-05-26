@@ -1,0 +1,120 @@
+extend type Mutation {
+    createProfile(input: CreateProfileInput!): ProfileResult!
+    updateProfile(input: UpdateProfileInput!): ProfileResult!
+    updateProfileSequence(input: [UpdateProfileSequenceInput]!): [ProfileResult]!
+    updateProfileColor(input: UpdateProfileColorInput!): ProfileResult!
+    deleteProfile(deletedId: Long): [ProfileResult]!
+}
+
+extend type Query {
+    profileByUser: [ProfileResult]!
+    profileById(id: Long): ProfileResult!
+}
+
+input CreateProfileInput {
+    occupation: Occupation!
+    workplaceName: String
+    employmentForm: EmploymentForm
+    income: Int
+    employmentDate: Date
+    purposeOfLoan: PurposeOfLoan!
+    desiredLoanAmount: Int!
+    loanProductUsageStatus: LoanProductUsageStatus!
+    loanProductUsageCount: Int!
+    totalLoanUsageAmount: Int!
+    creditScore: Int
+    creditGradeStatus: CreditGradeStatus
+    profileName: String!
+    profileColor: ProfileColor!
+}
+
+input UpdateProfileInput {
+    profileId: Long
+    occupation: Occupation!
+    workplaceName: String
+    employmentForm: EmploymentForm
+    income: Int
+    employmentDate: Date
+    purposeOfLoan: PurposeOfLoan!
+    desiredLoanAmount: Int!
+    loanProductUsageStatus: LoanProductUsageStatus!
+    loanProductUsageCount: Int!
+    totalLoanUsageAmount: Int!
+    creditScore: Int!
+    creditGradeStatus: CreditGradeStatus!
+    profileName: String!
+}
+
+input UpdateProfileSequenceInput {
+    id: Long!
+    seq: Int!
+}
+
+input UpdateProfileColorInput {
+    id: Long!
+    profileColor: ProfileColor!
+}
+
+type ProfileResult {
+    profileId: Long!
+    purposeOfLoan: PurposeOfLoan!
+    occupation: Occupation!
+    creditGradeStatus: CreditGradeStatus!
+    loanProductUsageCount: Int!
+    totalLoanUsageAmount: Int!
+    desiredLoanAmount: Int!
+    profileSeq: Int!
+    profileName: String!
+    profileColor: ProfileColor!
+}
+
+enum LoanUsageStatus {
+    USING, NOT_USING
+}
+
+enum Occupation {
+    EMPLOYEE
+    SELF_EMPLOYED
+    PUBLIC_SERVANT
+    UNEMPLOYED
+    OTHER
+}
+
+enum EmploymentForm {
+    FULL_TIME
+    CONTRACT
+}
+
+enum PurposeOfLoan {
+    LIVING_EXPENSES
+    TUITION
+    HOUSING
+    BUSINESS_FUNDS
+    MEDICAL_OR_EMERGENCY
+    LOAN_REPAYMENT
+}
+
+enum LoanProductUsageStatus {
+    USING
+    NOT_USING
+}
+
+enum CreditGradeStatus {
+    EXCELLENT,
+    GOOD,
+    FAIR,
+    POOR,
+    VERY_POOR,
+}
+
+enum ProfileColor {
+    RED_TWO
+    PINK_TWO
+    ORANGE_THREE
+    YELLOW_TWO
+    GREEN_TWO
+    BLUE_TWO
+    PURPLE_TWO
+    GRAY_TWO
+}
+
