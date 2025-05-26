@@ -44,7 +44,7 @@ class SseControllerTest {
 
         // when
         // then
-        mockMvc.perform(get("/sse/subscribe").param("userId", "1")).andExpect(status().isOk())
+        mockMvc.perform(get("/sse/subscribe").param("profileId", "1")).andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "text/event-stream;charset=UTF-8"))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("SSE 연결됨"))).andReturn();
     }

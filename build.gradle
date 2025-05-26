@@ -52,7 +52,7 @@ subprojects {
 
     checkstyle {
         toolVersion = '10.23.0' // 원하는 버전 사용
-        configFile = file("config/checkstyle/checkstyle.xml") // 설정 파일 경로
+        configFile = rootProject.file("config/checkstyle/checkstyle.xml") // 설정 파일 경로
     }
 
     tasks.withType(Checkstyle) {

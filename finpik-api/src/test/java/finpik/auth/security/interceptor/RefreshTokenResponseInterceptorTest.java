@@ -2,6 +2,7 @@ package finpik.auth.security.interceptor;
 
 import static finpik.util.Values.GRAPHQL_URL;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.mock;
 
 import java.util.Map;
@@ -46,28 +47,32 @@ class RefreshTokenResponseInterceptorTest {
     void addsCookieWhenRefreshTokenExists() {
         // given
         MockHttpServletResponse servletResponse = new MockHttpServletResponse();
+
         ServletRequestAttributes attributes = new ServletRequestAttributes(new MockHttpServletRequest(),
                 servletResponse);
+
         attributes.setAttribute(REFRESH_TOKEN, TEST_REFRESH_TOKEN, RequestAttributes.SCOPE_REQUEST);
         RequestContextHolder.setRequestAttributes(attributes);
 
         WebGraphQlRequest mockRequest = mock(WebGraphQlRequest.class);
+
         ExecutionInput input = ExecutionInput.newExecutionInput().query(QUERY).build();
         ExecutionResult result = ExecutionResultImpl.newExecutionResult().data(Map.of()).build();
         ExecutionGraphQlResponse execResponse = new DefaultExecutionGraphQlResponse(input, result);
+
         WebGraphQlResponse webResponse = new WebGraphQlResponse(execResponse);
 
         WebGraphQlInterceptor.Chain mockChain = req -> Mono.just(webResponse);
 
         // when
         interceptor.intercept(mockRequest, mockChain).block();
+        Cookie[] cookies = servletResponse.getCookies();
 
         // then
-        Cookie[] cookies = servletResponse.getCookies();
-        assertThat(cookies).isNotNull();
-        assertThat(cookies)
-                .anyMatch(cookie -> REFRESH_TOKEN.equals(cookie.getName()) && REFRESH_TOKEN.equals(cookie.getValue())
-                        && cookie.isHttpOnly() && cookie.getSecure() && GRAPHQL_URL.equals(cookie.getPath()));
+        assertAll(() -> assertThat(cookies).isNotNull(),
+                () -> assertThat(cookies).anyMatch(
+                        cookie -> REFRESH_TOKEN.equals(cookie.getName()) && TEST_REFRESH_TOKEN.equals(cookie.getValue())
+                                && cookie.isHttpOnly() && cookie.getSecure() && GRAPHQL_URL.equals(cookie.getPath())));
     }
 
     @DisplayName("refreshToken이 없으면 쿠키가 추가되지 않는다")
@@ -77,7 +82,7 @@ class RefreshTokenResponseInterceptorTest {
         MockHttpServletResponse servletResponse = new MockHttpServletResponse();
         ServletRequestAttributes attributes = new ServletRequestAttributes(new MockHttpServletRequest(),
                 servletResponse);
-        RequestContextHolder.setRequestAttributes(attributes); // refreshToken 없음
+        RequestContextHolder.setRequestAttributes(attributes);
 
         WebGraphQlRequest mockRequest = mock(WebGraphQlRequest.class);
         ExecutionInput input = ExecutionInput.newExecutionInput().query(QUERY).build();
