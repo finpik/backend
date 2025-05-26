@@ -2,123 +2,110 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.4'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'com.netflix.dgs.codegen' version '7.0.3'
     id 'checkstyle'
     id 'com.diffplug.spotless' version '6.25.0'
+    id 'java-library'
 }
 
-group = 'loandly'
+group = 'finpik'
 version = '0.0.1-SNAPSHOT'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
+subprojects {
+    apply plugin: "java"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "checkstyle"
+    apply plugin: "com.diffplug.spotless"
+    apply plugin: 'java-library'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-spotless {
     java {
-        eclipse().configFile('config/formatter/eclipse-java-formatter.xml')
-        trimTrailingWhitespace()
-        indentWithSpaces(4)
-        endWithNewline()
-        removeUnusedImports()
-        importOrder(
-                'java',
-                'javax',
-                'org',
-                'com',
-                '',
-                'static'
-        )
-        target 'src/**/*.java'
-        toggleOffOn()
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
     }
-}
-checkstyle {
-    toolVersion = '10.23.0' // 원하는 버전 사용
-    configFile = file("config/checkstyle/checkstyle.xml") // 설정 파일 경로
-}
 
-tasks.withType(Checkstyle) {
-    reports {
-        xml.required = false
-        html.required = true // HTML 리포트로 보기 좋게
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
-}
 
-repositories {
-    mavenCentral()
-}
+    spotless {
+        java {
+            eclipse().configFile("${rootDir}/config/formatter/eclipse-java-formatter.xml")
+            trimTrailingWhitespace()
+            indentWithSpaces(4)
+            endWithNewline()
+            removeUnusedImports()
+            importOrder(
+                    'java',
+                    'javax',
+                    'org',
+                    'com',
+                    '',
+                    'static'
+            )
+            target 'src/**/*.java'
+            toggleOffOn()
+        }
+    }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    checkstyle {
+        toolVersion = '10.23.0' // 원하는 버전 사용
+        configFile = rootProject.file("config/checkstyle/checkstyle.xml") // 설정 파일 경로
+    }
 
-    //heart beat check
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    tasks.withType(Checkstyle) {
+        reports {
+            xml.required = false
+            html.required = true // HTML 리포트로 보기 좋게
+        }
+    }
 
-    //jpa
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    repositories {
+        mavenCentral()
+    }
 
-    //lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    dependencies {
+        //lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
 
-    //mysql
-    runtimeOnly 'com.mysql:mysql-connector-j'
+        //h2
+        runtimeOnly 'com.h2database:h2'
 
-    //h2
-    runtimeOnly 'com.h2database:h2'
+        //test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.security:spring-security-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    //test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+        //security
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
-    //graphql
-    implementation 'org.springframework.boot:spring-boot-starter-graphql'
-    testImplementation 'org.springframework.graphql:spring-graphql-test'
-    implementation 'com.graphql-java:graphql-java-extended-scalars:22.0'
+        //web-client
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    }
 
-    //security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 
-    //jwt
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    test {
+        testLogging {
+            events "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "full"
+            showExceptions true
+            showCauses true
+            showStackTraces true
+        }
+    }
 
-    //redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-
-    //validate
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-}
-
-generateJava {
-    schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
-    packageName = 'loandly.loandly.codegen'
-    generateClient = true
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-test {
-    testLogging {
-        events "passed", "skipped", "failed", "standardOut", "standardError"
-        exceptionFormat "full"
-        showExceptions true
-        showCauses true
-        showStackTraces true
+    sourceSets {
+        test {
+            resources {
+                srcDirs = ['src/test/resources']
+            }
+        }
     }
 }
