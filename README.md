@@ -19,3 +19,4 @@ Features
 - feature/FP-7: Refresh토큰 기능
 - feature/FP-8: 대출 상품 추천 기능
 - feature/FP-9: Kafka 적용
+- feature/FP-10: Multi Module로 프로젝트 구조 변경
