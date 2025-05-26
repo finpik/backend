@@ -32,6 +32,7 @@ public class JwtProvider {
 
     @PostConstruct
     public void init() {
+        log.info("Initializing JWT provider = {}", base64SecretKey);
         byte[] keyBytes = Base64.getDecoder().decode(base64SecretKey);
         this.signingKey = Keys.hmacShaKeyFor(keyBytes);
     }
