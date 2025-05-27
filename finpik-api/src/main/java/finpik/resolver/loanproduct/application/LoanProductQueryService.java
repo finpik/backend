@@ -2,6 +2,8 @@ package finpik.resolver.loanproduct.application;
 
 import java.util.List;
 
+import finpik.loanproduct.entity.RelatedLoanProduct;
+import finpik.resolver.loanproduct.application.dto.RelatedLoanProductDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,5 +31,12 @@ public class LoanProductQueryService {
         LoanProduct loanProduct = loanProductService.getLoanProduct(loanProductId);
 
         return new LoanProductDto(loanProduct);
+    }
+
+    @Transactional(readOnly = true)
+    public List<RelatedLoanProductDto> getRelatedLoanProductList(Long productId) {
+        List<RelatedLoanProduct> relatedLoanProductList = loanProductService.getRelatedLoanProductList(productId);
+
+        return relatedLoanProductList.stream().map(RelatedLoanProductDto::new).toList();
     }
 }
