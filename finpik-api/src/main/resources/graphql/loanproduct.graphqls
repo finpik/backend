@@ -1,6 +1,7 @@
 type Query {
     getLoanProducts(profileId: Long!): [RecommendedLoanProductResult]!
     getLoanProduct(productId: Long!): LoanProductResult!
+    getRelatedLoanProductList(productId: Long!): [RelatedLoanProductResult]!
 }
 
 type RecommendedLoanProductResult {
@@ -27,4 +28,12 @@ type LoanProductDescriptionResult {
     creditLoanGuide: String!
     loanFeeGuide: String!
     notesOnLoan: String!
+}
+
+type RelatedLoanProductResult {
+    productId: Long!,
+    productName: String!,
+    maxInterestRate: Float!,
+    minInterestRate: Float!,
+    loanLimitAmount: Int!
 }
