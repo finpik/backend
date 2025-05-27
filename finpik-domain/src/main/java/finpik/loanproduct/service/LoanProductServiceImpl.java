@@ -2,16 +2,16 @@ package finpik.loanproduct.service;
 
 import java.util.List;
 
-import finpik.loanproduct.entity.RelatedLoanProduct;
-import finpik.loanproduct.repository.RelatedLoanProductRepository;
 import org.springframework.stereotype.Service;
 
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.loanproduct.entity.LoanProduct;
 import finpik.loanproduct.entity.RecommendedLoanProduct;
+import finpik.loanproduct.entity.RelatedLoanProduct;
 import finpik.loanproduct.repository.LoanProductCacheRepository;
 import finpik.loanproduct.repository.LoanProductRepository;
+import finpik.loanproduct.repository.RelatedLoanProductRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

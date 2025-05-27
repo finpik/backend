@@ -1,9 +1,10 @@
 package finpik.loanproduct.repository;
 
-import finpik.loanproduct.entity.RelatedLoanProduct;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import finpik.loanproduct.entity.RelatedLoanProduct;
 
 @Repository
 public interface RelatedLoanProductRepository {

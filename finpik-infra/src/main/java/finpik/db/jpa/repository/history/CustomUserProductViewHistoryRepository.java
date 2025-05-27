@@ -1,9 +1,10 @@
 package finpik.db.jpa.repository.history;
 
-import finpik.db.jpa.repository.history.dto.RelatedLoanProductProjection;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import finpik.db.jpa.repository.history.dto.RelatedLoanProductProjection;
 
 @Repository
 public interface CustomUserProductViewHistoryRepository {

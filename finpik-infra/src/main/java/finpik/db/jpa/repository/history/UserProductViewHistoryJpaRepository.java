@@ -1,10 +1,13 @@
 package finpik.db.jpa.repository.history;
 
-import finpik.db.entity.history.UserProductViewHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import finpik.db.entity.history.UserProductViewHistoryEntity;
+
 @Repository
 public interface UserProductViewHistoryJpaRepository
-    extends JpaRepository<UserProductViewHistoryEntity, Long>, CustomUserProductViewHistoryRepository{
+        extends
+            JpaRepository<UserProductViewHistoryEntity, Long>,
+            CustomUserProductViewHistoryRepository {
 }

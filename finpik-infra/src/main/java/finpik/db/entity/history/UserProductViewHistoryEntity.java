@@ -1,5 +1,7 @@
 package finpik.db.entity.history;
 
+import java.time.LocalDateTime;
+
 import finpik.history.entity.UserProductViewHistory;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +11,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter

@@ -2,16 +2,16 @@ package finpik.resolver.loanproduct.application;
 
 import java.util.List;
 
-import finpik.loanproduct.entity.RelatedLoanProduct;
-import finpik.resolver.loanproduct.application.dto.RelatedLoanProductDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import finpik.loanproduct.entity.LoanProduct;
 import finpik.loanproduct.entity.RecommendedLoanProduct;
+import finpik.loanproduct.entity.RelatedLoanProduct;
 import finpik.loanproduct.service.LoanProductService;
 import finpik.resolver.loanproduct.application.dto.LoanProductDto;
 import finpik.resolver.loanproduct.application.dto.RecommendedLoanProductDto;
+import finpik.resolver.loanproduct.application.dto.RelatedLoanProductDto;
 import lombok.RequiredArgsConstructor;
 
 @Service

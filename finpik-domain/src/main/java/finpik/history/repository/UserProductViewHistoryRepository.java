@@ -1,7 +1,8 @@
 package finpik.history.repository;
 
-import finpik.history.entity.UserProductViewHistory;
 import org.springframework.stereotype.Repository;
+
+import finpik.history.entity.UserProductViewHistory;
 
 @Repository
 public interface UserProductViewHistoryRepository {
