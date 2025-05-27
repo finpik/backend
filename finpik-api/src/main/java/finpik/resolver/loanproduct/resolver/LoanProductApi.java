@@ -2,6 +2,7 @@ package finpik.resolver.loanproduct.resolver;
 
 import java.util.List;
 
+import finpik.resolver.loanproduct.resolver.result.RelatedLoanProductResult;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.ContextValue;
 
@@ -13,4 +14,6 @@ public interface LoanProductApi {
     List<RecommendedLoanProductResult> getLoanProducts(@ContextValue("user") User userInput, @Argument Long profileId);
 
     LoanProductResult getLoanProduct(@ContextValue("user") User userInput, @Argument Long productId);
+
+    List<RelatedLoanProductResult> getRelatedLoanProductList(@ContextValue("user") User userInput, @Argument Long productId);
 }
