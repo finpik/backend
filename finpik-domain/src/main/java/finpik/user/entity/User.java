@@ -38,4 +38,16 @@ public class User {
     public Integer getAge() {
         return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return id != null && id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
