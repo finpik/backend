@@ -149,7 +149,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     private void validateProfileOwner(Profile profile, User user) {
-        if (profile.getUser().equals(user)) {
+        if (!profile.getUser().equals(user)) {
             throw new BusinessException(ErrorCode.NOT_PROFILE_OWNER);
         }
     }
