@@ -20,3 +20,4 @@ Features
 - feature/FP-8: 대출 상품 추천 기능
 - feature/FP-9: Kafka 적용
 - feature/FP-10: Multi Module로 프로젝트 구조 변경
+- feature/FP-11: 이 상품을 본 유저들이 본 상품이에요 기능
