@@ -14,11 +14,11 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
     private final AuthCacheRepository authCacheRepository;
 
-    public boolean isValid(long userId, String refreshToken) {
+    public boolean isValid(Long userId, String refreshToken) {
         return authCacheRepository.isRefreshTokenValid(userId, refreshToken);
     }
 
-    public void saveRefreshToken(long userId, String refreshToken) {
+    public void saveRefreshToken(Long userId, String refreshToken) {
         authCacheRepository.saveRefreshToken(userId, refreshToken, Duration.ofMillis(FOURTEEN_DAYS_MILL));
     }
 }
