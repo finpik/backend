@@ -18,7 +18,7 @@ public class NiceCreditGradePolicy {
         gradeRanges.put(CreditGradeStatus.VERY_POOR, new GradeRange(0, 514, "관리가 필요해요"));
     }
 
-    public static CreditGradeStatus fromScore(int score) {
+    public static CreditGradeStatus fromScore(Integer score) {
         return gradeRanges.entrySet().stream().filter(entry -> entry.getValue().contains(score)).map(Map.Entry::getKey)
                 .findFirst().orElseThrow(() -> new BusinessException(ErrorCode.OUT_OF_RANGE_CREDIT_GRADE_STATUS));
     }
@@ -31,8 +31,8 @@ public class NiceCreditGradePolicy {
         return gradeRanges.get(status);
     }
 
-    public record GradeRange(int min, int max, String description) {
-        public boolean contains(int score) {
+    public record GradeRange(Integer min, Integer max, String description) {
+        public boolean contains(Integer score) {
             return score >= min && score <= max;
         }
     }
