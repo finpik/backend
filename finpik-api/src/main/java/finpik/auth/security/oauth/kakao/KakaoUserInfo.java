@@ -1,4 +1,4 @@
-package finpik.oauth.kakao;
+package finpik.auth.security.oauth.kakao;
 
 import java.util.Map;
 
