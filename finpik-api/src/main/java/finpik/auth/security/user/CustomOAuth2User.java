@@ -1,4 +1,4 @@
-package finpik.oauth.kakao;
+package finpik.auth.security.user;
 
 import java.util.Collection;
 import java.util.List;

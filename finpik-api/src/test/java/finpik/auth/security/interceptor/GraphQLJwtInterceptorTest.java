@@ -23,6 +23,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import finpik.config.interceptor.GraphQLJwtInterceptor;
 import finpik.user.entity.User;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
