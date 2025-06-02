@@ -25,3 +25,4 @@ Features
 - feature/FP-13: jacoco 적용
 - feature/FP-14: Domain Module Test 추가
 - feature/FP-15: gradle 의존성 관리
+- feature/FP-16: 카프카 리트라이, DLQ 설정
