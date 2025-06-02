@@ -17,6 +17,6 @@ public class BusinessException extends RuntimeException {
 
     public Map<String, Object> getExtensions() {
         return Map.of("code", errorCode.getCode(), "httpStatusErrorCode", errorCode.getStatus().name(),
-                "httpStatusCode", errorCode.getStatus().value());
+                "httpStatusCode", errorCode.getStatus().getValue());
     }
 }

@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.4'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'checkstyle'
     id 'com.diffplug.spotless' version '6.25.0'
@@ -11,6 +10,106 @@ plugins {
 allprojects {
     repositories {
         mavenCentral()
+    }
+}
+
+group = 'finpik'
+version = '0.0.1-SNAPSHOT'
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "checkstyle"
+    apply plugin: "com.diffplug.spotless"
+    apply plugin: 'java-library'
+    apply plugin: 'jacoco'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:3.4.4"
+        }
+    }
+
+    dependencies {
+        //lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        implementation 'org.springframework.boot:spring-boot-starter-logging' // lombok @Slf4j를 위한 설정
+
+        //h2
+        runtimeOnly 'com.h2database:h2'
+
+        //test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.security:spring-security-test'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+
+    test {
+        testLogging {
+            events "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "full"
+            showExceptions true
+            showCauses true
+            showStackTraces true
+        }
+    }
+
+    spotless {
+        java {
+            eclipse().configFile("${rootDir}/config/formatter/eclipse-java-formatter.xml")
+            trimTrailingWhitespace()
+            indentWithSpaces(4)
+            endWithNewline()
+            removeUnusedImports()
+            importOrder(
+                    'java',
+                    'javax',
+                    'org',
+                    'com',
+                    '',
+                    'static'
+            )
+            target 'src/**/*.java'
+            toggleOffOn()
+        }
+    }
+
+    checkstyle {
+        toolVersion = '10.23.0' // 원하는 버전 사용
+        configFile = rootProject.file("config/checkstyle/checkstyle.xml") // 설정 파일 경로
+    }
+
+    tasks.withType(Checkstyle) {
+        reports {
+            xml.required = false
+            html.required = true
+        }
+    }
+
+    sourceSets {
+        test {
+            resources {
+                srcDirs = ['src/test/resources']
+            }
+        }
     }
 }
 
@@ -50,104 +149,4 @@ tasks.register("jacocoRootReport", JacocoReport) {
 
     group = "verification"
     description = "Generates an aggregated JaCoCo coverage report for all subprojects."
-}
-
-group = 'finpik'
-version = '0.0.1-SNAPSHOT'
-
-subprojects {
-    apply plugin: "java"
-    apply plugin: "org.springframework.boot"
-    apply plugin: "io.spring.dependency-management"
-    apply plugin: "checkstyle"
-    apply plugin: "com.diffplug.spotless"
-    apply plugin: 'java-library'
-    apply plugin: 'jacoco'
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
-    }
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-    }
-
-    spotless {
-        java {
-            eclipse().configFile("${rootDir}/config/formatter/eclipse-java-formatter.xml")
-            trimTrailingWhitespace()
-            indentWithSpaces(4)
-            endWithNewline()
-            removeUnusedImports()
-            importOrder(
-                    'java',
-                    'javax',
-                    'org',
-                    'com',
-                    '',
-                    'static'
-            )
-            target 'src/**/*.java'
-            toggleOffOn()
-        }
-    }
-
-    checkstyle {
-        toolVersion = '10.23.0' // 원하는 버전 사용
-        configFile = rootProject.file("config/checkstyle/checkstyle.xml") // 설정 파일 경로
-    }
-
-    tasks.withType(Checkstyle) {
-        reports {
-            xml.required = false
-            html.required = true
-        }
-    }
-
-    dependencies {
-        //lombok
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-
-        //h2
-        runtimeOnly 'com.h2database:h2'
-
-        //test
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'org.springframework.security:spring-security-test'
-        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-        //security
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-        //web-client
-        implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    }
-
-    tasks.named('test') {
-        useJUnitPlatform()
-    }
-
-    test {
-        testLogging {
-            events "passed", "skipped", "failed", "standardOut", "standardError"
-            exceptionFormat "full"
-            showExceptions true
-            showCauses true
-            showStackTraces true
-        }
-    }
-
-    sourceSets {
-        test {
-            resources {
-                srcDirs = ['src/test/resources']
-            }
-        }
-    }
 }
