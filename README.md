@@ -23,3 +23,4 @@ Features
 - feature/FP-11: 이 상품을 본 유저들이 본 상품이에요 기능
 - feature/FP-12: domain 모듈 테스트 코드 작성
 - feature/FP-13: jacoco 적용
+- feature/FP-14: Domain Module Test 추가
