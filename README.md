@@ -24,3 +24,4 @@ Features
 - feature/FP-12: domain 모듈 테스트 코드 작성
 - feature/FP-13: jacoco 적용
 - feature/FP-14: Domain Module Test 추가
+- feature/FP-15: gradle 의존성 관리
