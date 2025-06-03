@@ -1,0 +1,9 @@
+jar.enabled = true
+
+dependencies {
+    implementation project(":finpik-domain")
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+}

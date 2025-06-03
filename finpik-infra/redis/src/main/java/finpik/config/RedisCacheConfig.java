@@ -1,4 +1,4 @@
-package finpik.redis.config;
+package finpik.config;
 
 import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
 import static finpik.util.Values.FOUR;

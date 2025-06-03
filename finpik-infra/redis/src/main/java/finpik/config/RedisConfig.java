@@ -1,4 +1,4 @@
-package finpik.redis.config;
+package finpik.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
