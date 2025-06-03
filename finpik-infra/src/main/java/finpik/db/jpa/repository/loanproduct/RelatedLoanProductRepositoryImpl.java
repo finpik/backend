@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import finpik.db.entity.loanproduct.LoanProductEntity;
-import finpik.db.jpa.repository.history.userproductview.UserProductViewHistoryJpaRepository;
 import finpik.db.jpa.repository.history.userproductview.projection.RelatedLoanProductProjection;
+import finpik.db.jpa.repository.history.userproductview.UserProductViewHistoryJpaRepository;
 import finpik.loanproduct.entity.RelatedLoanProduct;
 import finpik.loanproduct.repository.RelatedLoanProductRepository;
 import lombok.RequiredArgsConstructor;
