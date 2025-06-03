@@ -1,5 +1,8 @@
 package finpik.redis.config;
 
+import java.time.Duration;
+import java.util.HashMap;
+
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +12,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import finpik.util.Values;
+
 @Configuration
 @EnableCaching
 public class RedisCacheConfig {
@@ -17,6 +22,11 @@ public class RedisCacheConfig {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
-        return RedisCacheManager.builder(connectionFactory).cacheDefaults(config).build();
+        HashMap<String, RedisCacheConfiguration> ttlConfigMap = new HashMap<>();
+
+        ttlConfigMap.put("recommendation", config.entryTtl(Duration.ofHours(Values.FOUR)));
+
+        return RedisCacheManager.builder(connectionFactory).cacheDefaults(config)
+                .withInitialCacheConfigurations(ttlConfigMap).build();
     }
 }
