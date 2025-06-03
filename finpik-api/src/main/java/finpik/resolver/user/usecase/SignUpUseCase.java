@@ -3,8 +3,8 @@ package finpik.resolver.user.usecase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import finpik.jwt.JwtProvider;
-import finpik.jwt.dto.CreateTokenDto;
+import finpik.JwtProvider;
+import finpik.dto.CreateTokenDto;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import finpik.resolver.user.usecase.dto.SignUpUseCaseDto;
 import finpik.user.entity.User;

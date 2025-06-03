@@ -7,3 +7,4 @@ include 'finpik-external'
 
 include 'finpik-infra'
 include 'finpik-infra:mysql'
+include 'finpik-infra:jwt'
