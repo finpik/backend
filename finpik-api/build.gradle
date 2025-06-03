@@ -8,6 +8,7 @@ dependencies {
     implementation project(":finpik-domain")
     implementation project(":finpik-infra")
     implementation project(":finpik-infra:jwt")
+    implementation project(":finpik-infra:kafka")
 
     //heart beat check
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

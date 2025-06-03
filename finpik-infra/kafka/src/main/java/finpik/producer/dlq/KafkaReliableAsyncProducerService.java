@@ -1,4 +1,4 @@
-package finpik.kafka.producer.dlq;
+package finpik.producer.dlq;
 
 import java.io.FileWriter;
 import java.io.PrintWriter;

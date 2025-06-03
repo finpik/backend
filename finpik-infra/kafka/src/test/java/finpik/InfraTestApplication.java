@@ -3,10 +3,8 @@ package finpik;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"finpik.config", "finpik.kafka", // consumer, producer
-        "finpik.db", // entity
-        "finpik.redis" // 포함되는 경우
-})
+@SpringBootApplication(scanBasePackages = {"finpik.config", "finpik.consumer", "finpik.producer", "finpik.redis",
+        "finpik.jpa.repository",})
 public class InfraTestApplication {
     public static void main(String[] args) {
         SpringApplication.run(InfraTestApplication.class, args);

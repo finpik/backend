@@ -1,4 +1,4 @@
-package finpik.kafka.consumer.mapper;
+package finpik.consumer.mapper;
 
 import java.util.List;
 

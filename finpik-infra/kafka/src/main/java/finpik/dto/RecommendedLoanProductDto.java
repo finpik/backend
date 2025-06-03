@@ -1,4 +1,4 @@
-package finpik.kafka.dto;
+package finpik.dto;
 
 import java.util.List;
 
