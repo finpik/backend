@@ -19,11 +19,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import finpik.db.entity.history.dlq.KafkaFailedMessage;
-import finpik.db.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
 import finpik.dto.RecommendedCompleteEvent;
+import finpik.entity.history.dlq.KafkaFailedMessage;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
+import finpik.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
 import finpik.kafka.consumer.mapper.RecommendedContentMapper;
 import finpik.kafka.dto.RecommendedLoanProductDto;
 import finpik.redis.service.loanproduct.LoanProductRedisRepository;

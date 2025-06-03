@@ -15,8 +15,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import finpik.InfraTestApplication;
-import finpik.db.entity.history.dlq.KafkaFailedMessage;
-import finpik.db.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
+import finpik.entity.history.dlq.KafkaFailedMessage;
+import finpik.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
 import finpik.kafka.config.KafkaTestConfig;
 
 @SpringBootTest(classes = InfraTestApplication.class)
