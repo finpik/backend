@@ -29,7 +29,6 @@ import finpik.redis.service.loanproduct.LoanProductRedisRepository;
 import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -48,7 +47,6 @@ public class RecommendLoanProductConsumer {
      */
     @RetryableTopic(backoff = @Backoff(delay = 1000, multiplier = 2))
     @KafkaListener(topics = RECOMMENDATION_TOPIC, groupId = LOAN_RECOMMENDER_GROUP_ID)
-    @Transactional
     public void recommendLoanProduct(String message) {
         RecommendedLoanProductDto loanProductDto = toRecommendedLoanProductDto(message);
 
