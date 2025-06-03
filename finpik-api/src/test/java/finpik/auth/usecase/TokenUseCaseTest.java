@@ -13,10 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import finpik.JwtProvider;
 import finpik.auth.service.AuthService;
 import finpik.auth.usecase.dto.TokenRefreshResultDto;
 import finpik.error.enums.ErrorCode;
-import finpik.jwt.JwtProvider;
 import finpik.user.entity.User;
 import finpik.user.service.UserService;
 

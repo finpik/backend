@@ -7,6 +7,7 @@ bootJar.enabled = true
 dependencies {
     implementation project(":finpik-domain")
     implementation project(":finpik-infra")
+    implementation project(":finpik-infra:jwt")
 
     //heart beat check
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

@@ -15,7 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import finpik.jwt.JwtProvider;
+import finpik.JwtProvider;
 import finpik.sse.service.SseEmitterService;
 import finpik.user.service.UserService;
 

@@ -1,4 +1,4 @@
-package finpik.jwt.dto;
+package finpik.dto;
 
 import java.util.Date;
 
