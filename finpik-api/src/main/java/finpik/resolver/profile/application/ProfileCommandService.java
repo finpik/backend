@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import finpik.kafka.RecommendLoanProductProducer;
 import finpik.kafka.dto.RecommendLoanProductProfileDto;
+import finpik.kafka.producer.RecommendLoanProductProducer;
 import finpik.profile.entity.Profile;
 import finpik.profile.service.ProfileService;
 import finpik.profile.service.dto.UpdateProfileSequenceDto;
