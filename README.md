@@ -22,4 +22,3 @@ Features
 - feature/FP-10: Multi Module로 프로젝트 구조 변경
 - feature/FP-11: 이 상품을 본 유저들이 본 상품이에요 기능
 - feature/FP-12: domain 모듈 테스트 코드 작성
-- feature/FP-13: jacoco 적용

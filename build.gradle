@@ -5,51 +5,6 @@ plugins {
     id 'checkstyle'
     id 'com.diffplug.spotless' version '6.25.0'
     id 'java-library'
-    id 'jacoco'
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-    }
-}
-
-jacoco {
-    toolVersion = "0.8.13"
-}
-
-tasks.register("jacocoRootReport", JacocoReport) {
-    dependsOn subprojects.test
-
-    executionData.from(
-            fileTree(project.rootDir.absolutePath) {
-                include("**/build/jacoco/test.exec")
-            }
-    )
-
-    def mainSrcDirs = files()
-    def classDirs = files()
-
-    subprojects.each { subproject ->
-        if (subproject.plugins.hasPlugin("jacoco")) {
-            def sourceSet = subproject.extensions.findByName("sourceSets")?.main
-            if (sourceSet) {
-                mainSrcDirs += files(sourceSet.allSource.srcDirs)
-                classDirs += files(sourceSet.output)
-            }
-        }
-    }
-
-    sourceDirectories.from(mainSrcDirs)
-    classDirectories.from(classDirs)
-
-    reports {
-        html.required.set(true)
-        xml.required.set(true)
-    }
-
-    group = "verification"
-    description = "Generates an aggregated JaCoCo coverage report for all subprojects."
 }
 
 group = 'finpik'
@@ -62,7 +17,6 @@ subprojects {
     apply plugin: "checkstyle"
     apply plugin: "com.diffplug.spotless"
     apply plugin: 'java-library'
-    apply plugin: 'jacoco'
 
     java {
         toolchain {
@@ -104,8 +58,12 @@ subprojects {
     tasks.withType(Checkstyle) {
         reports {
             xml.required = false
-            html.required = true
+            html.required = true // HTML 리포트로 보기 좋게
         }
+    }
+
+    repositories {
+        mavenCentral()
     }
 
     dependencies {
