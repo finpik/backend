@@ -1,4 +1,4 @@
-package finpik.db.entity.history.userproductview;
+package finpik.db.entity.history;
 
 import java.time.LocalDateTime;
 
