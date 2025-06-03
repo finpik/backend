@@ -17,7 +17,6 @@ import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledExecutorService;
 
-import finpik.kafka.producer.dlq.KafkaReliableAsyncProducerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,6 +26,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import finpik.kafka.producer.dlq.KafkaReliableAsyncProducerService;
 
 @ExtendWith(MockitoExtension.class)
 class KafkaReliableAsyncProducerServiceTest {
