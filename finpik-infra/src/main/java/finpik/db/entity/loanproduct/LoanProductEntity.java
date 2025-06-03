@@ -17,7 +17,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -65,28 +64,6 @@ public class LoanProductEntity {
 
     @Enumerated(EnumType.STRING)
     private PurposeOfLoan purposeOfLoan;
-
-    @Builder
-    public LoanProductEntity(Long id, String productName, String bankName, Float maxInterestRate, Float minInterestRate,
-            Integer maxCreditLine, Integer loanPeriod, Integer maxCreditGrade, Integer minCreditGrade, Integer age,
-            Integer loanLimitAmount, LoanProductDescriptionEntity description, LoanPeriodUnit loanPeriodUnit,
-            Occupation occupation, PurposeOfLoan purposeOfLoan) {
-        this.id = id;
-        this.productName = productName;
-        this.bankName = bankName;
-        this.maxInterestRate = maxInterestRate;
-        this.minInterestRate = minInterestRate;
-        this.maxCreditLine = maxCreditLine;
-        this.loanPeriod = loanPeriod;
-        this.maxCreditGrade = maxCreditGrade;
-        this.minCreditGrade = minCreditGrade;
-        this.age = age;
-        this.loanLimitAmount = loanLimitAmount;
-        this.description = description;
-        this.loanPeriodUnit = loanPeriodUnit;
-        this.occupation = occupation;
-        this.purposeOfLoan = purposeOfLoan;
-    }
 
     public LoanProduct toDomain() {
         LoanProductDescription descriptionDomain = description.toDomain();

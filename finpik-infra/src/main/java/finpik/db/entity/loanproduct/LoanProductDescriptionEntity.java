@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -31,18 +30,6 @@ public class LoanProductDescriptionEntity {
     private String loanFeeGuide;
 
     private String notesOnLoan;
-
-    @Builder
-    public LoanProductDescriptionEntity(Long id, String loanRequirement, String interestRateGuide,
-            String repaymentPeriod, String creditLoanGuide, String loanFeeGuide, String notesOnLoan) {
-        this.id = id;
-        this.loanRequirement = loanRequirement;
-        this.interestRateGuide = interestRateGuide;
-        this.repaymentPeriod = repaymentPeriod;
-        this.creditLoanGuide = creditLoanGuide;
-        this.loanFeeGuide = loanFeeGuide;
-        this.notesOnLoan = notesOnLoan;
-    }
 
     public LoanProductDescription toDomain() {
         return LoanProductDescription.builder().id(id).loanRequirement(loanRequirement)
