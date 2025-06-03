@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import finpik.dto.RecommendedCompleteEvent;
@@ -29,7 +31,7 @@ public class SseEmitterServiceImpl implements SseEmitterService {
     }
 
     @Async
-    @EventListener
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void notifyRecommendationCompleted(RecommendedCompleteEvent event) {
         log.info("Notify recommendation completed for {}", event.eventId());
 
