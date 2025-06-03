@@ -4,6 +4,7 @@ import static finpik.util.Values.ONE_MINUTE_MILL;
 
 import java.util.List;
 
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
