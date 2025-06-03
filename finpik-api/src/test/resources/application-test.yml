@@ -26,6 +26,8 @@ spring:
 fin-pik:
   jwt:
     secretKey: dGVzdHRlc3R0ZXN0dGVzdHRlc3R0ZXN0dGVzdHRlc3Q=
+  kafka:
+    dlqLogFileName: failed-kafka-messages-test.log
 
 #Log
 logging:
