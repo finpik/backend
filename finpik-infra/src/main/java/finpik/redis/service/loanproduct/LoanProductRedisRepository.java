@@ -1,5 +1,7 @@
 package finpik.redis.service.loanproduct;
 
+import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -10,8 +12,6 @@ import org.springframework.stereotype.Repository;
 import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProductList;
 import lombok.RequiredArgsConstructor;
-
-import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
 
 @Repository
 @RequiredArgsConstructor
