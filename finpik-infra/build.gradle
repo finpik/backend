@@ -20,7 +20,6 @@ dependencies {
 
     //kafka
     implementation("org.springframework.kafka:spring-kafka")
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
 
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -35,7 +34,7 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     //jackson
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
     implementation 'org.springframework:spring-context'
 }
