@@ -39,6 +39,6 @@ public class ConstraintViolationExceptionHandler implements GraphQLExceptionHand
         ErrorCode errorCode = ErrorCode.CONSTRAINT_VIOLATION_EXCEPTION;
 
         return Map.of("code", errorCode.getCode(), "httpStatusErrorCode", errorCode.getStatus().name(),
-                "httpStatusCode", errorCode.getStatus().getValue(), "fieldErrors", fieldErrors);
+                "httpStatusCode", errorCode.getStatus().value(), "fieldErrors", fieldErrors);
     }
 }

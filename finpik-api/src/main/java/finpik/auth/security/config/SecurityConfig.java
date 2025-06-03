@@ -16,7 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import finpik.auth.security.entrypoint.CustomAuthenticationEntryPoint;
 import finpik.auth.security.handler.OAuth2FailureHandler;
 import finpik.auth.security.handler.OAuth2SuccessHandler;
-import finpik.auth.security.oauth.kakao.KakaoOAuth2UserService;
+import finpik.oauth.kakao.KakaoOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

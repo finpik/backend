@@ -29,7 +29,7 @@ public class DefaultExceptionHandler implements GraphQLExceptionHandler<Throwabl
         return GraphqlErrorBuilder.newError(env).message("서버 내부 오류가 발생했습니다.")
                 .errorType(GraphQLErrorType.INTERNAL_SERVER_ERROR)
                 .extensions(Map.of("code", errorCode.getCode(), "httpStatusErrorCode", errorCode.getStatus().name(),
-                        "httpStatusCode", errorCode.getStatus().getValue()))
+                        "httpStatusCode", errorCode.getStatus().value()))
                 .build();
     }
 }

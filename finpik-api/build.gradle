@@ -1,12 +1,10 @@
-plugins {
-    id 'org.springframework.boot' version '3.4.4'
-}
-
 bootJar.enabled = true
 
 dependencies {
     implementation project(":finpik-domain")
+    implementation project(":finpik-common")
     implementation project(":finpik-infra")
+    implementation project(":finpik-external")
 
     //heart beat check
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -24,11 +22,4 @@ dependencies {
 
     //transactional
     implementation("org.springframework:spring-tx")
-
-    //web-client
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-    //security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }

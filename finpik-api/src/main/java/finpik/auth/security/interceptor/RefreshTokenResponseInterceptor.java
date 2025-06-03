@@ -1,4 +1,4 @@
-package finpik.config.interceptor;
+package finpik.auth.security.interceptor;
 
 import static finpik.util.Values.FOURTEEN_DAYS_SEC;
 import static finpik.util.Values.GRAPHQL_URL;
