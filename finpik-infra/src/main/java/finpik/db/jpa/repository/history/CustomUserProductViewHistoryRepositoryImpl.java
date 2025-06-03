@@ -1,14 +1,14 @@
-package finpik.db.jpa.repository.history.userproductview;
+package finpik.db.jpa.repository.history;
 
 import java.util.List;
 
-import finpik.db.jpa.repository.history.userproductview.projection.RelatedLoanProductProjection;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import finpik.db.entity.history.userproductview.QUserProductViewHistoryEntity;
+import finpik.db.entity.history.QUserProductViewHistoryEntity;
+import finpik.db.jpa.repository.history.dto.RelatedLoanProductProjection;
 import lombok.RequiredArgsConstructor;
 
 @Repository
