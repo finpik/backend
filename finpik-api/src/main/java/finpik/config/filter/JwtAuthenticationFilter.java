@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import finpik.jwt.JwtProvider;
+import finpik.JwtProvider;
 import finpik.user.entity.User;
 import finpik.user.service.UserService;
 import jakarta.servlet.FilterChain;

@@ -5,12 +5,12 @@ import java.util.Date;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import finpik.JwtProvider;
 import finpik.auth.service.AuthService;
 import finpik.auth.usecase.dto.TokenRefreshResultDto;
+import finpik.dto.CreateTokenDto;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.jwt.JwtProvider;
-import finpik.jwt.dto.CreateTokenDto;
 import finpik.user.entity.User;
 import finpik.user.service.UserService;
 import finpik.util.Values;

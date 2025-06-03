@@ -1,9 +1,10 @@
-package finpik.jwt;
+package finpik;
 
 import static finpik.util.Values.ACCESS_TOKEN;
 import static finpik.util.Values.EMAIL;
 import static finpik.util.Values.REFRESH_TOKEN;
 import static finpik.util.Values.TOKEN_TYPE;
+import static io.jsonwebtoken.SignatureAlgorithm.*;
 
 import java.security.Key;
 import java.util.Base64;
@@ -11,27 +12,19 @@ import java.util.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import finpik.jwt.dto.CreateTokenDto;
+import finpik.dto.CreateTokenDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 //@formatter:off
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class JwtProvider {
-    @Value("${fin-pik.jwt.secretKey}")
-    private String base64SecretKey;
+    private final Key signingKey;
 
-    private Key signingKey;
-
-    @PostConstruct
-    public void init() {
+    public JwtProvider(@Value("${fin-pik.jwt.secretKey}") String base64SecretKey) {
         log.info("Initializing JWT provider = {}", base64SecretKey);
         byte[] keyBytes = Base64.getDecoder().decode(base64SecretKey);
         this.signingKey = Keys.hmacShaKeyFor(keyBytes);
@@ -52,7 +45,7 @@ public class JwtProvider {
             .claim(TOKEN_TYPE, tokenType)
             .setIssuedAt(dto.issuedAt())
             .setExpiration(dto.expiration())
-            .signWith(signingKey, SignatureAlgorithm.HS256)
+            .signWith(signingKey, HS256)
             .compact();
     }
 

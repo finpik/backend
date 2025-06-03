@@ -20,11 +20,11 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import finpik.JwtProvider;
 import finpik.auth.security.handler.reponse.OAuth2Response;
 import finpik.auth.security.user.CustomOAuth2User;
 import finpik.auth.service.AuthService;
-import finpik.jwt.JwtProvider;
-import finpik.jwt.dto.CreateTokenDto;
+import finpik.dto.CreateTokenDto;
 import finpik.redis.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
 import finpik.user.repository.UserRepository;

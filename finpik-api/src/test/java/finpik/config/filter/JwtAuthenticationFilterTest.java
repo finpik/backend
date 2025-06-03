@@ -16,7 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import finpik.jwt.JwtProvider;
+import finpik.JwtProvider;
 import finpik.user.entity.User;
 import finpik.user.service.UserService;
 import jakarta.servlet.FilterChain;

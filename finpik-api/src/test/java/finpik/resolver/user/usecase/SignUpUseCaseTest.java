@@ -16,8 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import finpik.JwtProvider;
 import finpik.entity.enums.Gender;
-import finpik.jwt.JwtProvider;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import finpik.resolver.user.usecase.dto.SignUpUseCaseDto;
 import finpik.user.entity.User;
