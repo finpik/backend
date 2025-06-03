@@ -1,0 +1,3 @@
+fin-pik:
+  kafka:
+    dlqLogFileName: failed-kafka-messages-test.log
