@@ -2,6 +2,7 @@ package finpik.user.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RegistrationType;
@@ -35,6 +36,18 @@ public class User {
     }
 
     public Integer getAge() {
-        return LocalDate.now().getYear() - dateOfBirth.getYear() + 1;
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return id != null && id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
