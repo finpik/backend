@@ -1,4 +1,4 @@
-package finpik.redis.service.loanproduct.dto;
+package finpik.service.loanproduct.dto;
 
 import finpik.loanproduct.entity.RecommendedLoanProduct;
 import lombok.Builder;

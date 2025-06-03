@@ -3,7 +3,7 @@ jar.enabled = true
 dependencies {
     implementation project(":finpik-common")
     implementation project(":finpik-infra:mysql")
-    implementation project(":finpik-infra")
+    implementation project(":finpik-infra:redis")
 
     //kafka
     implementation 'org.springframework.kafka:spring-kafka'

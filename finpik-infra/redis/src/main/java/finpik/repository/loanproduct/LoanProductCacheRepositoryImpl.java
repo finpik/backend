@@ -1,4 +1,4 @@
-package finpik.redis.repository.loanproduct;
+package finpik.repository.loanproduct;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import finpik.loanproduct.entity.RecommendedLoanProduct;
 import finpik.loanproduct.repository.LoanProductCacheRepository;
-import finpik.redis.service.loanproduct.LoanProductRedisRepository;
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProductList;
+import finpik.service.loanproduct.LoanProductRedisRepository;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProductList;
 import lombok.RequiredArgsConstructor;
 
 @Repository

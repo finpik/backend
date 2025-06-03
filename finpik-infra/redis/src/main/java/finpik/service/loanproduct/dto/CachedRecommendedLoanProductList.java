@@ -1,4 +1,4 @@
-package finpik.redis.service.loanproduct.dto;
+package finpik.service.loanproduct.dto;
 
 import java.util.List;
 
