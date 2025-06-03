@@ -19,4 +19,15 @@ public class RecommendedLoanProductResult {
         maxInterestRate = dto.getMaxInterestRate();
         loanLimitAmount = dto.getLoanLimitAmount();
     }
+
+    public RecommendedLoanProductResult(
+        Long loanProductId, String productName, Float minInterestRate,
+        Float maxInterestRate, Integer loanLimitAmount
+    ) {
+        this.loanProductId = loanProductId;
+        this.productName = productName;
+        this.minInterestRate = minInterestRate;
+        this.maxInterestRate = maxInterestRate;
+        this.loanLimitAmount = loanLimitAmount;
+    }
 }
