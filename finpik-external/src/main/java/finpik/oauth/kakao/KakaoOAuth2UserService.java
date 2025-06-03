@@ -1,4 +1,4 @@
-package finpik.auth.security.oauth.kakao;
+package finpik.oauth.kakao;
 
 import java.util.Map;
 
@@ -8,7 +8,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import finpik.auth.security.user.CustomOAuth2User;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -21,9 +21,9 @@ import org.springframework.security.core.Authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import finpik.auth.security.user.CustomOAuth2User;
 import finpik.auth.service.AuthService;
 import finpik.jwt.JwtProvider;
+import finpik.oauth.kakao.CustomOAuth2User;
 import finpik.redis.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
 import finpik.user.repository.UserRepository;

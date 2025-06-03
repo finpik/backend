@@ -1,4 +1,4 @@
-package finpik.config.interceptor;
+package finpik.auth.security.interceptor;
 
 import static finpik.util.Values.REFRESH_TOKEN;
 import static finpik.util.Values.USER;
