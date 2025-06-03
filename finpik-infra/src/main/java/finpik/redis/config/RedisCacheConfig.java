@@ -1,5 +1,8 @@
 package finpik.redis.config;
 
+import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
+import static finpik.util.Values.FOUR;
+
 import java.time.Duration;
 import java.util.HashMap;
 
@@ -11,9 +14,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-
-import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
-import static finpik.util.Values.FOUR;
 
 @Configuration
 @EnableCaching
