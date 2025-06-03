@@ -3,6 +3,7 @@ package finpik.kafka.consumer;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Headers;
@@ -22,6 +23,7 @@ import finpik.db.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
 import finpik.dto.RecommendedCompleteEvent;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
+import finpik.kafka.consumer.mapper.RecommendedContentMapper;
 import finpik.kafka.dto.RecommendedLoanProductDto;
 import finpik.redis.service.loanproduct.LoanProductRedisRepository;
 import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
@@ -55,7 +57,13 @@ public class RecommendLoanProductConsumer {
 
         loanProductRedisRepository.cacheRecommendations(profileId, cachedRecommendedLoanProductList);
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(profileId);
+        List<RecommendedCompleteEvent.RecommendedCompleteEventContent> contentList = RecommendedContentMapper
+                .fromCached(cachedRecommendedLoanProductList);
+
+        UUID eventId = UUID.randomUUID();
+
+        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(eventId, profileId, contentList);
+
         eventPublisher.publishEvent(event);
     }
 
