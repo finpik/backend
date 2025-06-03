@@ -1,4 +1,4 @@
-package finpik.db.jpa.repository.history.dto;
+package finpik.db.jpa.repository.history.userproductview.projection;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
