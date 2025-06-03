@@ -12,7 +12,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
-import finpik.util.Values;
+import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
+import static finpik.util.Values.FOUR;
 
 @Configuration
 @EnableCaching
@@ -24,7 +25,7 @@ public class RedisCacheConfig {
 
         HashMap<String, RedisCacheConfiguration> ttlConfigMap = new HashMap<>();
 
-        ttlConfigMap.put("recommendation", config.entryTtl(Duration.ofHours(Values.FOUR)));
+        ttlConfigMap.put(RECOMMENDATION_KEY, config.entryTtl(Duration.ofHours(FOUR)));
 
         return RedisCacheManager.builder(connectionFactory).cacheDefaults(config)
                 .withInitialCacheConfigurations(ttlConfigMap).build();
