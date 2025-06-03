@@ -8,8 +8,6 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willThrow;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +53,7 @@ class SseEmitterServiceImplTest {
         Long profileId = 1L;
         given(sseEmitterRepository.get(profileId)).willReturn(emitter);
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(UUID.randomUUID(), profileId, List.of());
+        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(profileId);
 
         // when
         sseEmitterService.notifyRecommendationCompleted(event);
@@ -72,7 +70,7 @@ class SseEmitterServiceImplTest {
         Long profileId = 1L;
         given(sseEmitterRepository.get(profileId)).willReturn(null);
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(UUID.randomUUID(), profileId, List.of());
+        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(profileId);
 
         // when
         sseEmitterService.notifyRecommendationCompleted(event);
@@ -89,7 +87,7 @@ class SseEmitterServiceImplTest {
         given(sseEmitterRepository.get(profileId)).willReturn(emitter);
         willThrow(new IOException("send 실패")).given(emitter).send(any(SseEmitter.SseEventBuilder.class));
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(UUID.randomUUID(), profileId, List.of());
+        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(profileId);
 
         // when
         sseEmitterService.notifyRecommendationCompleted(event);
