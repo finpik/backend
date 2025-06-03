@@ -39,7 +39,7 @@ public class KafkaFailedMessage {
     private String errorMessage;
 
     /**
-     * 상태 (DLQ_SENT, RETRIED, RETRY_FAILED 등)
+     *  상태 (DLQ_SENT, RETRIED, RETRY_FAILED 등)
      */
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
