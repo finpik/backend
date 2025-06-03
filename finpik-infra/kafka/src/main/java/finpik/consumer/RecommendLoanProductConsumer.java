@@ -26,8 +26,8 @@ import finpik.entity.history.dlq.KafkaFailedMessage;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
-import finpik.redis.service.loanproduct.LoanProductRedisRepository;
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
+import finpik.service.loanproduct.LoanProductRedisRepository;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

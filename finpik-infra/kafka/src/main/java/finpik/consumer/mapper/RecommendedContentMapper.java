@@ -3,7 +3,7 @@ package finpik.consumer.mapper;
 import java.util.List;
 
 import finpik.dto.RecommendedCompleteEvent;
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 
 public class RecommendedContentMapper {
     public static List<RecommendedCompleteEvent.RecommendedCompleteEventContent> fromCached(

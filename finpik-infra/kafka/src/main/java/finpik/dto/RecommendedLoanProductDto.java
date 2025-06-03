@@ -2,7 +2,7 @@ package finpik.dto;
 
 import java.util.List;
 
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 
 public record RecommendedLoanProductDto(Long profileId, List<RecommendedLoanProductResult> resultList) {
 

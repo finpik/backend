@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import finpik.JwtProvider;
 import finpik.auth.security.user.CustomOAuth2User;
 import finpik.auth.service.AuthService;
-import finpik.redis.repository.auth.AuthRedisRepository;
+import finpik.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
 import finpik.user.repository.UserRepository;
 import jakarta.servlet.http.Cookie;

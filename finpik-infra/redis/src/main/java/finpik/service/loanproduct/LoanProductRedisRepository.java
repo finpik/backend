@@ -1,4 +1,4 @@
-package finpik.redis.service.loanproduct;
+package finpik.service.loanproduct;
 
 import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
 
@@ -9,8 +9,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
-import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProductList;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
+import finpik.service.loanproduct.dto.CachedRecommendedLoanProductList;
 import lombok.RequiredArgsConstructor;
 
 @Repository

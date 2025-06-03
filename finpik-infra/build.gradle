@@ -3,16 +3,4 @@ jar.enabled = true
 dependencies {
     implementation project(":finpik-domain")
     implementation project(":finpik-infra:mysql")
-
-    //h2
-    runtimeOnly 'com.h2database:h2'
-
-    //redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-
-    //jackson
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
-
-    implementation 'org.springframework:spring-context'
 }
