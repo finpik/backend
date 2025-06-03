@@ -1,0 +1,14 @@
+jar.enabled = true
+
+dependencies {
+    implementation project(":finpik-common")
+    implementation project(":finpik-infra:mysql")
+    implementation project(":finpik-infra")
+
+    //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    //jackson
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+}

@@ -1,14 +1,14 @@
-package finpik.kafka.producer;
+package finpik.producer;
 
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import finpik.dto.RecommendLoanProductProfileDto;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.kafka.dto.RecommendLoanProductProfileDto;
-import finpik.kafka.producer.dlq.KafkaReliableAsyncProducerService;
+import finpik.producer.dlq.KafkaReliableAsyncProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

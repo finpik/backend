@@ -1,4 +1,4 @@
-package finpik.kafka.dto;
+package finpik.dto;
 
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;

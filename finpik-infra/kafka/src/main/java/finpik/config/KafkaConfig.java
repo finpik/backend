@@ -1,4 +1,4 @@
-package finpik.kafka.config;
+package finpik.config;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

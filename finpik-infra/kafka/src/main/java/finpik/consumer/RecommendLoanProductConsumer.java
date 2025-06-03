@@ -1,4 +1,4 @@
-package finpik.kafka.consumer;
+package finpik.consumer;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,13 +19,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import finpik.consumer.mapper.RecommendedContentMapper;
 import finpik.dto.RecommendedCompleteEvent;
+import finpik.dto.RecommendedLoanProductDto;
 import finpik.entity.history.dlq.KafkaFailedMessage;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
-import finpik.kafka.consumer.mapper.RecommendedContentMapper;
-import finpik.kafka.dto.RecommendedLoanProductDto;
 import finpik.redis.service.loanproduct.LoanProductRedisRepository;
 import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import lombok.RequiredArgsConstructor;
