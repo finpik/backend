@@ -11,11 +11,11 @@ import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import finpik.redis.service.loanproduct.dto.CachedRecommendedLoanProductList;
 import lombok.RequiredArgsConstructor;
 
+import static finpik.util.RedisKeyValues.RECOMMENDATION_KEY;
+
 @Repository
 @RequiredArgsConstructor
 public class LoanProductRedisRepository {
-    private static final String RECOMMENDATION_KEY = "recommendation";
-
     @CachePut(value = RECOMMENDATION_KEY, key = "#profileId")
     public CachedRecommendedLoanProductList cacheRecommendations(Long profileId,
             List<CachedRecommendedLoanProduct> recommendations) {
