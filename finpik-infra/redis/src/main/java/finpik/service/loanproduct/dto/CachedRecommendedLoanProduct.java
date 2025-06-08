@@ -1,6 +1,7 @@
 package finpik.service.loanproduct.dto;
 
-import finpik.loanproduct.entity.RecommendedLoanProduct;
+import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.loanproduct.vo.InterestRate;
 import lombok.Builder;
 
 //@formatter:off
@@ -14,21 +15,19 @@ public record CachedRecommendedLoanProduct(
 ) {
 
     public RecommendedLoanProduct toDomain() {
-        return RecommendedLoanProduct.builder()
-            .loanProductId(loanProductId)
-            .productName(productName)
-            .minInterestRate(minInterestRate)
-            .maxInterestRate(maxInterestRate)
-            .loanLimitAmount(loanLimitAmount)
-            .build();
+        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
+
+        return RecommendedLoanProduct.of(
+                loanProductId, productName, interestRate, loanLimitAmount
+            );
     }
 
     public static CachedRecommendedLoanProduct from(RecommendedLoanProduct recommendedLoanProduct) {
         return CachedRecommendedLoanProduct.builder()
             .loanProductId(recommendedLoanProduct.getLoanProductId())
             .productName(recommendedLoanProduct.getProductName())
-            .minInterestRate(recommendedLoanProduct.getMinInterestRate())
-            .maxInterestRate(recommendedLoanProduct.getMaxInterestRate())
+            .minInterestRate(recommendedLoanProduct.getInterestRate().minInterestRate())
+            .maxInterestRate(recommendedLoanProduct.getInterestRate().maxInterestRate())
             .loanLimitAmount(recommendedLoanProduct.getLoanLimitAmount())
             .build();
     }

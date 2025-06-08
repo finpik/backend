@@ -12,7 +12,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import finpik.dto.UserProductViewEvent;
-import finpik.resolver.loanproduct.application.LoanProductQueryService;
+import finpik.resolver.loanproduct.application.GetLoanProductUseCase;
 import finpik.resolver.loanproduct.application.dto.LoanProductDto;
 import finpik.resolver.loanproduct.application.dto.RecommendedLoanProductDto;
 import finpik.resolver.loanproduct.application.dto.RelatedLoanProductDto;
@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class LoanProductResolver implements LoanProductApi {
-    private final LoanProductQueryService loanProductQueryService;
+    private final GetLoanProductUseCase getLoanProductUseCase;
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
@@ -34,7 +34,7 @@ public class LoanProductResolver implements LoanProductApi {
             @Argument Long profileId) {
         require(userInput);
 
-        List<RecommendedLoanProductDto> recommendedLoanProductDtoList = loanProductQueryService
+        List<RecommendedLoanProductDto> recommendedLoanProductDtoList = getLoanProductUseCase
                 .getRecommendedLoanProducts(profileId);
 
         return recommendedLoanProductDtoList.stream().map(RecommendedLoanProductResult::new).toList();
@@ -45,7 +45,7 @@ public class LoanProductResolver implements LoanProductApi {
     public LoanProductResult getLoanProduct(User userInput, Long productId) {
         require(userInput);
 
-        LoanProductDto loanProduct = loanProductQueryService.getLoanProduct(productId);
+        LoanProductDto loanProduct = getLoanProductUseCase.getLoanProduct(productId);
 
         // 유저가 본 상품에 대한 이벤트 발행
         userProductViewEvent(userInput.getId(), productId);
@@ -58,7 +58,7 @@ public class LoanProductResolver implements LoanProductApi {
     public List<RelatedLoanProductResult> getRelatedLoanProductList(User userInput, Long productId) {
         require(userInput);
 
-        List<RelatedLoanProductDto> relatedLoanProductList = loanProductQueryService
+        List<RelatedLoanProductDto> relatedLoanProductList = getLoanProductUseCase
                 .getRelatedLoanProductList(productId);
 
         return relatedLoanProductList.stream().map(RelatedLoanProductResult::new).toList();

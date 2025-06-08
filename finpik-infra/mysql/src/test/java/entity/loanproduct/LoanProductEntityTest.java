@@ -3,6 +3,9 @@ package entity.loanproduct;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import finpik.loanproduct.vo.CreditGrade;
+import finpik.loanproduct.vo.InterestRate;
+import finpik.loanproduct.vo.LoanPeriod;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +14,7 @@ import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.entity.loanproduct.LoanProductDescriptionEntity;
 import finpik.entity.loanproduct.LoanProductEntity;
-import finpik.loanproduct.entity.LoanProduct;
+import finpik.loanproduct.LoanProduct;
 
 class LoanProductEntityTest {
 
@@ -29,19 +32,23 @@ class LoanProductEntityTest {
         LoanProduct result = entity.toDomain();
 
         // then
+        InterestRate interestRate = result.getInterestRate();
+        CreditGrade creditGrade = result.getCreditGrade();
+        LoanPeriod loanPeriod = result.getLoanPeriod();
+
         assertAll(() -> assertThat(result).isInstanceOf(LoanProduct.class),
                 () -> assertThat(result.getId()).isEqualTo(entity.getId()),
                 () -> assertThat(result.getProductName()).isEqualTo(entity.getProductName()),
                 () -> assertThat(result.getBankName()).isEqualTo(entity.getBankName()),
-                () -> assertThat(result.getMaxInterestRate()).isEqualTo(entity.getMaxInterestRate()),
-                () -> assertThat(result.getMinInterestRate()).isEqualTo(entity.getMinInterestRate()),
+                () -> assertThat(interestRate.maxInterestRate()).isEqualTo(entity.getMaxInterestRate()),
+                () -> assertThat(interestRate.minInterestRate()).isEqualTo(entity.getMinInterestRate()),
                 () -> assertThat(result.getMaxCreditLine()).isEqualTo(entity.getMaxCreditLine()),
-                () -> assertThat(result.getLoanPeriod()).isEqualTo(entity.getLoanPeriod()),
-                () -> assertThat(result.getMaxCreditGrade()).isEqualTo(entity.getMaxCreditGrade()),
-                () -> assertThat(result.getMinCreditGrade()).isEqualTo(entity.getMinCreditGrade()),
+                () -> assertThat(loanPeriod.loanPeriod()).isEqualTo(entity.getLoanPeriod()),
+                () -> assertThat(creditGrade.maxCreditGrade()).isEqualTo(entity.getMaxCreditGrade()),
+                () -> assertThat(creditGrade.minCreditGrade()).isEqualTo(entity.getMinCreditGrade()),
                 () -> assertThat(result.getAge()).isEqualTo(entity.getAge()),
                 () -> assertThat(result.getLoanLimitAmount()).isEqualTo(entity.getLoanLimitAmount()),
-                () -> assertThat(result.getLoanPeriodUnit()).isEqualTo(entity.getLoanPeriodUnit()),
+                () -> assertThat(loanPeriod.loanPeriodUnit()).isEqualTo(entity.getLoanPeriodUnit()),
                 () -> assertThat(result.getOccupation()).isEqualTo(entity.getOccupation()),
                 () -> assertThat(result.getPurposeOfLoan()).isEqualTo(entity.getPurposeOfLoan()),
                 () -> assertThat(result.getDescription()).isNotNull());
