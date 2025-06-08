@@ -29,3 +29,4 @@ Features
 - feature/FP-17: sse 리턴 변경
 - feature/FP-18: 레디스 캐시 ttl 설정
 - feature/FP-19: infra 하위 패키지 -> 모듈로 분리
+- feature/FP-20: 1차 구조변경
