@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import finpik.loanproduct.entity.RecommendedLoanProduct;
-import finpik.loanproduct.repository.LoanProductCacheRepository;
+import finpik.loanproduct.RecommendedLoanProduct;
 import finpik.service.loanproduct.LoanProductRedisRepository;
 import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import finpik.service.loanproduct.dto.CachedRecommendedLoanProductList;
@@ -29,7 +28,7 @@ public class LoanProductCacheRepositoryImpl implements LoanProductCacheRepositor
     }
 
     @Override
-    public List<RecommendedLoanProduct> getRecommendations(Long profileId) {
+    public List<RecommendedLoanProduct> findAllById(Long profileId) {
         CachedRecommendedLoanProductList resultList = loanProductRedisRepository.getRecommendations(profileId);
 
         return resultList.dtos().stream().map(CachedRecommendedLoanProduct::toDomain).toList();

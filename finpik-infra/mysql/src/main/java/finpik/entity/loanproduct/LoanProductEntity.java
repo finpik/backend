@@ -3,8 +3,11 @@ package finpik.entity.loanproduct;
 import finpik.entity.enums.LoanPeriodUnit;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.loanproduct.entity.LoanProduct;
-import finpik.loanproduct.entity.LoanProductDescription;
+import finpik.loanproduct.LoanProduct;
+import finpik.loanproduct.LoanProductDescription;
+import finpik.loanproduct.vo.CreditGrade;
+import finpik.loanproduct.vo.InterestRate;
+import finpik.loanproduct.vo.LoanPeriod;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -90,11 +93,14 @@ public class LoanProductEntity {
 
     public LoanProduct toDomain() {
         LoanProductDescription descriptionDomain = description.toDomain();
+        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
+        LoanPeriod loanPeriodDomain = new LoanPeriod(loanPeriod, loanPeriodUnit);
+        CreditGrade creditGrade = new CreditGrade(maxCreditGrade, minCreditGrade);
 
-        return LoanProduct.builder().id(id).productName(productName).bankName(bankName).maxInterestRate(maxInterestRate)
-                .minInterestRate(minInterestRate).maxCreditLine(maxCreditLine).loanPeriod(loanPeriod)
-                .maxCreditGrade(maxCreditGrade).minCreditGrade(minCreditGrade).age(age).loanLimitAmount(loanLimitAmount)
-                .description(descriptionDomain).loanPeriodUnit(loanPeriodUnit).occupation(occupation)
-                .purposeOfLoan(purposeOfLoan).build();
+        return LoanProduct.withId(
+            id, productName, bankName, interestRate, maxCreditLine,
+            loanPeriodDomain, creditGrade, age, loanLimitAmount,
+            descriptionDomain, occupation, purposeOfLoan
+        );
     }
 }

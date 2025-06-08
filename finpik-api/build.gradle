@@ -9,6 +9,7 @@ dependencies {
     implementation project(":finpik-infra:redis")
     implementation project(":finpik-infra:jwt")
     implementation project(":finpik-infra:kafka")
+    implementation project(":finpik-infra:mysql")
 
     //heart beat check
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

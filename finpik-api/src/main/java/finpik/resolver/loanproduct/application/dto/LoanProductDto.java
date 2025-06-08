@@ -1,6 +1,7 @@
 package finpik.resolver.loanproduct.application.dto;
 
-import finpik.loanproduct.entity.LoanProduct;
+import finpik.entity.enums.LoanPeriodUnit;
+import finpik.loanproduct.LoanProduct;
 import lombok.Getter;
 
 @Getter
@@ -12,6 +13,7 @@ public class LoanProductDto {
     private final Float maxInterestRate;
     private final Float minInterestRate;
     private final Integer loanPeriod;
+    private final LoanPeriodUnit loanPeriodUnit;
     private final LoanProductDescriptionDto description;
 
     public LoanProductDto(LoanProduct loanProduct) {
@@ -19,9 +21,10 @@ public class LoanProductDto {
         productName = loanProduct.getProductName();
         bankName = loanProduct.getBankName();
         loanLimitAmount = loanProduct.getLoanLimitAmount();
-        maxInterestRate = loanProduct.getMaxInterestRate();
-        minInterestRate = loanProduct.getMinInterestRate();
-        loanPeriod = loanProduct.getLoanPeriod();
+        maxInterestRate = loanProduct.getInterestRate().maxInterestRate();
+        minInterestRate = loanProduct.getInterestRate().minInterestRate();
+        loanPeriod = loanProduct.getLoanPeriod().loanPeriod();
+        loanPeriodUnit = loanProduct.getLoanPeriod().loanPeriodUnit();
         description = new LoanProductDescriptionDto(loanProduct.getDescription());
     }
 }

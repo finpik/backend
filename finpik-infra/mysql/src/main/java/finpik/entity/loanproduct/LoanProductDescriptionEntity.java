@@ -1,6 +1,6 @@
 package finpik.entity.loanproduct;
 
-import finpik.loanproduct.entity.LoanProductDescription;
+import finpik.loanproduct.LoanProductDescription;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
