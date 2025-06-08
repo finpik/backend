@@ -7,10 +7,9 @@ import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.profile.service.dto.UpdateProfileDto;
+import finpik.profile.entity.Profile;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record UpdateProfileUseCaseDto(
     Long id,
@@ -28,22 +27,13 @@ public record UpdateProfileUseCaseDto(
     CreditGradeStatus creditGradeStatus,
     String profileName
 ) {
-    public UpdateProfileDto toDomainDto() {
-        return UpdateProfileDto.builder()
-            .id(id)
-            .occupation(occupation)
-            .workplaceName(workplaceName)
-            .employmentForm(employmentForm)
-            .income(income)
-            .employmentDate(employmentDate)
-            .purposeOfLoan(purposeOfLoan)
-            .desiredLoanAmount(desiredLoanAmount)
-            .loanProductUsageStatus(loanProductUsageStatus)
-            .loanProductUsageCount(loanProductUsageCount)
-            .totalLoanUsageAmount(totalLoanUsageAmount)
-            .creditGradeStatus(creditGradeStatus)
-            .creditScore(creditScore)
-            .profileName(profileName)
-            .build();
+    public Profile toDomain() {
+        return Profile.withId(
+            id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
+            creditScore, creditGradeStatus, income, null,
+            workplaceName, employmentForm, loanProductUsageStatus,
+            purposeOfLoan, employmentDate, profileName,
+            occupation, null, null
+        );
     }
 }

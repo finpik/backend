@@ -1,4 +1,4 @@
-package finpik.profile.entity;
+package finpik.profile.entity.policy;
 
 import java.util.EnumMap;
 import java.util.Map;
