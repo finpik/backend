@@ -44,15 +44,30 @@ class ProfileEntityTest {
         Profile result = entity.toDomain();
 
         // then
+        assertThat(result).isInstanceOf(Profile.class);
     }
 
     private Profile getDefaultProfile() {
         User user = User.builder().id(1L).build();
 
-        return Profile.builder().id(1L).occupation(Occupation.OTHER).employmentForm(EmploymentForm.CONTRACT)
-                .purposeOfLoan(PurposeOfLoan.LOAN_REPAYMENT).desiredLoanAmount(10000000)
-                .loanProductUsageStatus(LoanProductUsageStatus.NOT_USING).loanProductUsageCount(0)
-                .totalLoanUsageAmount(0).creditScore(900).creditGradeStatus(CreditGradeStatus.EXCELLENT)
-                .profileColor(ProfileColor.BLUE_TWO).profileName("내 전 프로필").seq(0).user(user).build();
+        return Profile.withId(
+            1L,
+            10_000_000,
+            0,
+            0,
+            900,
+            CreditGradeStatus.EXCELLENT,
+            null,
+            0,
+            null,
+            EmploymentForm.CONTRACT,
+            LoanProductUsageStatus.NOT_USING,
+            PurposeOfLoan.LOAN_REPAYMENT,
+            null,
+            "내 전 프로필",
+            Occupation.OTHER,
+            user,
+            ProfileColor.BLUE_TWO
+        );
     }
 }

@@ -8,7 +8,7 @@ import finpik.entity.enums.LoanProductUsageStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.profile.service.dto.CreateProfileDto;
+import finpik.profile.entity.Profile;
 import finpik.user.entity.User;
 import lombok.Builder;
 
@@ -32,23 +32,12 @@ public record CreateProfileUseCaseDto(
     ProfileColor profileColor
 ) {
 
-    public CreateProfileDto toDomainDto(User user) {
-        return CreateProfileDto.builder()
-            .workplaceName(workplaceName)
-            .employmentForm(employmentForm)
-            .income(income)
-            .occupation(occupation)
-            .employmentDate(employmentDate)
-            .loanProductUsageStatus(loanProductUsageStatus)
-            .loanProductUsageCount(loanProductUsageCount)
-            .totalLoanUsageAmount(totalLoanUsageAmount)
-            .purposeOfLoan(purposeOfLoan)
-            .desiredLoanAmount(desiredLoanAmount)
-            .creditGradeStatus(creditGradeStatus)
-            .creditScore(creditScore)
-            .profileName(profileName)
-            .profileColor(profileColor)
-            .user(user)
-            .build();
+    public Profile toDomain(User user) {
+        return Profile.of(
+            desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
+            creditScore, creditGradeStatus, income, null, workplaceName,
+            employmentForm, loanProductUsageStatus, purposeOfLoan, employmentDate,
+            profileName, occupation, user, profileColor
+        );
     }
 }

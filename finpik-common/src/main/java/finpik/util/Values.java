@@ -13,4 +13,5 @@ public class Values {
     public static final String TOKEN_TYPE = "tokenType";
     public static final long FIVE_MINUTE_MILL = 5 * 60 * 1000;
     public static final int FOUR = 4;
+    public static final int PROFILE_LIMIT_NUMBER = 4;
 }

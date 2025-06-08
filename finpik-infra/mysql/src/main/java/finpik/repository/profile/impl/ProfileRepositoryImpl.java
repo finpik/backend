@@ -1,10 +1,12 @@
-package finpik.jpa.repository.profile;
+package finpik.repository.profile.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import finpik.jpa.repository.profile.ProfileEntityJpaRepository;
+import finpik.profile.entity.ProfileList;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +16,7 @@ import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.jpa.repository.user.UserEntityJpaRepository;
 import finpik.profile.entity.Profile;
-import finpik.profile.repository.ProfileRepository;
+import finpik.repository.profile.ProfileRepository;
 import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
 
@@ -46,11 +48,11 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     }
 
     @Override
-    public List<Profile> updateAll(List<Profile> profileList) {
+    public ProfileList updateAll(ProfileList profileList) {
         List<ProfileEntity> profileEntityList = profileEntityJpaRepository
-                .findAllById(profileList.stream().map(Profile::getId).toList());
+                .findAllById(profileList.getIds());
 
-        Map<Long, Profile> idProfileMap = profileList.stream()
+        Map<Long, Profile> idProfileMap = profileList.getProfiles().stream()
                 .collect(Collectors.toMap(Profile::getId, profile -> profile));
 
         profileEntityList.forEach(profileEntity -> {
@@ -61,7 +63,7 @@ public class ProfileRepositoryImpl implements ProfileRepository {
             }
         });
 
-        return idProfileMap.values().stream().toList();
+        return new ProfileList(idProfileMap.values().stream().toList());
     }
 
     @Override
@@ -72,17 +74,21 @@ public class ProfileRepositoryImpl implements ProfileRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Profile> findByUser(User user) {
+    public ProfileList findByUser(User user) {
         UserEntity userEntity = userEntityJpaRepository.findById(user.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
 
-        return profileEntityJpaRepository.findByUser(userEntity).stream().map(ProfileEntity::toDomain).toList();
+        return new ProfileList(
+            profileEntityJpaRepository.findByUser(userEntity).stream().map(ProfileEntity::toDomain).toList()
+        );
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Profile> findAllById(List<Long> ids) {
-        return profileEntityJpaRepository.findAllById(ids).stream().map(ProfileEntity::toDomain).toList();
+    public ProfileList findAllById(List<Long> ids) {
+        return new ProfileList(
+            profileEntityJpaRepository.findAllById(ids).stream().map(ProfileEntity::toDomain).toList()
+        );
     }
 
     @Override

@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class RecommendLoanProductProfileDto {
+public class RecommendLoanProductProfileEvent {
     Long profileId;
     Integer desiredLimit;
     Integer creditScore;
@@ -15,8 +15,8 @@ public class RecommendLoanProductProfileDto {
     Integer age;
 
     @Builder
-    public RecommendLoanProductProfileDto(Long profileId, Integer desiredLimit, Integer creditScore,
-            PurposeOfLoan purposeOfLoan, Occupation occupation, Integer age) {
+    public RecommendLoanProductProfileEvent(Long profileId, Integer desiredLimit, Integer creditScore,
+                                            PurposeOfLoan purposeOfLoan, Occupation occupation, Integer age) {
         this.profileId = profileId;
         this.desiredLimit = desiredLimit;
         this.creditScore = creditScore;

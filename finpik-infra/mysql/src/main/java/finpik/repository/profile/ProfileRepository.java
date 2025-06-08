@@ -1,9 +1,10 @@
-package finpik.profile.repository;
+package finpik.repository.profile;
 
 import java.util.List;
 import java.util.Optional;
 
 import finpik.profile.entity.Profile;
+import finpik.profile.entity.ProfileList;
 import finpik.user.entity.User;
 
 public interface ProfileRepository {
@@ -11,13 +12,13 @@ public interface ProfileRepository {
 
     Profile update(Profile profile);
 
-    List<Profile> updateAll(List<Profile> profiles);
+    ProfileList updateAll(ProfileList profileList);
 
     Optional<Profile> findById(Long id);
 
-    List<Profile> findByUser(User user);
+    ProfileList findByUser(User user);
 
-    List<Profile> findAllById(List<Long> ids);
+    ProfileList findAllById(List<Long> ids);
 
     void deleteById(Long id);
 }
