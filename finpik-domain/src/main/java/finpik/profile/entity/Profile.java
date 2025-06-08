@@ -10,13 +10,16 @@ import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
+import finpik.profile.entity.policy.NiceCreditGradePolicy;
 import finpik.user.entity.User;
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Profile {
-    private final Long id;
+    private Long id;
     private Integer desiredLoanAmount;
     private Integer loanProductUsageCount;
     private Integer totalLoanUsageAmount;
@@ -32,10 +35,8 @@ public class Profile {
     private Occupation occupation;
     private ProfileColor profileColor;
     private LocalDate employmentDate;
-    private final User user;
+    private User user;
 
-    //@formatter:off
-    @Builder
     public Profile(
         Integer desiredLoanAmount, Integer loanProductUsageCount, Integer totalLoanUsageAmount,
         Integer creditScore, CreditGradeStatus creditGradeStatus, Integer income, Integer seq,
@@ -62,6 +63,38 @@ public class Profile {
         this.user = user;
         this.profileColor = profileColor;
         this.seq = seq == null ? 0 : seq;
+    }
+
+    public static Profile of(
+        Integer desiredLoanAmount, Integer loanProductUsageCount, Integer totalLoanUsageAmount,
+        Integer creditScore, CreditGradeStatus creditGradeStatus, Integer income, Integer seq,
+        String workplaceName, EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus,
+        PurposeOfLoan purposeOfLoan, LocalDate employmentDate, String profileName,
+        Occupation occupation, User user, ProfileColor profileColor
+    ) {
+        return new Profile(
+            desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
+            creditScore, creditGradeStatus, income, seq == null ? 0 : seq,
+            workplaceName, employmentForm, loanProductUsageStatus,
+            purposeOfLoan, employmentDate, profileName,
+            occupation, user, null, profileColor
+        );
+    }
+
+    public static Profile withId(
+        Long id, Integer desiredLoanAmount, Integer loanProductUsageCount, Integer totalLoanUsageAmount,
+        Integer creditScore, CreditGradeStatus creditGradeStatus, Integer income, Integer seq,
+        String workplaceName, EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus,
+        PurposeOfLoan purposeOfLoan, LocalDate employmentDate, String profileName,
+        Occupation occupation, User user, ProfileColor profileColor
+    ) {
+        return new Profile(
+            desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
+            creditScore, creditGradeStatus, income, seq == null ? 0 : seq,
+            workplaceName, employmentForm, loanProductUsageStatus,
+            purposeOfLoan, employmentDate, profileName,
+            occupation, user, id, profileColor
+        );
     }
 
     public void updateProfile(Profile profile) {
@@ -101,8 +134,6 @@ public class Profile {
             }
         }
     }
-
-
 
     private CreditGradeStatus determineCreditGradeStatusByScore() {
         validateCredits();

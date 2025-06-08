@@ -1,7 +1,7 @@
 package finpik.resolver.profile.application.impl;
 
-import finpik.profile.entity.Profile;
-import finpik.profile.service.ProfileService;
+import finpik.profile.entity.ProfileList;
+import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.dto.ProfileDto;
 import finpik.resolver.profile.application.usecase.GetProfileListByUserUseCase;
 import finpik.user.entity.User;
@@ -16,15 +16,15 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class GetProfileListByUserUseCaseImpl implements GetProfileListByUserUseCase {
-    private final ProfileService profileService;
+    private final ProfileRepository profileRepository;
     private final UserService userService;
 
     @Override
     public List<ProfileDto> execute(Long userId) {
         User user = userService.findUserBy(userId);
 
-        List<Profile> profileList = profileService.getProfileListBy(user);
+        ProfileList profileList = profileRepository.findByUser(user);
 
-        return profileList.stream().map(ProfileDto::new).toList();
+        return profileList.getProfiles().stream().map(ProfileDto::new).toList();
     }
 }

@@ -115,12 +115,13 @@ public class ProfileEntity {
     }
 
     public Profile toDomain() {
-        return Profile.builder().id(id).desiredLoanAmount(desiredLoanAmount)
-                .loanProductUsageCount(loanProductUsageCount).totalLoanUsageAmount(totalLoanUsageAmount)
-                .creditScore(creditScore).income(income).workplaceName(workplaceName).profileName(profileName).seq(seq)
-                .employmentForm(employmentForm).creditGradeStatus(creditGradeStatus)
-                .loanProductUsageStatus(loanProductUsageStatus).purposeOfLoan(purposeOfLoan).occupation(occupation)
-                .profileColor(profileColor).employmentDate(employmentDate).user(user.toDomain()).build();
+        return Profile.withId(
+            id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
+            creditScore, creditGradeStatus, income, seq, workplaceName,
+            employmentForm, loanProductUsageStatus, purposeOfLoan,
+            employmentDate, profileName, occupation,
+            user.toDomain(), profileColor
+        );
     }
 
     public void updateAllFields(Profile profile) {
@@ -140,13 +141,5 @@ public class ProfileEntity {
         profileColor = profile.getProfileColor();
         employmentDate = profile.getEmploymentDate();
         profileColor = profile.getProfileColor();
-    }
-
-    public void updateSequence(Integer seq) {
-        if (seq == null) {
-            throw new BusinessException(ErrorCode.PROFILE_SEQUENCE_CANNOT_BE_NULL);
-        }
-
-        this.seq = seq;
     }
 }

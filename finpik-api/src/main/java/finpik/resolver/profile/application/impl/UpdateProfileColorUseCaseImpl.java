@@ -1,7 +1,9 @@
 package finpik.resolver.profile.application.impl;
 
+import finpik.error.enums.ErrorCode;
+import finpik.error.exception.BusinessException;
 import finpik.profile.entity.Profile;
-import finpik.profile.service.ProfileService;
+import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileColorUseCase;
 import finpik.resolver.profile.application.dto.ProfileDto;
 import finpik.resolver.profile.application.dto.UpdateProfileColorUseCaseDto;
@@ -13,12 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class UpdateProfileColorUseCaseImpl implements UpdateProfileColorUseCase {
-    private final ProfileService profileService;
+    private final ProfileRepository profileRepository;
 
     @Override
     public ProfileDto execute(UpdateProfileColorUseCaseDto dto) {
-        Profile profile = profileService.updateProfileColor(dto.toDomainDto());
+        Profile profile = findProfileBy(dto.id());
 
-        return new ProfileDto(profile);
+        profile.changeProfileColor(dto.profileColor());
+
+        return new ProfileDto(profileRepository.update(profile));
+    }
+
+    private Profile findProfileBy(long id) {
+        return profileRepository.findById(id).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PROFILE));
     }
 }
