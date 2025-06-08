@@ -19,6 +19,7 @@ type LoanProductResult {
     maxInterestRate: Float!
     minInterestRate: Float!
     loanPeriod: Int!
+    loanPeriodUnit: LoanPeriodUnit!
     descriptionResult: LoanProductDescriptionResult!
 }
 
@@ -36,4 +37,8 @@ type RelatedLoanProductResult {
     maxInterestRate: Float!,
     minInterestRate: Float!,
     loanLimitAmount: Int!
+}
+
+enum LoanPeriodUnit {
+    YEAR, MONTH
 }

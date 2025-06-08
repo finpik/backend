@@ -1,6 +1,6 @@
 package finpik.resolver.loanproduct.application.dto;
 
-import finpik.loanproduct.entity.RelatedLoanProduct;
+import finpik.loanproduct.RelatedLoanProduct;
 import lombok.Getter;
 
 @Getter
@@ -14,8 +14,8 @@ public class RelatedLoanProductDto {
     public RelatedLoanProductDto(RelatedLoanProduct relatedLoanProduct) {
         productId = relatedLoanProduct.getProductId();
         productName = relatedLoanProduct.getProductName();
-        maxInterestRate = relatedLoanProduct.getMaxInterestRate();
-        minInterestRate = relatedLoanProduct.getMinInterestRate();
+        maxInterestRate = relatedLoanProduct.getInterestRate().minInterestRate();
+        minInterestRate = relatedLoanProduct.getInterestRate().maxInterestRate();
         loanLimitAmount = relatedLoanProduct.getLoanLimitAmount();
     }
 }
