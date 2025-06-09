@@ -8,7 +8,7 @@ import finpik.resolver.profile.application.usecase.UpdateProfileSequenceUseCase;
 import finpik.resolver.profile.application.dto.ProfileDto;
 import finpik.resolver.profile.application.dto.UpdateProfileSequenceUseCaseDto;
 import finpik.user.entity.User;
-import finpik.user.repository.UserRepository;
+import finpik.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

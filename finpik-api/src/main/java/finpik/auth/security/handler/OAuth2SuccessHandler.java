@@ -27,7 +27,7 @@ import finpik.auth.service.AuthService;
 import finpik.dto.CreateTokenDto;
 import finpik.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
-import finpik.user.repository.UserRepository;
+import finpik.repository.user.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

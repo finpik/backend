@@ -1,12 +1,13 @@
-package finpik.jpa.repository.user;
+package finpik.repository.user.impl;
 
 import java.util.Optional;
 
+import finpik.jpa.repository.user.UserEntityJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import finpik.entity.user.UserEntity;
 import finpik.user.entity.User;
-import finpik.user.repository.UserRepository;
+import finpik.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Repository

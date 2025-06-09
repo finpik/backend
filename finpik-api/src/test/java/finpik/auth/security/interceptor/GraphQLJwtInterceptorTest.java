@@ -4,9 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
+import finpik.entity.enums.Gender;
+import finpik.entity.enums.RegistrationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +49,11 @@ class GraphQLJwtInterceptorTest {
     @Test
     void addsUserAndRefreshTokenToGraphQLContext() {
         // given
-        User user = User.builder().id(1L).email("test@example.com").build();
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
+        );
+
         String refreshToken = "test-refresh-token";
 
         Map<String, Object> attributes = Map.of("user", user, "refreshToken", refreshToken);

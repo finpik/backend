@@ -2,6 +2,7 @@ package finpik.auth.usecase;
 
 import java.util.Date;
 
+import finpik.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +13,6 @@ import finpik.dto.CreateTokenDto;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.user.entity.User;
-import finpik.user.service.UserService;
 import finpik.util.Values;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TokenUseCase {
     private final AuthService authService;
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
     @Transactional
@@ -28,7 +28,7 @@ public class TokenUseCase {
         long userId = jwtProvider.getUserId(refreshToken);
         validateRefreshToken(userId, refreshToken);
 
-        User user = userService.findUserBy(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
 
         CreateTokenDto dto = createTokenDto(user.getId(), user.getEmail());
 

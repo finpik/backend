@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-//@formatter:off
 public record SignUpInput(
         @NotBlank(message = "이름을 넣어주세요.") @Size(min = 2, message = "이름은 최소 2글자 이상이어야 합니다.")
         String username,

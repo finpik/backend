@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import finpik.entity.enums.Gender;
+import finpik.entity.enums.RegistrationType;
+import finpik.repository.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +21,10 @@ import finpik.auth.service.AuthService;
 import finpik.auth.usecase.dto.TokenRefreshResultDto;
 import finpik.error.enums.ErrorCode;
 import finpik.user.entity.User;
-import finpik.user.service.UserService;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class TokenUseCaseTest {
@@ -29,7 +35,7 @@ class TokenUseCaseTest {
     private AuthService authService;
 
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Mock
     private JwtProvider jwtProvider;
@@ -42,9 +48,13 @@ class TokenUseCaseTest {
         String newRefreshToken = "newRefreshToken";
         String newAccessToken = "newAccessToken";
 
-        User user = User.builder().id(1L).build();
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
+        );
+
         when(jwtProvider.getUserId(previousRefreshToken)).thenReturn(user.getId());
-        when(userService.findUserBy(user.getId())).thenReturn(user);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         when(authService.isValid(user.getId(), previousRefreshToken)).thenReturn(true);
         when(jwtProvider.createAccessToken(any())).thenReturn(newAccessToken);
         when(jwtProvider.createRefreshToken(any())).thenReturn(newRefreshToken);

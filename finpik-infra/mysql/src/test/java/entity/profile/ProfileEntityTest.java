@@ -2,6 +2,8 @@ package entity.profile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import finpik.entity.enums.Gender;
+import finpik.entity.enums.RegistrationType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,9 @@ import finpik.entity.profile.ProfileEntity;
 import finpik.entity.user.UserEntity;
 import finpik.profile.entity.Profile;
 import finpik.user.entity.User;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 class ProfileEntityTest {
 
@@ -37,7 +42,7 @@ class ProfileEntityTest {
     void toDomain() {
         // given
         Profile profile = getDefaultProfile();
-        UserEntity userEntity = UserEntity.builder().build();
+        UserEntity userEntity = UserEntity.builder().email("test@test.com").build();
 
         ProfileEntity entity = ProfileEntity.from(profile, userEntity);
         // when
@@ -48,7 +53,10 @@ class ProfileEntityTest {
     }
 
     private Profile getDefaultProfile() {
-        User user = User.builder().id(1L).build();
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
+        );
 
         return Profile.withId(
             1L,

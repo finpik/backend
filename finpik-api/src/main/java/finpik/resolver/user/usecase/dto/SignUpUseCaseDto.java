@@ -4,10 +4,9 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import finpik.entity.enums.Gender;
-import finpik.user.service.dto.CreateUserDto;
+import finpik.user.entity.User;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record SignUpUseCaseDto(
     String username,
@@ -18,13 +17,11 @@ public record SignUpUseCaseDto(
     Date issuedAt,
     Date expiresAt
 ) {
-    public CreateUserDto toCreateUserDto() {
-        return CreateUserDto.builder()
-            .username(username)
-            .dateOfBirth(dateOfBirth)
-            .gender(gender)
-            .provider(provider)
-            .id(vendorId)
-            .build();
+
+    public User toDomain(String email) {
+        return User.from(
+            username, email, gender,
+            provider, dateOfBirth
+        );
     }
 }

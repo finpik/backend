@@ -1,26 +1,26 @@
 package finpik.resolver.profile.application.impl;
 
 import finpik.dto.RecommendLoanProductProfileEvent;
+import finpik.error.enums.ErrorCode;
+import finpik.error.exception.BusinessException;
 import finpik.profile.entity.Profile;
 import finpik.profile.entity.ProfileList;
 import finpik.repository.profile.ProfileRepository;
+import finpik.repository.user.UserRepository;
 import finpik.resolver.profile.application.usecase.CreateProfileUseCase;
 import finpik.resolver.profile.application.dto.CreateProfileUseCaseDto;
 import finpik.resolver.profile.application.dto.ProfileDto;
 import finpik.user.entity.User;
-import finpik.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final ApplicationEventPublisher eventPublisher;
 
@@ -43,7 +43,8 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
     }
 
     private User getUser(Long userId) {
-        return userService.findUserBy(userId);
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
     }
 
 
