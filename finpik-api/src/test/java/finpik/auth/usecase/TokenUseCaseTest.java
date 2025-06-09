@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RegistrationType;
+import finpik.repository.auth.AuthCacheRepository;
 import finpik.repository.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import finpik.JwtProvider;
-import finpik.auth.service.AuthService;
 import finpik.auth.usecase.dto.TokenRefreshResultDto;
 import finpik.error.enums.ErrorCode;
 import finpik.user.entity.User;
@@ -32,7 +32,7 @@ class TokenUseCaseTest {
     private TokenUseCase tokenUseCase;
 
     @Mock
-    private AuthService authService;
+    private AuthCacheRepository authCacheRepository;
 
     @Mock
     private UserRepository userRepository;
@@ -55,7 +55,7 @@ class TokenUseCaseTest {
 
         when(jwtProvider.getUserId(previousRefreshToken)).thenReturn(user.getId());
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(authService.isValid(user.getId(), previousRefreshToken)).thenReturn(true);
+        when(authCacheRepository.isRefreshTokenValid(user.getId(), previousRefreshToken)).thenReturn(true);
         when(jwtProvider.createAccessToken(any())).thenReturn(newAccessToken);
         when(jwtProvider.createRefreshToken(any())).thenReturn(newRefreshToken);
 

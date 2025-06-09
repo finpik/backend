@@ -1,13 +1,14 @@
 package finpik.auth.usecase;
 
+import java.time.Duration;
 import java.util.Date;
 
+import finpik.repository.auth.AuthCacheRepository;
 import finpik.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import finpik.JwtProvider;
-import finpik.auth.service.AuthService;
 import finpik.auth.usecase.dto.TokenRefreshResultDto;
 import finpik.dto.CreateTokenDto;
 import finpik.error.enums.ErrorCode;
@@ -16,10 +17,12 @@ import finpik.user.entity.User;
 import finpik.util.Values;
 import lombok.RequiredArgsConstructor;
 
+import static finpik.util.Values.FOURTEEN_DAYS_SEC;
+
 @Service
 @RequiredArgsConstructor
 public class TokenUseCase {
-    private final AuthService authService;
+    private final AuthCacheRepository authCacheRepository;
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
@@ -34,7 +37,7 @@ public class TokenUseCase {
 
         String newRefreshToken = jwtProvider.createRefreshToken(dto);
         // TODO(여기 부분을 Kafka 이벤트로 발생하는걸 생각해봐야함)
-        authService.saveRefreshToken(userId, newRefreshToken);
+        authCacheRepository.saveRefreshToken(userId, newRefreshToken, Duration.ofSeconds(FOURTEEN_DAYS_SEC));
 
         String newAccessToken = jwtProvider.createAccessToken(dto);
 
@@ -42,7 +45,7 @@ public class TokenUseCase {
     }
 
     private void validateRefreshToken(Long userId, String refreshToken) {
-        if (!authService.isValid(userId, refreshToken) && !jwtProvider.isValid(refreshToken)) {
+        if (!authCacheRepository.isRefreshTokenValid(userId, refreshToken) && !jwtProvider.isValid(refreshToken)) {
             throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
         }
     }

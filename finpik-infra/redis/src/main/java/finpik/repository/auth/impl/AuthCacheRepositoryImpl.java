@@ -1,10 +1,11 @@
-package finpik.repository.auth;
+package finpik.repository.auth.impl;
 
 import java.time.Duration;
 
+import finpik.repository.auth.AuthCacheRepository;
+import finpik.repository.auth.AuthRedisRepository;
 import org.springframework.stereotype.Repository;
 
-import finpik.auth.repository.AuthCacheRepository;
 import lombok.RequiredArgsConstructor;
 
 @Repository
