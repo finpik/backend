@@ -7,8 +7,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Duration;
 import java.util.Optional;
 
+import finpik.repository.auth.AuthCacheRepository;
+import finpik.util.Values;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import finpik.JwtProvider;
 import finpik.auth.security.user.CustomOAuth2User;
-import finpik.auth.service.AuthService;
 import finpik.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
@@ -48,12 +50,12 @@ class OAuth2SuccessHandlerTest {
     private ObjectMapper objectMapper;
 
     @Mock
-    private AuthService authService;
+    private AuthCacheRepository authCacheRepository;
 
     @DisplayName("기존 사용자일 경우 accessToken, refreshToken 생성 및 응답 반환")
     @Test
     void existingUser_accessTokenRefreshTokenResponse() throws Exception {
-        // Given
+        // given
         CustomOAuth2User userPrincipal = mock(CustomOAuth2User.class);
         when(userPrincipal.getEmail()).thenReturn("test@example.com");
 
@@ -71,10 +73,10 @@ class OAuth2SuccessHandlerTest {
 
         MockHttpServletResponse response = new MockHttpServletResponse();
 
-        // When
+        // when
         successHandler.onAuthenticationSuccess(new MockHttpServletRequest(), response, auth);
 
-        // Then
+        // then
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentAsString()).contains("access-token");
         Cookie cookie = response.getCookie("refreshToken");
@@ -82,13 +84,14 @@ class OAuth2SuccessHandlerTest {
         assertThat(cookie.isHttpOnly()).isTrue();
         assertThat(cookie.getValue()).isEqualTo("refresh-token");
 
-        verify(authService).saveRefreshToken(eq(1L), eq("refresh-token"));
+        verify(authCacheRepository)
+            .saveRefreshToken(eq(1L), eq("refresh-token"), eq(Duration.ofSeconds(Values.FOURTEEN_DAYS_SEC)));
     }
 
     @DisplayName("신규 사용자일 경우 Redis에 임시 저장 후 회원가입 응답 반환")
     @Test
     void newUser_saveToRedis_andReturnSignUpResponse() throws Exception {
-        // Given
+        // given
         CustomOAuth2User userPrincipal = mock(CustomOAuth2User.class);
         when(userPrincipal.getEmail()).thenReturn("new@example.com");
         when(userPrincipal.getUserId()).thenReturn("oauth-user-id");
@@ -102,10 +105,10 @@ class OAuth2SuccessHandlerTest {
 
         MockHttpServletResponse response = new MockHttpServletResponse();
 
-        // When
+        // when
         successHandler.onAuthenticationSuccess(new MockHttpServletRequest(), response, auth);
 
-        // Then
+        // then
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentAsString()).contains("oauth-user-id");
         assertThat(response.getContentAsString()).contains("kakao");

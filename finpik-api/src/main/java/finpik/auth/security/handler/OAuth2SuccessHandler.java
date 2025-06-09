@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
+import finpik.repository.auth.AuthCacheRepository;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -23,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import finpik.JwtProvider;
 import finpik.auth.security.handler.reponse.OAuth2Response;
 import finpik.auth.security.user.CustomOAuth2User;
-import finpik.auth.service.AuthService;
 import finpik.dto.CreateTokenDto;
 import finpik.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
@@ -40,7 +40,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final UserRepository userRepository;
     private final AuthRedisRepository authRedisRepository;
     private final ObjectMapper objectMapper;
-    private final AuthService authService;
+    private final AuthCacheRepository authCacheRepository;
 
     private static final String UTF_8 = "UTF-8";
 
@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         if (user.isPresent()) {
             String accessToken = getAccessToken(user.get());
             String refreshToken = getRefreshToken(user.get());
-            authService.saveRefreshToken(user.get().getId(), refreshToken);
+            authCacheRepository.saveRefreshToken(user.get().getId(), refreshToken, Duration.ofSeconds(FOURTEEN_DAYS_SEC));
 
             responseSuccessLogin(response, accessToken, refreshToken);
         } else {

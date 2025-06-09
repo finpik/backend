@@ -1,4 +1,4 @@
-package finpik.auth.repository;
+package finpik.repository.auth;
 
 import java.time.Duration;
 
