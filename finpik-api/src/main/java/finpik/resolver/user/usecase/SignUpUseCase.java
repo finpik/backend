@@ -1,6 +1,6 @@
 package finpik.resolver.user.usecase;
 
-import finpik.auth.repository.AuthCacheRepository;
+import finpik.repository.auth.AuthCacheRepository;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.user.entity.User;

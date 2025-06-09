@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import finpik.auth.repository.AuthCacheRepository;
+import finpik.repository.auth.AuthCacheRepository;
 import finpik.entity.enums.RegistrationType;
 import finpik.repository.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;

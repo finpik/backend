@@ -1,7 +1,8 @@
-package finpik.repository.auth;
+package finpik.repository.auth.impl;
 
 import java.time.Duration;
 
+import finpik.repository.auth.AuthRedisRepository;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
