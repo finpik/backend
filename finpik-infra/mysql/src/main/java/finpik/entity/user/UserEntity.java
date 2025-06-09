@@ -67,14 +67,9 @@ public class UserEntity {
     }
 
     public User toDomain() {
-        return User.builder()
-            .id(id)
-            .username(username)
-            .email(email)
-            .gender(gender)
-            .registrationType(registrationType)
-            .dateOfBirth(dateOfBirth)
-            .registrationDate(registrationDate)
-            .build();
+        return User.withId(
+            id, username, email, gender,
+            registrationType, registrationDate, dateOfBirth
+        );
     }
 }

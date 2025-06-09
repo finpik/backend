@@ -3,7 +3,10 @@ package finpik.user.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import finpik.entity.enums.Gender;
+import finpik.entity.enums.RegistrationType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +16,10 @@ class UserTest {
     @Test
     void getAge() {
         // given
-        User user = User.builder().id(1L).dateOfBirth(LocalDate.of(1993, 12, 14)).build();
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(1993, 12, 14)
+        );
 
         // when
         Integer result = user.getAge();

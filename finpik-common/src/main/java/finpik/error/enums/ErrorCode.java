@@ -26,6 +26,7 @@ public enum ErrorCode {
     // User
     EXISTING_USER("이미 존재하는 유저입니다.", "USR-0001", CustomHttpStatus.BAD_REQUEST),
     NOT_FOUND_USER("유저를 찾을 수 없습니다.", "USR-0002", CustomHttpStatus.NOT_FOUND),
+    INVALID_EMAIL_FORMAT("이메일 포맷을 확인해 주세요", "USR-0003", CustomHttpStatus.BAD_REQUEST),
 
     // Profile
     EXCEEDING_PROFILE_COUNT_LIMIT("제한된 프로파일 개수보다 많이 생성할 수 없습니다.", "PRF-0001", CustomHttpStatus.BAD_REQUEST),

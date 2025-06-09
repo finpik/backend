@@ -7,7 +7,7 @@ import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.DeleteProfileUseCase;
 import finpik.resolver.profile.application.dto.ProfileDto;
 import finpik.user.entity.User;
-import finpik.user.repository.UserRepository;
+import finpik.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
