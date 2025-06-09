@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import finpik.repository.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import finpik.JwtProvider;
 import finpik.sse.service.SseEmitterService;
-import finpik.user.service.UserService;
 
 @WebMvcTest(SseController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -33,7 +33,7 @@ class SseControllerTest {
     JwtProvider jwtProvider;
 
     @MockitoBean
-    UserService userService;
+    UserRepository userRepository;
 
     @DisplayName("SSE 연결 시 SseEmitter와 초기 메시지를 반환한다.")
     @Test

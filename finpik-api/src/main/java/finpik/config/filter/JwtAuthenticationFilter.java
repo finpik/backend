@@ -5,6 +5,9 @@ import static finpik.util.Values.USER;
 
 import java.io.IOException;
 
+import finpik.error.enums.ErrorCode;
+import finpik.error.exception.BusinessException;
+import finpik.repository.user.UserRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -12,7 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import finpik.JwtProvider;
 import finpik.user.entity.User;
-import finpik.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     private static final int BEGIN_INDEX = 7;
     private static final String BEARER = "Bearer";
@@ -39,7 +41,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null && jwtProvider.isValid(token)) {
             long userId = jwtProvider.getUserId(token);
-            User user = userService.findUserBy(userId);
+            User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
 
             request.setAttribute(USER, user);
         }

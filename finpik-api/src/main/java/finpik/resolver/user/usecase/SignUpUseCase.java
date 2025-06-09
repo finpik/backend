@@ -1,5 +1,10 @@
 package finpik.resolver.user.usecase;
 
+import finpik.auth.repository.AuthCacheRepository;
+import finpik.error.enums.ErrorCode;
+import finpik.error.exception.BusinessException;
+import finpik.user.entity.User;
+import finpik.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -7,23 +12,37 @@ import finpik.JwtProvider;
 import finpik.dto.CreateTokenDto;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import finpik.resolver.user.usecase.dto.SignUpUseCaseDto;
-import finpik.user.entity.User;
-import finpik.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class SignUpUseCase {
-    private final UserService userService;
+    private final UserRepository userRepository;
+    private final AuthCacheRepository authCacheRepository;
     private final JwtProvider jwtProvider;
 
     @Transactional
     public SignUpResultDto signUp(SignUpUseCaseDto dto) {
-        User user = userService.createUser(dto.toCreateUserDto());
+        String email = authCacheRepository.getEmailByCustomId(dto.vendorId(), dto.provider());
+        validateExistingUserBy(email);
 
-        CreateTokenDto tokenDto = CreateTokenDto.builder().userId(user.getId()).email(user.getEmail())
-                .issuedAt(dto.issuedAt()).expiration(dto.expiresAt()).build();
+        User user = dto.toDomain(email);
 
-        return new SignUpResultDto(user, jwtProvider.createAccessToken(tokenDto));
+        User savedUser = userRepository.save(user);
+
+        CreateTokenDto tokenDto = CreateTokenDto.builder()
+            .userId(savedUser.getId())
+            .email(savedUser.getEmail())
+            .issuedAt(dto.issuedAt())
+            .expiration(dto.expiresAt())
+            .build();
+
+        return new SignUpResultDto(savedUser, jwtProvider.createAccessToken(tokenDto));
+    }
+
+    private void validateExistingUserBy(String email) {
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new BusinessException(ErrorCode.EXISTING_USER);
+        }
     }
 }

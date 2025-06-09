@@ -26,7 +26,7 @@ import finpik.auth.security.user.CustomOAuth2User;
 import finpik.auth.service.AuthService;
 import finpik.repository.auth.AuthRedisRepository;
 import finpik.user.entity.User;
-import finpik.user.repository.UserRepository;
+import finpik.repository.user.UserRepository;
 import jakarta.servlet.http.Cookie;
 
 @ExtendWith(MockitoExtension.class)

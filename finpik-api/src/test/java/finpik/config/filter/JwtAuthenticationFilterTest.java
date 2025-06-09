@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+import finpik.entity.enums.Gender;
+import finpik.entity.enums.RegistrationType;
+import finpik.repository.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,9 +21,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import finpik.JwtProvider;
 import finpik.user.entity.User;
-import finpik.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class JwtAuthenticationFilterTest {
@@ -32,7 +38,7 @@ class JwtAuthenticationFilterTest {
     private JwtProvider jwtProvider;
 
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
 
     private MockHttpServletRequest request;
     private MockHttpServletResponse response;
@@ -54,8 +60,11 @@ class JwtAuthenticationFilterTest {
 
         given(jwtProvider.isValid(token)).willReturn(true);
         given(jwtProvider.getUserId(token)).willReturn(1L);
-        User mockUser = User.builder().id(1L).email("test@user.com").build();
-        given(userService.findUserBy(1L)).willReturn(mockUser);
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25));
+
+        given(userRepository.findById(1L)).willReturn(Optional.of(user));
 
         // when
         filter.doFilterInternal(request, response, chain);

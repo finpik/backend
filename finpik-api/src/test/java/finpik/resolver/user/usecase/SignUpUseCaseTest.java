@@ -7,8 +7,12 @@ import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import finpik.auth.repository.AuthCacheRepository;
+import finpik.entity.enums.RegistrationType;
+import finpik.repository.user.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +25,6 @@ import finpik.entity.enums.Gender;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import finpik.resolver.user.usecase.dto.SignUpUseCaseDto;
 import finpik.user.entity.User;
-import finpik.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class SignUpUseCaseTest {
@@ -29,24 +32,32 @@ class SignUpUseCaseTest {
     private SignUpUseCase signUpUseCase;
 
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Mock
     private JwtProvider jwtProvider;
+
+    @Mock
+    private AuthCacheRepository authCacheRepository;
 
     @DisplayName("sign up할 유저를 전달하면 유저정보와 함께 access token이 리턴된다.")
     @Test
     void signUp() {
         // given
         SignUpUseCaseDto dto = SignUpUseCaseDto.builder().username("테스트").dateOfBirth(LocalDate.of(2025, 5, 25))
-                .gender(Gender.MALE).provider("123123").vendorId("kakao").issuedAt(Date.from(Instant.now()))
+                .gender(Gender.MALE).provider("kakao").vendorId("123123").issuedAt(Date.from(Instant.now()))
                 .expiresAt(Date.from(Instant.now())).build();
 
-        User user = User.builder().id(1L).email("test@test.com").dateOfBirth(LocalDate.of(2025, 5, 25))
-                .gender(Gender.MALE).username("테스트").build();
+        Long userId = 1L;
+        String email = "test@test.com";
+
+        User user = User.withId(
+            userId, "test", email, Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25));
 
         when(jwtProvider.createAccessToken(any())).thenReturn("testAccessToken");
-        when(userService.createUser(dto.toCreateUserDto())).thenReturn(user);
+        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(authCacheRepository.getEmailByCustomId("123123", "kakao")).thenReturn(email);
 
         // when
         SignUpResultDto result = signUpUseCase.signUp(dto);

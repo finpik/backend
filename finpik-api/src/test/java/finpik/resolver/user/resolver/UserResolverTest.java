@@ -4,7 +4,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import finpik.entity.enums.RegistrationType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +39,11 @@ class UserResolverTest {
     @Test
     void signUp() {
         // given
-        User user = User.builder().id(1L).email("test@test.com").dateOfBirth(LocalDate.of(2025, 5, 25))
-                .gender(Gender.MALE).username("테스트").build();
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
+        );
+
         SignUpResultDto dto = new SignUpResultDto(user, "testAccessToken");
         given(signUpUseCase.signUp(any())).willReturn(dto);
 

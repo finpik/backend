@@ -1,4 +1,4 @@
-package finpik.user.repository;
+package finpik.repository.user;
 
 import java.util.Optional;
 
