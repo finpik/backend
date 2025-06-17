@@ -1,7 +1,7 @@
 package finpik.resolver.profile.application.usecase;
 
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 
 public interface GetProfileByIdUseCase {
-    ProfileDto execute(Long id, Long userId);
+    ProfileResultDto execute(Long id, Long userId);
 }

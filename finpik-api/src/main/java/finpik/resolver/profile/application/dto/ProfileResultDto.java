@@ -8,7 +8,7 @@ import finpik.profile.entity.Profile;
 import lombok.Getter;
 
 @Getter
-public class ProfileDto {
+public class ProfileResultDto {
     Long profileId;
     PurposeOfLoan purposeOfLoan;
     Occupation occupation;
@@ -20,11 +20,11 @@ public class ProfileDto {
     Integer profileSeq;
     ProfileColor profileColor;
 
-    public ProfileDto(Profile profile) {
+    public ProfileResultDto(Profile profile) {
         profileId = profile.getId();
         purposeOfLoan = profile.getPurposeOfLoan();
-        occupation = profile.getOccupation();
-        creditGradeStatus = profile.getCreditGradeStatus();
+        occupation = profile.getOccupationDetail().getOccupation();
+        creditGradeStatus = profile.getCreditScore().creditGradeStatus();
         loanProductUsageCount = profile.getLoanProductUsageCount();
         totalLoanUsageAmount = profile.getTotalLoanUsageAmount();
         desiredLoanAmount = profile.getDesiredLoanAmount();

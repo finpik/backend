@@ -9,7 +9,7 @@ import finpik.repository.profile.ProfileRepository;
 import finpik.repository.user.UserRepository;
 import finpik.resolver.profile.application.usecase.CreateProfileUseCase;
 import finpik.resolver.profile.application.dto.CreateProfileUseCaseDto;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +27,7 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
     private static final int START_SEQ = 1;
 
     @Override
-    public ProfileDto execute(CreateProfileUseCaseDto dto) {
+    public ProfileResultDto execute(CreateProfileUseCaseDto dto) {
         User user = getUser(dto.userId());
 
         Profile profile = dto.toDomain(user);
@@ -39,7 +39,7 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
 
         sendEvent(profile);
 
-        return new ProfileDto(profileRepository.save(profile));
+        return new ProfileResultDto(profileRepository.save(profile));
     }
 
     private User getUser(Long userId) {
@@ -50,8 +50,8 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
 
     private void sendEvent(Profile profile) {
         RecommendLoanProductProfileEvent event = RecommendLoanProductProfileEvent.builder().profileId(profile.getId())
-            .creditScore(profile.getCreditScore()).purposeOfLoan(profile.getPurposeOfLoan())
-            .occupation(profile.getOccupation()).build();
+            .creditScore(profile.getCreditScore().creditScore()).purposeOfLoan(profile.getPurposeOfLoan())
+            .occupation(profile.getOccupationDetail().getOccupation()).build();
 
         eventPublisher.publishEvent(event);
     }

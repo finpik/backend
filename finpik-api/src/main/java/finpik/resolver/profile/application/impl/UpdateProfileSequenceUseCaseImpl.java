@@ -5,7 +5,7 @@ import finpik.error.exception.BusinessException;
 import finpik.profile.entity.ProfileList;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileSequenceUseCase;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.resolver.profile.application.dto.UpdateProfileSequenceUseCaseDto;
 import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
@@ -31,7 +31,7 @@ public class UpdateProfileSequenceUseCaseImpl implements UpdateProfileSequenceUs
     private final UserRepository userRepository;
 
     @Override
-    public List<ProfileDto> execute(List<UpdateProfileSequenceUseCaseDto> dtos, Long userId) {
+    public List<ProfileResultDto> execute(List<UpdateProfileSequenceUseCaseDto> dtos, Long userId) {
         validateDuplicateSequence(dtos);
         dtos.forEach(dto -> validateDtoCountLimit(dto.seq()));
 
@@ -52,7 +52,7 @@ public class UpdateProfileSequenceUseCaseImpl implements UpdateProfileSequenceUs
             .updateSequences(idSeqMap);
 
         return profileRepository.updateAll(changedProfileList).getProfiles()
-            .stream().map(ProfileDto::new).toList();
+            .stream().map(ProfileResultDto::new).toList();
     }
 
     private void validateDuplicateSequence(List<UpdateProfileSequenceUseCaseDto> dtos) {
