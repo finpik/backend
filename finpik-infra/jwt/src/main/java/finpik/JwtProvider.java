@@ -18,7 +18,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
-//@formatter:off
 @Component
 @Slf4j
 public class JwtProvider {

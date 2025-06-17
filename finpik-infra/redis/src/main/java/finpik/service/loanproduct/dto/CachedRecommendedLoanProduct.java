@@ -4,7 +4,6 @@ import finpik.loanproduct.RecommendedLoanProduct;
 import finpik.loanproduct.vo.InterestRate;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record CachedRecommendedLoanProduct(
     Long loanProductId,

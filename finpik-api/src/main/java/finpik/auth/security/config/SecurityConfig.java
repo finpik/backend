@@ -30,14 +30,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/login/oauth2/**", // 카카오 콜백 URL
-                        "/oauth2/**", // 인가 시작 URL (`/oauth2/authorization/kakao`)
-                        "/auth/**", // 사용자 정의 callback 또는 API
-                        "/graphql").permitAll().anyRequest().permitAll())
-                .oauth2Login(oauth -> oauth.userInfoEndpoint(user -> user.userService(kakaoOAuth2UserService))
-                        .successHandler(oAuth2SuccessHandler).failureHandler(oAuth2FailureHandler))
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
+        http.cors(Customizer.withDefaults())
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth.requestMatchers(
+                    "/login/oauth2/**", // 카카오 콜백 URL
+                    "/oauth2/**", // 인가 시작 URL (`/oauth2/authorization/kakao`)
+                    "/auth/**", // 사용자 정의 callback 또는 API
+                    "/graphql")
+                .permitAll()
+                .anyRequest()
+                .permitAll()
+            ).oauth2Login(oauth -> oauth.userInfoEndpoint(
+                    user -> user.userService(kakaoOAuth2UserService))
+                .successHandler(oAuth2SuccessHandler).failureHandler(oAuth2FailureHandler))
+            .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
 
         return http.build();
     }

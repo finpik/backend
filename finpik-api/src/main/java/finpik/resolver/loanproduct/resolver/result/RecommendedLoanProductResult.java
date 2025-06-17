@@ -3,7 +3,6 @@ package finpik.resolver.loanproduct.resolver.result;
 import finpik.resolver.loanproduct.application.dto.RecommendedLoanProductDto;
 import lombok.Getter;
 
-//@formatter:off
 @Getter
 public class RecommendedLoanProductResult {
     private final Long loanProductId;

@@ -71,9 +71,9 @@ public class LoanProductEntity {
 
     @Builder
     public LoanProductEntity(Long id, String productName, String bankName, Float maxInterestRate, Float minInterestRate,
-            Integer maxCreditLine, Integer loanPeriod, Integer maxCreditGrade, Integer minCreditGrade, Integer age,
-            Integer loanLimitAmount, LoanProductDescriptionEntity description, LoanPeriodUnit loanPeriodUnit,
-            Occupation occupation, PurposeOfLoan purposeOfLoan) {
+                             Integer maxCreditLine, Integer loanPeriod, Integer maxCreditGrade, Integer minCreditGrade, Integer age,
+                             Integer loanLimitAmount, LoanProductDescriptionEntity description, LoanPeriodUnit loanPeriodUnit,
+                             Occupation occupation, PurposeOfLoan purposeOfLoan) {
         this.id = id;
         this.productName = productName;
         this.bankName = bankName;
