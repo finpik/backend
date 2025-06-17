@@ -5,14 +5,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.Occupation;
 import finpik.entity.enums.RegistrationType;
+import finpik.profile.entity.policy.ProfileCreationSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
-import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.error.enums.ErrorCode;
@@ -32,36 +33,36 @@ class ProfileTest {
             RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
         );
 
-        Long id = 1L;
-        
         Profile profile = getDefaultProfile(user);
-
-        Profile updatingProfile = Profile.withId(
-            id,
-            10_000_000,
+        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
+            1L,
+            100,
+            100,
+            100,
+            1000,
+            "profile name",
             0,
-            0,
-            900,
             CreditGradeStatus.EXCELLENT,
-            null,
-            0,
-            null,
-            EmploymentForm.CONTRACT,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
-            null,
-            "내 전 프로필",
-            Occupation.OTHER,
+            ProfileColor.GRAY_TWO,
+            1000,
+            LocalDate.now(),
+            LocalDate.now(),
+            Occupation.EMPLOYEE,
+            EmploymentForm.CONTRACT,
             user,
-            ProfileColor.BLUE_TWO
+            LocalDateTime.now(),
+            LocalDateTime.now()
         );
+
+        Profile updatingProfile = Profile.withId(spec);
 
         // when
         profile.updateProfile(updatingProfile);
 
         // then
-        assertAll(() -> assertThat(profile.getOccupation()).isEqualTo(Occupation.OTHER),
-                () -> assertThat(profile.getEmploymentForm()).isEqualTo(EmploymentForm.CONTRACT),
+        assertAll(() -> assertThat(profile.getOccupationDetail().getOccupation()).isEqualTo(Occupation.EMPLOYEE),
                 () -> assertThat(profile.getPurposeOfLoan()).isEqualTo(PurposeOfLoan.LOAN_REPAYMENT));
     }
 
@@ -84,90 +85,74 @@ class ProfileTest {
         assertThat(profile.getSeq()).isEqualTo(seq);
     }
 
-    @DisplayName("프로필 생성시 EMPLOYEE인데 수입, 직장명, 입사일을 적지 않으면 예외가 발생한다.")
-    @Test
-    void validateInfoRelatedEmploymentStatus() {
-        // given
-        // when
-        // then
-        assertThatThrownBy(
-                () -> Profile.withId(
-                    1L,
-                    10_000_000,
-                    0,
-                    0,
-                    900,
-                    CreditGradeStatus.EXCELLENT,
-                    null,
-                    0,
-                    null,
-                    EmploymentForm.CONTRACT,
-                    LoanProductUsageStatus.NOT_USING,
-                    PurposeOfLoan.LOAN_REPAYMENT,
-                    null,
-                    "내 전 프로필",
-                    Occupation.EMPLOYEE,
-                    null,
-                    ProfileColor.BLUE_TWO
-                )).hasMessage(ErrorCode.INVALID_EMPLOYMENT_INFO.getMessage());
-    }
-
     @DisplayName("프로필 생성시 신용 등급와, 신용 점수가 없다면 예외가 발생한다.")
     @Test
     void validateCredits() {
         // given
-        // when
-        // then
-        assertThatThrownBy(() -> Profile.withId(
+        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
             1L,
-            10_000_000,
+            100,
+            100,
+            100,
+            null,
+            "profile name",
             0,
-            0,
             null,
-            null,
-            null,
-            0,
-            null,
-            EmploymentForm.CONTRACT,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
+            ProfileColor.GRAY_TWO,
+            1000,
+            LocalDate.now(),
+            LocalDate.now(),
+            Occupation.EMPLOYEE,
+            EmploymentForm.CONTRACT,
             null,
-            "내 전 프로필",
-            Occupation.SELF_EMPLOYED,
-            null,
-            ProfileColor.BLUE_TWO
-        )).hasMessage(ErrorCode.CREDITS_CANNOT_BE_NULL.getMessage());
+            LocalDateTime.now(),
+            LocalDateTime.now()
+        );
+
+        // when
+        // then
+        assertThatThrownBy(() -> Profile.withId(spec))
+            .hasMessage(ErrorCode.CREDITS_CANNOT_BE_NULL.getMessage());
     }
 
     @DisplayName("프로필 생성시 신용 점수가 있다면 신용등급이 정해진다.")
     @Test
     void determineCreditGradeStatusByScore() {
-        // given
-        int score = 900;
-
-        // when
-        Profile profile = Profile.withId(
-            1L,
-            10_000_000,
-            0,
-            0,
-            900,
-            null,
-            null,
-            0,
-            null,
-            EmploymentForm.CONTRACT,
-            LoanProductUsageStatus.NOT_USING,
-            PurposeOfLoan.LOAN_REPAYMENT,
-            null,
-            "내 전 프로필",
-            Occupation.SELF_EMPLOYED,
-            null,
-            ProfileColor.BLUE_TWO
+        User user = User.withId(
+            1L, "test", "test@test.com", Gender.MALE,
+            RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
         );
 
+        // given
+        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
+            1L,
+            100,
+            100,
+            100,
+            1000,
+            "profile name",
+            0,
+            CreditGradeStatus.EXCELLENT,
+            LoanProductUsageStatus.NOT_USING,
+            PurposeOfLoan.LOAN_REPAYMENT,
+            ProfileColor.GRAY_TWO,
+            1000,
+            LocalDate.now(),
+            LocalDate.now(),
+            Occupation.EMPLOYEE,
+            EmploymentForm.CONTRACT,
+            user,
+            LocalDateTime.now(),
+            LocalDateTime.now()
+        );
+
+        // when
+        Profile profile = Profile.withId(spec);
+
         // then
-        assertThat(profile.getCreditGradeStatus()).isEqualTo(CreditGradeStatus.EXCELLENT);
+        assertThat(profile.getCreditScore().creditGradeStatus()).isEqualTo(CreditGradeStatus.EXCELLENT);
     }
 
     @DisplayName("프로필 색상을 변경할 수 있다.")
@@ -190,24 +175,28 @@ class ProfileTest {
     }
 
     private Profile getDefaultProfile(User user) {
-        return Profile.withId(
+        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
             1L,
-            10_000_000,
+            100,
+            100,
+            100,
+            1000,
+            "profile name",
             0,
-            0,
-            900,
             CreditGradeStatus.EXCELLENT,
-            null,
-            0,
-            null,
-            EmploymentForm.CONTRACT,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
-            null,
-            "내 전 프로필",
+            ProfileColor.GRAY_TWO,
+            1000,
+            LocalDate.now(),
+            LocalDate.now(),
             Occupation.OTHER,
+            null,
             user,
-            ProfileColor.BLUE_TWO
+            LocalDateTime.now(),
+            LocalDateTime.now()
         );
+
+        return Profile.withId(spec);
     }
 }
