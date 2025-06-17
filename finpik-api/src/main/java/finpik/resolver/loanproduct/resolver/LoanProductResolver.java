@@ -34,8 +34,8 @@ public class LoanProductResolver implements LoanProductApi {
             @Argument Long profileId) {
         require(userInput);
 
-        List<RecommendedLoanProductDto> recommendedLoanProductDtoList = getLoanProductUseCase
-                .getRecommendedLoanProducts(profileId);
+        List<RecommendedLoanProductDto> recommendedLoanProductDtoList =
+            getLoanProductUseCase.getRecommendedLoanProducts(profileId);
 
         return recommendedLoanProductDtoList.stream().map(RecommendedLoanProductResult::new).toList();
     }
@@ -58,8 +58,7 @@ public class LoanProductResolver implements LoanProductApi {
     public List<RelatedLoanProductResult> getRelatedLoanProductList(User userInput, Long productId) {
         require(userInput);
 
-        List<RelatedLoanProductDto> relatedLoanProductList = getLoanProductUseCase
-                .getRelatedLoanProductList(productId);
+        List<RelatedLoanProductDto> relatedLoanProductList = getLoanProductUseCase.getRelatedLoanProductList(productId);
 
         return relatedLoanProductList.stream().map(RelatedLoanProductResult::new).toList();
     }

@@ -1,4 +1,4 @@
-package finpik.auth.usecase;
+package finpik.auth.application;
 
 import java.time.Duration;
 import java.util.Date;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import finpik.JwtProvider;
-import finpik.auth.usecase.dto.TokenRefreshResultDto;
+import finpik.auth.application.dto.TokenRefreshResultDto;
 import finpik.dto.CreateTokenDto;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;

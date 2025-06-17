@@ -9,8 +9,8 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import finpik.auth.controller.result.AuthResult;
-import finpik.auth.usecase.TokenUseCase;
-import finpik.auth.usecase.dto.TokenRefreshResultDto;
+import finpik.auth.application.TokenUseCase;
+import finpik.auth.application.dto.TokenRefreshResultDto;
 import graphql.GraphQLContext;
 import lombok.RequiredArgsConstructor;
 
@@ -24,10 +24,14 @@ public class AuthResolver implements AuthApi {
         TokenRefreshResultDto resultDto = tokenUseCase.refresh(refreshToken);
 
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-        if (attributes != null) {
+        if (isNotAttributeNull(attributes)) {
             attributes.setAttribute(REFRESH_TOKEN, resultDto.newRefreshToken(), RequestAttributes.SCOPE_REQUEST);
         }
 
         return new AuthResult(resultDto.newAccessToken());
+    }
+
+    private boolean isNotAttributeNull(RequestAttributes attribute) {
+        return attribute != null;
     }
 }

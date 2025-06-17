@@ -1,5 +1,6 @@
 package finpik.sse;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,12 +18,13 @@ public class SseController {
 
     @GetMapping("/subscribe")
     public SseEmitter subscribe(Long profileId, HttpServletResponse response) {
-        response.setContentType("application/json;charset=UTF-8");
+        response.setContentType("text/event-stream;charset=UTF-8");
 
         SseEmitter emitter = sseEmitterService.createSseEmitter(profileId);
 
         try {
-            emitter.send(SseEmitter.event().name("connect").data("SSE 연결됨"));
+            emitter.send(SseEmitter.event().name("connect")
+                .data("SSE 연결됨", MediaType.APPLICATION_JSON).build());
         } catch (Exception e) {
             emitter.completeWithError(e);
         }

@@ -44,7 +44,7 @@ public class RecommendLoanProductConsumer {
 
     /**
      * @param message
-     *            기본 설정 시도 3번, dlq 토픽 서픽스 기본 설정 -dlq 사용
+     * 기본 설정 시도 3번, dlq 토픽 서픽스 기본 설정 -dlq 사용
      */
     @RetryableTopic(backoff = @Backoff(delay = 1000, multiplier = 2))
     @KafkaListener(topics = RECOMMENDATION_TOPIC, groupId = LOAN_RECOMMENDER_GROUP_ID)
@@ -54,6 +54,7 @@ public class RecommendLoanProductConsumer {
 
         Long profileId = loanProductDto.profileId();
 
+        //캐싱
         List<CachedRecommendedLoanProduct> cachedRecommendedLoanProductList = loanProductDto
                 .toCachedRecommendedLoanProductList();
 

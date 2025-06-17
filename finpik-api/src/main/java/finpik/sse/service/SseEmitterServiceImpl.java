@@ -4,6 +4,7 @@ import static finpik.util.Values.ONE_MINUTE_MILL;
 
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
@@ -35,15 +36,20 @@ public class SseEmitterServiceImpl implements SseEmitterService {
         log.info("Notify recommendation completed for {}", event.eventId());
 
         List<RecommendedLoanProductResult> resultList = event.contentList().stream()
-                .map(it -> new RecommendedLoanProductResult(it.loanProductId(), it.productName(), it.minInterestRate(),
-                        it.maxInterestRate(), it.loanLimitAmount()))
-                .toList();
+            .map(it -> new
+                RecommendedLoanProductResult(
+                it.loanProductId(), it.productName(), it.minInterestRate(),
+                it.maxInterestRate(), it.loanLimitAmount())
+            ).toList();
 
         SseEmitter emitter = sseEmitterRepository.get(event.profileId());
+
         if (emitter != null) {
             try {
-                emitter.send(SseEmitter.event().name("recommendation").data(resultList));
+                emitter.send(SseEmitter.event().name("recommendation")
+                    .data(resultList, MediaType.APPLICATION_JSON));
                 emitter.complete();
+
             } catch (Exception e) {
                 emitter.completeWithError(e);
                 sseEmitterRepository.delete(event.profileId());
