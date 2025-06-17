@@ -16,7 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import finpik.auth.controller.AuthResolver;
-import finpik.auth.usecase.TokenUseCase;
+import finpik.auth.application.TokenUseCase;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
