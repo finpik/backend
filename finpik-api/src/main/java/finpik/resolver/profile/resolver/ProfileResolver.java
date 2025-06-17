@@ -15,7 +15,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.resolver.profile.application.dto.UpdateProfileSequenceUseCaseDto;
 import finpik.resolver.profile.resolver.input.CreateProfileInput;
 import finpik.resolver.profile.resolver.input.UpdateProfileColorInput;
@@ -44,7 +44,7 @@ public class ProfileResolver implements ProfileApi {
             @ContextValue(value = "user", required = false) User userInput) {
         User user = validateUser(userInput);
 
-        ProfileDto profile = createProfileUseCase.execute(input.toDto(user.getId()));
+        ProfileResultDto profile = createProfileUseCase.execute(input.toDto(user.getId()));
 
         return ProfileResult.of(profile);
     }
@@ -54,7 +54,7 @@ public class ProfileResolver implements ProfileApi {
     public List<ProfileResult> profileByUser(@ContextValue(value = "user", required = false) User userInput) {
         User userDto = validateUser(userInput);
 
-        List<ProfileDto> profileList = getProfileListByUserUseCase.execute(userDto.getId());
+        List<ProfileResultDto> profileList = getProfileListByUserUseCase.execute(userDto.getId());
 
         return profileList.stream().map(ProfileResult::of).toList();
     }
@@ -65,7 +65,7 @@ public class ProfileResolver implements ProfileApi {
             @ContextValue(value = "user", required = false) User userInput) {
         validateUser(userInput);
 
-        ProfileDto profile = getProfileByIdUseCase.execute(id, userInput.getId());
+        ProfileResultDto profile = getProfileByIdUseCase.execute(id, userInput.getId());
 
         return ProfileResult.of(profile);
     }
@@ -76,7 +76,7 @@ public class ProfileResolver implements ProfileApi {
             @ContextValue(value = "user", required = false) User userInput) {
         validateUser(userInput);
 
-        ProfileDto profile = updateProfileUseCase.execute(input.toDto());
+        ProfileResultDto profile = updateProfileUseCase.execute(input.toDto());
 
         return ProfileResult.of(profile);
     }
@@ -89,7 +89,7 @@ public class ProfileResolver implements ProfileApi {
 
         List<UpdateProfileSequenceUseCaseDto> dtos = input.stream().map(UpdateProfileSequenceInput::toDto).toList();
 
-        List<ProfileDto> profileList = updateProfileSequenceUseCase.execute(dtos, user.getId());
+        List<ProfileResultDto> profileList = updateProfileSequenceUseCase.execute(dtos, user.getId());
 
         return profileList.stream().map(ProfileResult::of).toList();
     }
@@ -109,7 +109,7 @@ public class ProfileResolver implements ProfileApi {
             @ContextValue(value = "user", required = false) User userInput) {
         User user = validateUser(userInput);
 
-        List<ProfileDto> profileList = deleteProfileUseCase.execute(deletedId, user.getId());
+        List<ProfileResultDto> profileList = deleteProfileUseCase.execute(deletedId, user.getId());
 
         return profileList.stream().map(ProfileResult::of).toList();
     }

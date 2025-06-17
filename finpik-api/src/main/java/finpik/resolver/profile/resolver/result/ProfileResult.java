@@ -4,10 +4,9 @@ import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record ProfileResult(
     Long profileId,
@@ -22,7 +21,7 @@ public record ProfileResult(
     ProfileColor profileColor
 ) {
 
-    public static ProfileResult of(ProfileDto profile) {
+    public static ProfileResult of(ProfileResultDto profile) {
         return ProfileResult.builder()
             .profileId(profile.getProfileId())
             .purposeOfLoan(profile.getPurposeOfLoan())

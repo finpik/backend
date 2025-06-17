@@ -15,14 +15,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record CreateProfileInput(
     @NotNull(message = "직업을 선택해 주세요.")
     Occupation occupation,
-    String workplaceName,
     EmploymentForm employmentForm,
-    Integer income,
+    Integer annualIncome,
     LocalDate employmentDate,
     @NotNull(message = "대출 목적을 선택해 주세요.")
     PurposeOfLoan purposeOfLoan,
@@ -46,9 +44,8 @@ public record CreateProfileInput(
 ) {
     public CreateProfileUseCaseDto toDto(Long userId) {
         return CreateProfileUseCaseDto.builder()
-            .workplaceName(workplaceName)
             .employmentForm(employmentForm)
-            .income(income)
+            .annualIncome(annualIncome)
             .employmentDate(employmentDate)
             .loanProductUsageStatus(loanProductUsageStatus)
             .loanProductUsageCount(loanProductUsageCount)

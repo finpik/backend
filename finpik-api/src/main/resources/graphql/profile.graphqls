@@ -13,9 +13,8 @@ extend type Query {
 
 input CreateProfileInput {
     occupation: Occupation!
-    workplaceName: String
     employmentForm: EmploymentForm
-    income: Int
+    annualIncome: Int
     employmentDate: Date
     purposeOfLoan: PurposeOfLoan!
     desiredLoanAmount: Int!
@@ -31,9 +30,8 @@ input CreateProfileInput {
 input UpdateProfileInput {
     profileId: Long
     occupation: Occupation!
-    workplaceName: String
     employmentForm: EmploymentForm
-    income: Int
+    annualIncome: Int
     employmentDate: Date
     purposeOfLoan: PurposeOfLoan!
     desiredLoanAmount: Int!
@@ -43,6 +41,7 @@ input UpdateProfileInput {
     creditScore: Int!
     creditGradeStatus: CreditGradeStatus!
     profileName: String!
+    businessStartDate: Date
 }
 
 input UpdateProfileSequenceInput {

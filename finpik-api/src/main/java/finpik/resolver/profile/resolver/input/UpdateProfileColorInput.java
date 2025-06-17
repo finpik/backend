@@ -5,7 +5,6 @@ import finpik.resolver.profile.application.dto.UpdateProfileColorUseCaseDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record UpdateProfileColorInput(
     @NotNull(message = "바꿀 프로필의 아이디가 필요합니다.")

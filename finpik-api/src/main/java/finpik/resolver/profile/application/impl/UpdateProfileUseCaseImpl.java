@@ -5,7 +5,7 @@ import finpik.error.exception.BusinessException;
 import finpik.profile.entity.Profile;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileUseCase;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.resolver.profile.application.dto.UpdateProfileUseCaseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ public class UpdateProfileUseCaseImpl implements UpdateProfileUseCase {
     private final ProfileRepository profileRepository;
 
     @Override
-    public ProfileDto execute(UpdateProfileUseCaseDto dto) {
+    public ProfileResultDto execute(UpdateProfileUseCaseDto dto) {
         Profile changedProfile = dto.toDomain();
         Profile profile = findProfileBy(dto.id());
 
         profile.updateProfile(changedProfile);
 
-        return new ProfileDto(profileRepository.update(profile));
+        return new ProfileResultDto(profileRepository.update(profile));
     }
 
     private Profile findProfileBy(long id) {

@@ -1,9 +1,9 @@
 package finpik.resolver.profile.application.usecase;
 
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 
 import java.util.List;
 
 public interface GetProfileListByUserUseCase {
-    List<ProfileDto> execute(Long userId);
+    List<ProfileResultDto> execute(Long userId);
 }

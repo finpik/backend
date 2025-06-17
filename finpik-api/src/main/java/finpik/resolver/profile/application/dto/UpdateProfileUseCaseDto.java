@@ -8,6 +8,7 @@ import finpik.entity.enums.LoanProductUsageStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.profile.entity.Profile;
+import finpik.profile.entity.policy.ProfileCreationSpec;
 import lombok.Builder;
 
 @Builder
@@ -16,7 +17,7 @@ public record UpdateProfileUseCaseDto(
     Occupation occupation,
     String workplaceName,
     EmploymentForm employmentForm,
-    Integer income,
+    Integer annualIncome,
     LocalDate employmentDate,
     PurposeOfLoan purposeOfLoan,
     Integer desiredLoanAmount,
@@ -25,15 +26,20 @@ public record UpdateProfileUseCaseDto(
     Integer totalLoanUsageAmount,
     Integer creditScore,
     CreditGradeStatus creditGradeStatus,
-    String profileName
+    String profileName,
+    LocalDate businessStartDate
 ) {
     public Profile toDomain() {
-        return Profile.withId(
-            id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
-            creditScore, creditGradeStatus, income, null,
-            workplaceName, employmentForm, loanProductUsageStatus,
-            purposeOfLoan, employmentDate, profileName,
-            occupation, null, null
+        ProfileCreationSpec spec = ProfileCreationSpec.createNew(
+            desiredLoanAmount, loanProductUsageCount,
+            totalLoanUsageAmount, creditScore,
+            profileName, creditGradeStatus,
+            loanProductUsageStatus, purposeOfLoan,
+            null, annualIncome, businessStartDate,
+            employmentDate, occupation,
+            employmentForm, null
         );
+
+        return Profile.withId(spec);
     }
 }

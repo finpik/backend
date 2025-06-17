@@ -5,7 +5,7 @@ import finpik.error.exception.BusinessException;
 import finpik.profile.entity.Profile;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileColorUseCase;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.resolver.profile.application.dto.UpdateProfileColorUseCaseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ public class UpdateProfileColorUseCaseImpl implements UpdateProfileColorUseCase 
     private final ProfileRepository profileRepository;
 
     @Override
-    public ProfileDto execute(UpdateProfileColorUseCaseDto dto) {
+    public ProfileResultDto execute(UpdateProfileColorUseCaseDto dto) {
         Profile profile = findProfileBy(dto.id());
 
         profile.changeProfileColor(dto.profileColor());
 
-        return new ProfileDto(profileRepository.update(profile));
+        return new ProfileResultDto(profileRepository.update(profile));
     }
 
     private Profile findProfileBy(long id) {
