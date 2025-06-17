@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import finpik.entity.enums.Occupation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
-import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.resolver.profile.application.dto.CreateProfileUseCaseDto;
@@ -58,7 +58,7 @@ class CreateProfileInputTest {
         Long userId = 1L;
 
         CreateProfileInput input = CreateProfileInput.builder().occupation(Occupation.EMPLOYEE)
-                .workplaceName("Example Corp").employmentForm(EmploymentForm.CONTRACT).income(50000000)
+                .employmentForm(EmploymentForm.CONTRACT).annualIncome(50000000)
                 .employmentDate(LocalDate.of(2020, 1, 1)).purposeOfLoan(PurposeOfLoan.LOAN_REPAYMENT)
                 .desiredLoanAmount(10000000).loanProductUsageStatus(LoanProductUsageStatus.NOT_USING)
                 .loanProductUsageCount(2).totalLoanUsageAmount(5000000).creditScore(750)

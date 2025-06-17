@@ -3,14 +3,14 @@ package entity.profile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.Occupation;
 import finpik.entity.enums.RegistrationType;
+import finpik.profile.entity.policy.ProfileCreationSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import finpik.entity.enums.CreditGradeStatus;
-import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
-import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.entity.profile.ProfileEntity;
@@ -58,24 +58,28 @@ class ProfileEntityTest {
             RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
         );
 
-        return Profile.withId(
+        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
             1L,
-            10_000_000,
+            100,
+            100,
+            100,
+            1000,
+            "profile name",
             0,
-            0,
-            900,
             CreditGradeStatus.EXCELLENT,
-            null,
-            0,
-            null,
-            EmploymentForm.CONTRACT,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
-            null,
-            "내 전 프로필",
+            ProfileColor.GRAY_TWO,
+            1000,
+            LocalDate.now(),
+            LocalDate.now(),
             Occupation.OTHER,
+            null,
             user,
-            ProfileColor.BLUE_TWO
+            LocalDateTime.now(),
+            LocalDateTime.now()
         );
+
+        return Profile.withId(spec);
     }
 }

@@ -22,8 +22,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import finpik.auth.usecase.TokenUseCase;
-import finpik.auth.usecase.dto.TokenRefreshResultDto;
+import finpik.auth.application.TokenUseCase;
+import finpik.auth.application.dto.TokenRefreshResultDto;
 import jakarta.servlet.http.Cookie;
 
 @SpringBootTest

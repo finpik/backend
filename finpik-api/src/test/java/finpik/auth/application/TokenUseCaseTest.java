@@ -1,4 +1,4 @@
-package finpik.auth.usecase;
+package finpik.auth.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import finpik.JwtProvider;
-import finpik.auth.usecase.dto.TokenRefreshResultDto;
+import finpik.auth.application.dto.TokenRefreshResultDto;
 import finpik.error.enums.ErrorCode;
 import finpik.user.entity.User;
 
