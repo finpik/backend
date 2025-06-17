@@ -3,7 +3,6 @@ package finpik.dto;
 import java.util.List;
 import java.util.UUID;
 
-//@formatter:off
 public record RecommendedCompleteEvent(
     Long profileId,
     UUID eventId,
