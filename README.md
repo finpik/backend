@@ -30,4 +30,5 @@ Features
 - feature/FP-18: 레디스 캐시 ttl 설정
 - feature/FP-19: infra 하위 패키지 -> 모듈로 분리
 - feature/FP-20: 1차 구조변경
-- feature/FP-21: 프로파일 직업군 기획 추가로 인한 변경
+- feature/FP-21: 프로파일 직업군 기획 추가로 인한 수정
+- feature/FP-22: 대출 상품 기획 변경으로 인한 수정
