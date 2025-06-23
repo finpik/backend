@@ -63,14 +63,14 @@ public class LoanProduct {
             repaymentPeriod,
             bankDetails,
             interestRate,
-            requirePositive(dto.minAge(), "minAge must not be null."),
-            requirePositive(dto.maxAge(), "maxAge must not be null."),
+            dto.minAge(),
+            dto.maxAge(),
             require(dto.genderLimit(), "genderLimit must not be null."),
-            requirePositive(dto.maxLoanLimitAmount(), "maxLoanLimitAmount must not be null."),
+            dto.maxLoanLimitAmount(),
             description,
-            require(dto.certificateRequirement(), "certificateRequirement must not be null."),
+            dto.certificateRequirement(),
             require(dto.occupation(), "occupation must not be null."),
-            require(dto.url(), "url must not be null."),
+            dto.url(),
             requirePositive(dto.minCreditScore(), "minCreditScore must not be null.")
         );
     }
