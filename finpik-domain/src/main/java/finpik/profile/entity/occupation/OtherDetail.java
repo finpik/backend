@@ -1,5 +1,6 @@
 package finpik.profile.entity.occupation;
 
+import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
 
 public record OtherDetail(
@@ -19,5 +20,10 @@ public record OtherDetail(
     @Override
     public Integer getAnnualIncome() {
         return annualIncome;
+    }
+
+    @Override
+    public EmploymentForm getEmploymentForm() {
+        return null;
     }
 }

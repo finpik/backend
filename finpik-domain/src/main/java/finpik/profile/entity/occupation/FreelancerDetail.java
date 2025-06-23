@@ -1,5 +1,6 @@
 package finpik.profile.entity.occupation;
 
+import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
 import finpik.error.enums.ErrorCode;
 
@@ -10,10 +11,12 @@ import static finpik.util.Preconditions.require;
 public record FreelancerDetail(
     Occupation occupation,
     Integer annualIncome,
-    LocalDate employmentDate
+    LocalDate employmentDate,
+    EmploymentForm employmentForm
 ) implements OccupationDetail {
     public FreelancerDetail {
         require(employmentDate, ErrorCode.INVALID_FREELANCER_FIELDS.getMessage());
+        employmentForm = EmploymentForm.CONTRACT;
     }
 
     @Override
@@ -24,5 +27,10 @@ public record FreelancerDetail(
     @Override
     public Integer getAnnualIncome() {
         return annualIncome;
+    }
+
+    @Override
+    public EmploymentForm getEmploymentForm() {
+        return employmentForm;
     }
 }
