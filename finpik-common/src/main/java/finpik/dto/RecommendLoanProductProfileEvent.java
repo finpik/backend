@@ -1,7 +1,8 @@
 package finpik.dto;
 
+import finpik.entity.enums.EmploymentForm;
+import finpik.entity.enums.Gender;
 import finpik.entity.enums.Occupation;
-import finpik.entity.enums.PurposeOfLoan;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,18 +11,23 @@ public class RecommendLoanProductProfileEvent {
     Long profileId;
     Integer desiredLimit;
     Integer creditScore;
-    PurposeOfLoan purposeOfLoan;
     Occupation occupation;
+    EmploymentForm employmentForm;
+    Gender gender;
     Integer age;
 
     @Builder
-    public RecommendLoanProductProfileEvent(Long profileId, Integer desiredLimit, Integer creditScore,
-                                            PurposeOfLoan purposeOfLoan, Occupation occupation, Integer age) {
+    public RecommendLoanProductProfileEvent(
+        Long profileId, Integer desiredLimit, Integer creditScore,
+        Occupation occupation, EmploymentForm employmentForm,
+        Integer age, Gender gender
+    ) {
         this.profileId = profileId;
         this.desiredLimit = desiredLimit;
         this.creditScore = creditScore;
-        this.purposeOfLoan = purposeOfLoan;
         this.occupation = occupation;
+        this.employmentForm = employmentForm;
+        this.gender = gender;
         this.age = age;
     }
 }
