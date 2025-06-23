@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import finpik.entity.enums.CertificateRequirement;
-import finpik.loanproduct.vo.CreditGrade;
+import finpik.entity.enums.Gender;
 import finpik.loanproduct.vo.InterestRate;
 import finpik.loanproduct.vo.RepaymentPeriod;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
-import finpik.entity.enums.PurposeOfLoan;
 import finpik.entity.loanproduct.LoanProductDescriptionEntity;
 import finpik.entity.loanproduct.LoanProductEntity;
 import finpik.loanproduct.LoanProduct;
@@ -36,8 +35,11 @@ class LoanProductEntityTest {
             .minInterestRate(2.0f)
             .repaymentPeriod(5)
             .minAge(20)
+            .maxAge(35)
+            .genderLimit(Gender.MALE)
             .maxLoanLimitAmount(1000L)
             .description(description)
+            .minCreditScore(0)
             .repaymentPeriodUnit(RepaymentPeriodUnit.YEAR)
             .certificateRequirement(CertificateRequirement.YES)
             .occupation(Occupation.EMPLOYEE)
@@ -49,7 +51,6 @@ class LoanProductEntityTest {
 
         // then
         InterestRate interestRate = result.getInterestRate();
-        CreditGrade creditGrade = result.getCreditGrade();
         RepaymentPeriod repaymentPeriod = result.getRepaymentPeriod();
 
         assertAll(
