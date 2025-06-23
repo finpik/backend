@@ -15,20 +15,22 @@ type RecommendedLoanProductResult {
 type LoanProductResult {
     productName: String!
     bankName: String!
-    loanLimitAmount: Int!
+    maxLoanLimitAmount: Int!
     maxInterestRate: Float!
     minInterestRate: Float!
-    loanPeriod: Int!
-    loanPeriodUnit: LoanPeriodUnit!
+    repaymentPeriod: Int! # 대출 기간에 관한 내용 질문 필요
+    repaymentPeriodUnit: LoanPeriodUnit!
     descriptionResult: LoanProductDescriptionResult!
 }
 
 type LoanProductDescriptionResult {
+    loanPrerequisite: String!
+    loanTargetGuide: String!
     interestRateGuide: String!
-    repaymentPeriod: String!
-    creditLoanGuide: String!
-    loanFeeGuide: String!
+    maxLoanLimitGuide: String!
+    repaymentPeriodGuide: String!
     notesOnLoan: String!
+    preLoanChecklist: String!
 }
 
 type RelatedLoanProductResult {
