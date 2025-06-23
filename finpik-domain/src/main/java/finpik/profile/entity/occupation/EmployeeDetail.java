@@ -28,4 +28,9 @@ public record EmployeeDetail(
     public Integer getAnnualIncome() {
         return annualIncome;
     }
+
+    @Override
+    public EmploymentForm getEmploymentForm() {
+        return employmentForm;
+    }
 }

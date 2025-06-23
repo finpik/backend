@@ -1,7 +1,9 @@
 package finpik.profile.entity.occupation;
 
+import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
 import finpik.error.enums.ErrorCode;
+import finpik.error.exception.BusinessException;
 import finpik.profile.entity.policy.ProfileCreationSpec;
 
 import static finpik.util.Preconditions.require;
@@ -11,6 +13,7 @@ public sealed interface OccupationDetail
 {
     Occupation getOccupation();
     Integer getAnnualIncome();
+    EmploymentForm getEmploymentForm();
 
     static OccupationDetail of(ProfileCreationSpec spec) {
         require(spec.annualIncome(), ErrorCode.INVALID_ANNUAL_INCOME.getMessage());
@@ -38,13 +41,16 @@ public sealed interface OccupationDetail
             case FREELANCER -> new FreelancerDetail(
                 spec.occupation(),
                 spec.annualIncome(),
-                spec.employmentDate()
+                spec.employmentDate(),
+                EmploymentForm.CONTRACT
             );
 
             case OTHER -> new OtherDetail(
                 spec.occupation(),
                 spec.annualIncome()
             );
+
+            default -> throw new BusinessException(ErrorCode.UNSUPPORTED_OCCUPATION);
         };
     }
 }
