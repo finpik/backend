@@ -43,6 +43,7 @@ public enum ErrorCode {
     INVALID_ANNUAL_INCOME("유효하지 않은 연수입 입니다. 값을 확인해주세요.", "PRF-0011", CustomHttpStatus.BAD_REQUEST),
     INVALID_PUBLIC_SERVANT_FIELDS("공무워 직군 관련 필드에 문제가 있습니다.", "PRF-0012", CustomHttpStatus.BAD_REQUEST),
     INVALID_FREELANCER_FIELDS("프리랜서 직군 관련 필드에 문제가 있습니다.", "PRF-0013", CustomHttpStatus.BAD_REQUEST),
+    UNSUPPORTED_OCCUPATION("지원하지 않는 직군입니다.", "PRF-0014", CustomHttpStatus.BAD_REQUEST),
 
     // Loan Product
     NOT_FOUND_LOAN_PRODUCT("대출 상품을 찾을 수 없습니다.", "LPD-0001", CustomHttpStatus.NOT_FOUND),
