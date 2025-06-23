@@ -13,14 +13,14 @@ public class RelatedLoanProduct {
     private Long productId;
     private String productName;
     private InterestRate interestRate;
-    private Integer loanLimitAmount;
+    private Long maxLoanLimitAmount;
 
     public static RelatedLoanProduct of(
         Long productId,
         String productName,
         InterestRate interestRate,
-        Integer loanLimitAmount
+        Long maxLoanLimitAmount
     ) {
-        return new RelatedLoanProduct(productId, productName, interestRate, loanLimitAmount);
+        return new RelatedLoanProduct(productId, productName, interestRate, maxLoanLimitAmount);
     }
 }
