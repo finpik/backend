@@ -3,13 +3,14 @@ package entity.loanproduct;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import finpik.entity.enums.CertificateRequirement;
 import finpik.loanproduct.vo.CreditGrade;
 import finpik.loanproduct.vo.InterestRate;
-import finpik.loanproduct.vo.LoanPeriod;
+import finpik.loanproduct.vo.RepaymentPeriod;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import finpik.entity.enums.LoanPeriodUnit;
+import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.entity.loanproduct.LoanProductDescriptionEntity;
@@ -22,11 +23,26 @@ class LoanProductEntityTest {
     @Test
     void toDomain() {
         // given
-        LoanProductEntity entity = LoanProductEntity.builder().id(1L).productName("상품 이름").bankName("은행 이름")
-                .maxInterestRate(3.5f).minInterestRate(2.0f).maxCreditLine(900).loanPeriod(5).maxCreditGrade(900)
-                .minCreditGrade(500).age(20).loanLimitAmount(1000)
-                .description(LoanProductDescriptionEntity.builder().build()).loanPeriodUnit(LoanPeriodUnit.YEAR)
-                .occupation(Occupation.EMPLOYEE).purposeOfLoan(PurposeOfLoan.LOAN_REPAYMENT).build();
+        LoanProductDescriptionEntity description = new LoanProductDescriptionEntity(
+            "필수조건", "대상 가이드", "한도 가이드", "상환기간 가이드", "금리 가이드",
+            "이용시간 가이드", "상환수수료 가이드", "연체이자 가이드",
+            "주의사항", "대출 신청전 확인", "인증서 가이드"
+        );
+
+        LoanProductEntity entity = LoanProductEntity.builder()
+            .productName("상품 이름")
+            .bankName("은행 이름")
+            .maxInterestRate(3.5f)
+            .minInterestRate(2.0f)
+            .repaymentPeriod(5)
+            .minAge(20)
+            .maxLoanLimitAmount(1000L)
+            .description(description)
+            .repaymentPeriodUnit(RepaymentPeriodUnit.YEAR)
+            .certificateRequirement(CertificateRequirement.YES)
+            .occupation(Occupation.EMPLOYEE)
+            .url("www.test.url")
+            .build();
 
         // when
         LoanProduct result = entity.toDomain();
@@ -34,23 +50,17 @@ class LoanProductEntityTest {
         // then
         InterestRate interestRate = result.getInterestRate();
         CreditGrade creditGrade = result.getCreditGrade();
-        LoanPeriod loanPeriod = result.getLoanPeriod();
+        RepaymentPeriod repaymentPeriod = result.getRepaymentPeriod();
 
-        assertAll(() -> assertThat(result).isInstanceOf(LoanProduct.class),
-                () -> assertThat(result.getId()).isEqualTo(entity.getId()),
-                () -> assertThat(result.getProductName()).isEqualTo(entity.getProductName()),
-                () -> assertThat(result.getBankName()).isEqualTo(entity.getBankName()),
-                () -> assertThat(interestRate.maxInterestRate()).isEqualTo(entity.getMaxInterestRate()),
-                () -> assertThat(interestRate.minInterestRate()).isEqualTo(entity.getMinInterestRate()),
-                () -> assertThat(result.getMaxCreditLine()).isEqualTo(entity.getMaxCreditLine()),
-                () -> assertThat(loanPeriod.loanPeriod()).isEqualTo(entity.getLoanPeriod()),
-                () -> assertThat(creditGrade.maxCreditGrade()).isEqualTo(entity.getMaxCreditGrade()),
-                () -> assertThat(creditGrade.minCreditGrade()).isEqualTo(entity.getMinCreditGrade()),
-                () -> assertThat(result.getAge()).isEqualTo(entity.getAge()),
-                () -> assertThat(result.getLoanLimitAmount()).isEqualTo(entity.getLoanLimitAmount()),
-                () -> assertThat(loanPeriod.loanPeriodUnit()).isEqualTo(entity.getLoanPeriodUnit()),
-                () -> assertThat(result.getOccupation()).isEqualTo(entity.getOccupation()),
-                () -> assertThat(result.getPurposeOfLoan()).isEqualTo(entity.getPurposeOfLoan()),
-                () -> assertThat(result.getDescription()).isNotNull());
+        assertAll(
+            () -> assertThat(result).isInstanceOf(LoanProduct.class),
+            () -> assertThat(result.getId()).isEqualTo(entity.getId()),
+            () -> assertThat(result.getProductName()).isEqualTo(entity.getProductName()),
+            () -> assertThat(interestRate.maxInterestRate()).isEqualTo(entity.getMaxInterestRate()),
+            () -> assertThat(interestRate.minInterestRate()).isEqualTo(entity.getMinInterestRate()),
+            () -> assertThat(repaymentPeriod.repaymentPeriod()).isEqualTo(entity.getRepaymentPeriod()),
+            () -> assertThat(result.getOccupation()).isEqualTo(entity.getOccupation()),
+            () -> assertThat(result.getDescription()).isNotNull()
+        );
     }
 }
