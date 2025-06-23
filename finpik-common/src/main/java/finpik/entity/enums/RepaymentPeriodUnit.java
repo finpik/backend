@@ -3,6 +3,6 @@ package finpik.entity.enums;
 import lombok.Getter;
 
 @Getter
-public enum LoanPeriodUnit {
+public enum RepaymentPeriodUnit {
     YEAR, MONTH
 }
