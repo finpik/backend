@@ -38,7 +38,7 @@ public class RelatedLoanProductRepositoryImpl implements RelatedLoanProductRepos
                     entity.getId(),
                     entity.getProductName(),
                     interestRate,
-                    entity.getLoanLimitAmount()
+                    entity.getMaxLoanLimitAmount()
                 );
             }).toList();
     }
