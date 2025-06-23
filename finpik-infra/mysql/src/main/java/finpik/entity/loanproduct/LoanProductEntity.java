@@ -1,13 +1,12 @@
 package finpik.entity.loanproduct;
 
-import finpik.entity.enums.LoanPeriodUnit;
+import finpik.entity.enums.CertificateRequirement;
+import finpik.entity.enums.EmploymentForm;
+import finpik.entity.enums.Gender;
+import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
-import finpik.entity.enums.PurposeOfLoan;
 import finpik.loanproduct.LoanProduct;
-import finpik.loanproduct.LoanProductDescription;
-import finpik.loanproduct.vo.CreditGrade;
-import finpik.loanproduct.vo.InterestRate;
-import finpik.loanproduct.vo.LoanPeriod;
+import finpik.loanproduct.dto.LoanProductCreationDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -35,72 +35,83 @@ public class LoanProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String productName;
-
-    private String bankName;
-
-    private Float maxInterestRate;
-
-    private Float minInterestRate;
-
-    private Integer maxCreditLine;
-
-    private Integer loanPeriod;
-
-    private Integer maxCreditGrade;
-
-    private Integer minCreditGrade;
-
-    private Integer age;
-
-    private Integer loanLimitAmount;
+    private String productName; //상품명
+    private Integer repaymentPeriod; //상환 기간(숫자)
+    private String bankName; //은행
+    private String bankPhoneNumber; //전화
+    private String loanAvailableTime; //이용 시간
+    private Float maxInterestRate; //최대 금리
+    private Float minInterestRate; //최소 금리
+    private Integer minAge;//minAge
+    private Integer maxAge;//maxAge
+    private Long maxLoanLimitAmount; //대출 한도(숫자)
+    @Lob
+    private String url; //url
+    private Integer minCreditScore;
 
     @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "loan_product_description_id")
     private LoanProductDescriptionEntity description;
 
     @Enumerated(EnumType.STRING)
-    private LoanPeriodUnit loanPeriodUnit;
+    private RepaymentPeriodUnit repaymentPeriodUnit; //상환 기간 단위
 
     @Enumerated(EnumType.STRING)
-    private Occupation occupation;
+    private Occupation occupation; //대상(필터용)
 
     @Enumerated(EnumType.STRING)
-    private PurposeOfLoan purposeOfLoan;
+    private CertificateRequirement certificateRequirement; //인증서 준비 (있을 경우, 없을 경우)
+
+    @Enumerated(EnumType.STRING)
+    private Gender genderLimit; //genderLimit
+
+    @Enumerated(EnumType.STRING)
+    private EmploymentForm employmentForm;
 
     @Builder
-    public LoanProductEntity(Long id, String productName, String bankName, Float maxInterestRate, Float minInterestRate,
-                             Integer maxCreditLine, Integer loanPeriod, Integer maxCreditGrade, Integer minCreditGrade, Integer age,
-                             Integer loanLimitAmount, LoanProductDescriptionEntity description, LoanPeriodUnit loanPeriodUnit,
-                             Occupation occupation, PurposeOfLoan purposeOfLoan) {
-        this.id = id;
+    public LoanProductEntity(
+        String productName, Integer repaymentPeriod, String bankName,
+        String bankPhoneNumber, String loanAvailableTime, Float maxInterestRate,
+        Float minInterestRate, RepaymentPeriodUnit repaymentPeriodUnit,
+        Integer minAge, Integer maxAge, Long maxLoanLimitAmount,
+        LoanProductDescriptionEntity description,
+        CertificateRequirement certificateRequirement, Gender genderLimit,
+        Occupation occupation, String url, Integer minCreditScore, EmploymentForm employmentForm
+    ) {
         this.productName = productName;
+        this.repaymentPeriod = repaymentPeriod;
         this.bankName = bankName;
+        this.bankPhoneNumber = bankPhoneNumber;
+        this.loanAvailableTime = loanAvailableTime;
         this.maxInterestRate = maxInterestRate;
         this.minInterestRate = minInterestRate;
-        this.maxCreditLine = maxCreditLine;
-        this.loanPeriod = loanPeriod;
-        this.maxCreditGrade = maxCreditGrade;
-        this.minCreditGrade = minCreditGrade;
-        this.age = age;
-        this.loanLimitAmount = loanLimitAmount;
+        this.repaymentPeriodUnit = repaymentPeriodUnit;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
+        this.maxLoanLimitAmount = maxLoanLimitAmount;
         this.description = description;
-        this.loanPeriodUnit = loanPeriodUnit;
+        this.certificateRequirement = certificateRequirement;
         this.occupation = occupation;
-        this.purposeOfLoan = purposeOfLoan;
+        this.genderLimit = genderLimit;
+        this.url = url;
+        this.minCreditScore = minCreditScore;
+        this.employmentForm = employmentForm;
     }
 
     public LoanProduct toDomain() {
-        LoanProductDescription descriptionDomain = description.toDomain();
-        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
-        LoanPeriod loanPeriodDomain = new LoanPeriod(loanPeriod, loanPeriodUnit);
-        CreditGrade creditGrade = new CreditGrade(maxCreditGrade, minCreditGrade);
-
-        return LoanProduct.withId(
-            id, productName, bankName, interestRate, maxCreditLine,
-            loanPeriodDomain, creditGrade, age, loanLimitAmount,
-            descriptionDomain, occupation, purposeOfLoan
+        LoanProductCreationDto dto = new LoanProductCreationDto(
+            id, productName, repaymentPeriod, bankName, bankPhoneNumber, loanAvailableTime,
+            maxInterestRate, minInterestRate, repaymentPeriodUnit,
+            minAge, maxAge, genderLimit, maxLoanLimitAmount,
+            description.getLoanPrerequisite(), description.getLoanTargetGuide(),
+            description.getCertificationRequirementGuide(),
+            description.getMaxLoanLimitAmountGuide(), description.getRepaymentPeriodGuide(),
+            description.getInterestRateGuide(), description.getLoanAvailableTimeGuide(),
+            description.getRepaymentFeeGuide(), description.getDelinquencyInterestRateGuide(),
+            description.getNotesOnLoan(), description.getPreLoanChecklist(),
+            certificateRequirement, occupation, url, minCreditScore, employmentForm
         );
+
+        return LoanProduct.withId(dto);
     }
 }
