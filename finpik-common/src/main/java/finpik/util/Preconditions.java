@@ -6,7 +6,12 @@ public class Preconditions {
         return value;
     }
 
-    public static int requirePositive(Integer value, String message) {
+    public static Integer requirePositive(Integer value, String message) {
+        if (value == null || value <= 0) throw new IllegalArgumentException(message);
+        return value;
+    }
+
+    public static Long requirePositive(Long value, String message) {
         if (value == null || value <= 0) throw new IllegalArgumentException(message);
         return value;
     }
