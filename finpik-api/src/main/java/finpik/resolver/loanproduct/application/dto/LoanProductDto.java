@@ -1,6 +1,6 @@
 package finpik.resolver.loanproduct.application.dto;
 
-import finpik.entity.enums.LoanPeriodUnit;
+import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.loanproduct.LoanProduct;
 import lombok.Getter;
 
@@ -9,22 +9,22 @@ public class LoanProductDto {
     private final Long loanProductId;
     private final String productName;
     private final String bankName;
-    private final Integer loanLimitAmount;
+    private final Long maxLoanLimitAmount;
     private final Float maxInterestRate;
     private final Float minInterestRate;
-    private final Integer loanPeriod;
-    private final LoanPeriodUnit loanPeriodUnit;
+    private final Integer repaymentPeriod;
+    private final RepaymentPeriodUnit repaymentPeriodUnit;
     private final LoanProductDescriptionDto description;
 
     public LoanProductDto(LoanProduct loanProduct) {
         loanProductId = loanProduct.getId();
         productName = loanProduct.getProductName();
-        bankName = loanProduct.getBankName();
-        loanLimitAmount = loanProduct.getLoanLimitAmount();
+        bankName = loanProduct.getBankDetails().bankName();
+        maxLoanLimitAmount = loanProduct.getMaxLoanLimitAmount();
         maxInterestRate = loanProduct.getInterestRate().maxInterestRate();
         minInterestRate = loanProduct.getInterestRate().minInterestRate();
-        loanPeriod = loanProduct.getLoanPeriod().loanPeriod();
-        loanPeriodUnit = loanProduct.getLoanPeriod().loanPeriodUnit();
+        repaymentPeriod = loanProduct.getRepaymentPeriod().repaymentPeriod();
+        repaymentPeriodUnit = loanProduct.getRepaymentPeriod().repaymentPeriodUnit();
         description = new LoanProductDescriptionDto(loanProduct.getDescription());
     }
 }

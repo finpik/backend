@@ -50,8 +50,10 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
 
     private void sendEvent(Profile profile) {
         RecommendLoanProductProfileEvent event = RecommendLoanProductProfileEvent.builder().profileId(profile.getId())
-            .creditScore(profile.getCreditScore().creditScore()).purposeOfLoan(profile.getPurposeOfLoan())
-            .occupation(profile.getOccupationDetail().getOccupation()).build();
+            .creditScore(profile.getCreditScore().creditScore())
+            .occupation(profile.getOccupationDetail().getOccupation())
+            .employmentForm(profile.getOccupationDetail().getEmploymentForm())
+            .build();
 
         eventPublisher.publishEvent(event);
     }
