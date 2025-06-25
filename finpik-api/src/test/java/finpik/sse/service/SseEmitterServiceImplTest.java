@@ -19,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import finpik.dto.RecommendedCompleteEvent;
 import finpik.sse.service.repository.SseEmitterRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,10 +54,8 @@ class SseEmitterServiceImplTest {
         Long profileId = 1L;
         given(sseEmitterRepository.get(profileId)).willReturn(emitter);
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(UUID.randomUUID(), profileId, List.of());
-
         // when
-        sseEmitterService.notifyRecommendationCompleted(event);
+        sseEmitterService.notifyRecommendationCompleted(UUID.randomUUID(), profileId, List.of());
 
         // then
         then(emitter).should().send(any(SseEmitter.SseEventBuilder.class));
@@ -72,10 +69,8 @@ class SseEmitterServiceImplTest {
         Long profileId = 1L;
         given(sseEmitterRepository.get(profileId)).willReturn(null);
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(UUID.randomUUID(), profileId, List.of());
-
         // when
-        sseEmitterService.notifyRecommendationCompleted(event);
+        sseEmitterService.notifyRecommendationCompleted(UUID.randomUUID(), profileId, List.of());
 
         // then
         then(emitter).shouldHaveNoInteractions();
@@ -89,10 +84,8 @@ class SseEmitterServiceImplTest {
         given(sseEmitterRepository.get(profileId)).willReturn(emitter);
         willThrow(new IOException("send 실패")).given(emitter).send(any(SseEmitter.SseEventBuilder.class));
 
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(UUID.randomUUID(), profileId, List.of());
-
         // when
-        sseEmitterService.notifyRecommendationCompleted(event);
+        sseEmitterService.notifyRecommendationCompleted(UUID.randomUUID(), profileId, List.of());
 
         // then
         then(emitter).should().completeWithError(any(IOException.class));

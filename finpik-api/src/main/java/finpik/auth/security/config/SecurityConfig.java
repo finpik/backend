@@ -42,7 +42,8 @@ public class SecurityConfig {
                 .permitAll()
             ).oauth2Login(oauth -> oauth.userInfoEndpoint(
                     user -> user.userService(kakaoOAuth2UserService))
-                .successHandler(oAuth2SuccessHandler).failureHandler(oAuth2FailureHandler))
+                .successHandler(oAuth2SuccessHandler)
+                .failureHandler(oAuth2FailureHandler))
             .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
 
         return http.build();
@@ -51,8 +52,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
-        config.setAllowedOrigins(List.of("https://bc7c-118-32-78-199.ngrok-free.app"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "https://3592-118-32-78-199.ngrok-free.app"));
         config.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

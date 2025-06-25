@@ -38,15 +38,20 @@ public class LoanProduct {
     private Integer minCreditScore;
 
     public static LoanProduct of(LoanProductCreationDto dto) {
-        return create(dto);
+        return rebuild(dto);
     }
 
     public static LoanProduct withId(LoanProductCreationDto dto) {
-        return create(dto);
+        return rebuild(dto);
     }
 
-    private static LoanProduct create(LoanProductCreationDto dto) {
-        BankDetails bankDetails = new BankDetails(dto.bankName(), dto.bankPhoneNumber(), dto.loanAvailableTime());
+    private static LoanProduct rebuild(LoanProductCreationDto dto) {
+        BankDetails bankDetails = new BankDetails(
+            dto.bankName(),
+            dto.bankPhoneNumber(),
+            dto.loanAvailableTime(),
+            dto.bankImgUrl()
+        );
         InterestRate interestRate = new InterestRate(dto.maxInterestRate(), dto.minInterestRate());
         RepaymentPeriod repaymentPeriod = new RepaymentPeriod(dto.repaymentPeriod(), dto.repaymentPeriodUnit());
         LoanProductDescription description = new LoanProductDescription(

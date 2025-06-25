@@ -35,6 +35,7 @@ public record LoanProductCreationDto(
     Occupation occupation,
     String url,
     Integer minCreditScore,
-    EmploymentForm employmentForm
+    EmploymentForm employmentForm,
+    String bankImgUrl
 ) {
 }

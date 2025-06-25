@@ -48,6 +48,7 @@ public class LoanProductEntity {
     @Lob
     private String url; //url
     private Integer minCreditScore;
+    private String bankImgUrl;
 
     @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "loan_product_description_id")
@@ -109,7 +110,7 @@ public class LoanProductEntity {
             description.getInterestRateGuide(), description.getLoanAvailableTimeGuide(),
             description.getRepaymentFeeGuide(), description.getDelinquencyInterestRateGuide(),
             description.getNotesOnLoan(), description.getPreLoanChecklist(),
-            certificateRequirement, occupation, url, minCreditScore, employmentForm
+            certificateRequirement, occupation, url, minCreditScore, employmentForm, bankImgUrl
         );
 
         return LoanProduct.withId(dto);
