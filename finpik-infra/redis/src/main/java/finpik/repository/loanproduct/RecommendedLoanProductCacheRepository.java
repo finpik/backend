@@ -3,10 +3,11 @@ package finpik.repository.loanproduct;
 import finpik.loanproduct.RecommendedLoanProduct;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
-public interface LoanProductCacheRepository {
-    List<RecommendedLoanProduct> cacheRecommendations(
+public interface RecommendedLoanProductCacheRepository {
+    CompletableFuture<List<RecommendedLoanProduct>> cacheAsync(
         Long profileId,
         List<RecommendedLoanProduct> recommendedLoanProductList
     );

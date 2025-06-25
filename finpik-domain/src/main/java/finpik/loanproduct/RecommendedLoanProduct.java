@@ -6,18 +6,57 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static finpik.util.Preconditions.require;
+
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecommendedLoanProduct {
+    private Long recommendedLoanProductId;
+    private Long profileId;
     private Long loanProductId;
     private String productName;
     private InterestRate interestRate;
-    private Integer loanLimitAmount;
+    private Integer maxLoanLimitAmount;
 
     public static RecommendedLoanProduct of(
-        Long loanProductId, String productName, InterestRate interestRate, Integer loanLimitAmount
+        Long profileId,
+        Long loanProductId,
+        String productName,
+        Float maxInterestRate,
+        Float minInterestRate,
+        Integer maxLoanLimitAmount
     ) {
-        return new RecommendedLoanProduct(loanProductId, productName, interestRate, loanLimitAmount);
+        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
+
+        return new RecommendedLoanProduct(
+            null,
+            require(profileId, "profileId must not be null"),
+            require(loanProductId, "loanProductId must not be null"),
+            require(productName, "productName must not be null"),
+            interestRate,
+            maxLoanLimitAmount
+        );
+    }
+
+    public static RecommendedLoanProduct rebuild(
+        Long recommendedLoanProductId,
+        Long profileId,
+        Long loanProductId,
+        String productName,
+        Float maxInterestRate,
+        Float minInterestRate,
+        Integer maxLoanLimitAmount
+    ) {
+        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
+
+        return new RecommendedLoanProduct(
+            require(recommendedLoanProductId, "recommendedLoanProductId must not be null"),
+            require(profileId, "profileId must not be null"),
+            require(loanProductId, "loanProductId must not be null"),
+            require(productName, "productName must not be null"),
+            interestRate,
+            maxLoanLimitAmount
+        );
     }
 }

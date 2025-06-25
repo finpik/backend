@@ -1,24 +1,29 @@
 package finpik.service.loanproduct.dto;
 
 import finpik.loanproduct.RecommendedLoanProduct;
-import finpik.loanproduct.vo.InterestRate;
 import lombok.Builder;
 
 @Builder
 public record CachedRecommendedLoanProduct(
+    Long recommendedLoanProductId,
+    Long profileId,
     Long loanProductId,
     String productName,
     Float minInterestRate,
     Float maxInterestRate,
-    Integer loanLimitAmount
+    Integer maxLoanLimitAmount
 ) {
 
     public RecommendedLoanProduct toDomain() {
-        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
-
-        return RecommendedLoanProduct.of(
-                loanProductId, productName, interestRate, loanLimitAmount
-            );
+        return RecommendedLoanProduct.rebuild(
+            recommendedLoanProductId,
+            profileId,
+            loanProductId,
+            productName,
+            maxInterestRate,
+            minInterestRate,
+            maxLoanLimitAmount
+        );
     }
 
     public static CachedRecommendedLoanProduct from(RecommendedLoanProduct recommendedLoanProduct) {
@@ -27,7 +32,7 @@ public record CachedRecommendedLoanProduct(
             .productName(recommendedLoanProduct.getProductName())
             .minInterestRate(recommendedLoanProduct.getInterestRate().minInterestRate())
             .maxInterestRate(recommendedLoanProduct.getInterestRate().maxInterestRate())
-            .loanLimitAmount(recommendedLoanProduct.getLoanLimitAmount())
+            .maxLoanLimitAmount(recommendedLoanProduct.getMaxLoanLimitAmount())
             .build();
     }
 }
