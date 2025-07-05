@@ -33,4 +33,4 @@ Features
 - feature/FP-21: 프로파일 직업군 기획 추가로 인한 수정
 - feature/FP-22: 대출 상품 기획 변경으로 인한 수정
 - feature/FP-23: 카프카 consumer 책임 분리
-- feature/FP-24: S3 은행 이미지 url 기능
+- feature/FP-24: 도메인 테스트 코드 추가
