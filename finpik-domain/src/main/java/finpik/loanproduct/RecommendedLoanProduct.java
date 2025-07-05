@@ -17,7 +17,7 @@ public class RecommendedLoanProduct {
     private Long loanProductId;
     private String productName;
     private InterestRate interestRate;
-    private Integer maxLoanLimitAmount;
+    private Long maxLoanLimitAmount;
 
     public static RecommendedLoanProduct of(
         Long profileId,
@@ -25,7 +25,7 @@ public class RecommendedLoanProduct {
         String productName,
         Float maxInterestRate,
         Float minInterestRate,
-        Integer maxLoanLimitAmount
+        Long maxLoanLimitAmount
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 
@@ -46,7 +46,7 @@ public class RecommendedLoanProduct {
         String productName,
         Float maxInterestRate,
         Float minInterestRate,
-        Integer maxLoanLimitAmount
+        Long maxLoanLimitAmount
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 

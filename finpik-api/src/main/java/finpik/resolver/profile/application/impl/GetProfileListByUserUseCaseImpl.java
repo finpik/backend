@@ -28,6 +28,6 @@ public class GetProfileListByUserUseCaseImpl implements GetProfileListByUserUseC
 
         ProfileList profileList = profileRepository.findByUser(user);
 
-        return profileList.getProfiles().stream().map(ProfileResultDto::new).toList();
+        return profileList.getProfileList().stream().map(ProfileResultDto::new).toList();
     }
 }

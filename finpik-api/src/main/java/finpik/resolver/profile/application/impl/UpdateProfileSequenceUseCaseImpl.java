@@ -51,7 +51,7 @@ public class UpdateProfileSequenceUseCaseImpl implements UpdateProfileSequenceUs
             .validateAllProfilesHaveSequence(idSeqMap)
             .updateSequences(idSeqMap);
 
-        return profileRepository.updateAll(changedProfileList).getProfiles()
+        return profileRepository.updateAll(changedProfileList).getProfileList()
             .stream().map(ProfileResultDto::new).toList();
     }
 

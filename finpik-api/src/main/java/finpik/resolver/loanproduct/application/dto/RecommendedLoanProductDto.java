@@ -9,7 +9,7 @@ public class RecommendedLoanProductDto {
     private final String productName;
     private final Float minInterestRate;
     private final Float maxInterestRate;
-    private final Integer maxLoanLimitAmount;
+    private final Long maxLoanLimitAmount;
 
     public RecommendedLoanProductDto(RecommendedLoanProduct recommendedLoanProduct) {
         this.loanProductId = recommendedLoanProduct.getLoanProductId();

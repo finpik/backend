@@ -9,7 +9,7 @@ public class RecommendedLoanProductResult {
     private final String productName;
     private final Float minInterestRate;
     private final Float maxInterestRate;
-    private final Integer loanLimitAmount;
+    private final Long loanLimitAmount;
 
     public RecommendedLoanProductResult (RecommendedLoanProductDto dto) {
         loanProductId = dto.getLoanProductId();
@@ -21,7 +21,7 @@ public class RecommendedLoanProductResult {
 
     public RecommendedLoanProductResult(
         Long loanProductId, String productName, Float minInterestRate,
-        Float maxInterestRate, Integer loanLimitAmount
+        Float maxInterestRate, Long loanLimitAmount
     ) {
         this.loanProductId = loanProductId;
         this.productName = productName;

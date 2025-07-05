@@ -18,9 +18,12 @@ public class RelatedLoanProduct {
     public static RelatedLoanProduct of(
         Long productId,
         String productName,
-        InterestRate interestRate,
+        Float maxInterestRate,
+        Float minInterestRate,
         Long maxLoanLimitAmount
     ) {
+        InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
+
         return new RelatedLoanProduct(productId, productName, interestRate, maxLoanLimitAmount);
     }
 }

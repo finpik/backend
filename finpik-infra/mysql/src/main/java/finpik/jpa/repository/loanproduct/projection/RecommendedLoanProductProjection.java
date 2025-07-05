@@ -7,6 +7,6 @@ public record RecommendedLoanProductProjection(
     String productName,
     Float minInterestRate,
     Float maxInterestRate,
-    Integer maxLoanLimitAmount
+    Long maxLoanLimitAmount
 ) {
 }

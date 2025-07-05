@@ -11,7 +11,7 @@ public record CachedRecommendedLoanProduct(
     String productName,
     Float minInterestRate,
     Float maxInterestRate,
-    Integer maxLoanLimitAmount
+    Long maxLoanLimitAmount
 ) {
 
     public RecommendedLoanProduct toDomain() {

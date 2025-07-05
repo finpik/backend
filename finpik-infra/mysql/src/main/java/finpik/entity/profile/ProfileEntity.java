@@ -131,4 +131,8 @@ public class ProfileEntity {
         profileColor = profile.getProfileColor();
         updatedAt = LocalDateTime.now();
     }
+
+    public void updateSeq(Integer seq) {
+        this.seq = seq;
+    }
 }

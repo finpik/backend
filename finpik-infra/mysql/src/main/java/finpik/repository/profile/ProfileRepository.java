@@ -10,6 +10,8 @@ import finpik.user.entity.User;
 public interface ProfileRepository {
     Profile save(Profile profile);
 
+    Profile saveNewAndUpdateExistProfileList(ProfileList profileList);
+
     Profile update(Profile profile);
 
     ProfileList updateAll(ProfileList profileList);
