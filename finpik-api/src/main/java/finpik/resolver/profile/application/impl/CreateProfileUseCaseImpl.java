@@ -24,8 +24,6 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
     private final ProfileRepository profileRepository;
     private final ApplicationEventPublisher eventPublisher;
 
-    private static final int START_SEQ = 1;
-
     @Override
     public ProfileResultDto execute(CreateProfileUseCaseDto dto) {
         User user = getUser(dto.userId());
@@ -33,13 +31,14 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
         Profile profile = dto.toDomain(user);
 
         ProfileList profileList = findProfileListBy(user);
-        profileList.validateProfileCountLimit();
 
-        profileList.balanceSequence(START_SEQ);
+        ProfileList addedProfileList = profileList.addProfile(profile);
 
         sendEvent(profile);
 
-        return new ProfileResultDto(profileRepository.save(profile));
+        return new ProfileResultDto(
+            profileRepository.saveNewAndUpdateExistProfileList(addedProfileList)
+        );
     }
 
     private User getUser(Long userId) {

@@ -5,6 +5,7 @@ import finpik.error.exception.BusinessException;
 import finpik.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -18,15 +19,30 @@ public record ProfileList(
     List<Profile> profileList
 ) {
     private static final int PROFILE_LIMIT_NUMBER = 4;
+    private static final int START_SEQ_ADD = 1;
+    private static final int START_SEQ_DELETE = 0;
 
     public ProfileList {
-        require(profileList, "프로파일들이 없습니다.");
+        require(profileList, "프로파일 리스트가 Null입니다.");
     }
 
-    public void balanceSequence(int startSeq) {
+    public ProfileList addProfile(Profile newProfile) {
+        validateProfileCountLimit(START_SEQ_ADD + profileList.size());
+
+        balanceSequence(START_SEQ_ADD);
+
+        List<Profile> mutableProfileList = new ArrayList<>(profileList);
+        mutableProfileList.add(newProfile);
+
+        return new ProfileList(mutableProfileList.stream().sorted(Comparator.comparing(Profile::getSeq)).toList());
+    }
+
+    private void balanceSequence(int startSeq) {
         if (profileList.isEmpty()) {
             return;
         }
+
+        validateProfileCountLimit(startSeq);
 
         AtomicInteger seq = new AtomicInteger(startSeq);
 
@@ -35,25 +51,28 @@ public record ProfileList(
             .forEach(profile -> profile.updateSequence(seq.getAndIncrement()));
     }
 
-    public void validateProfileCountLimit() {
-        if (isNotLessThanLimit(profileList.size())) {
-            log.error("[ProfileService] - limit reached");
+    private void validateProfileCountLimit(int profilesCount) {
+        if (isNotLessThanLimit(profilesCount)) {
             throw new BusinessException(ErrorCode.EXCEEDING_PROFILE_COUNT_LIMIT);
         }
     }
 
     private boolean isNotLessThanLimit(int count) {
-        return count >= PROFILE_LIMIT_NUMBER;
+        return count > PROFILE_LIMIT_NUMBER;
     }
 
-    public List<Profile> getProfiles() {
+    public List<Profile> getProfileList() {
         return Collections.unmodifiableList(profileList);
     }
 
     public ProfileList deleteProfile(Long deletedId) {
-        return new ProfileList(profileList.stream().filter(profile ->
+        ProfileList filteredProfileList = new ProfileList(profileList.stream().filter(profile ->
             !profile.getId().equals(deletedId)
         ).toList());
+
+        filteredProfileList.balanceSequence(START_SEQ_DELETE);
+
+        return filteredProfileList;
     }
 
     public int size() {

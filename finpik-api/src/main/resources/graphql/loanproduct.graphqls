@@ -18,7 +18,7 @@ type LoanProductResult {
     maxLoanLimitAmount: Int!
     maxInterestRate: Float!
     minInterestRate: Float!
-    repaymentPeriod: Int! # 대출 기간에 관한 내용 질문 필요
+    repaymentPeriod: Int!
     repaymentPeriodUnit: LoanPeriodUnit!
     descriptionResult: LoanProductDescriptionResult!
 }

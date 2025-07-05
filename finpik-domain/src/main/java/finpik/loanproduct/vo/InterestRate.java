@@ -10,7 +10,7 @@ public record InterestRate(Float maxInterestRate, Float minInterestRate) {
         if (minInterestRate == null) return;
 
         if (minInterestRate < 0) {
-            throw new IllegalArgumentException("Interest rate must not be negative");
+            throw new IllegalArgumentException("minInterestRate must not be negative");
         }
     }
 

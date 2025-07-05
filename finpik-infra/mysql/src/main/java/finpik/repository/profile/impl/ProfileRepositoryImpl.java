@@ -2,6 +2,7 @@ package finpik.repository.profile.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,27 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     }
 
     @Override
+    public Profile saveNewAndUpdateExistProfileList(ProfileList profileList) {
+        UserEntity userEntity = userEntityJpaRepository
+            .findById(profileList.getProfileList().getFirst().getUser().getId())
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
+
+        List<Long> existProfileIdList = profileList.profileList().stream().map(Profile::getId)
+            .filter(Objects::nonNull).toList();
+
+        List<ProfileEntity> exsitProfileEntityList = profileEntityJpaRepository.findAllById(existProfileIdList);
+
+        updateFields(exsitProfileEntityList, profileList.profileList());
+
+        exsitProfileEntityList.add(ProfileEntity.from(profileList.getProfileList().getFirst(), userEntity));
+
+        profileEntityJpaRepository.saveAll(exsitProfileEntityList);
+
+        return profileList.profileList().getFirst();
+    }
+
+
+    @Override
     public Profile update(Profile profile) {
         ProfileEntity entity = profileEntityJpaRepository.findById(profile.getId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PROFILE));
@@ -52,8 +74,17 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         List<ProfileEntity> profileEntityList = profileEntityJpaRepository
                 .findAllById(profileList.getIds());
 
-        Map<Long, Profile> idProfileMap = profileList.getProfiles().stream()
-                .collect(Collectors.toMap(Profile::getId, profile -> profile));
+        updateFields(profileEntityList, profileList.getProfileList());
+
+        return new ProfileList(profileList.getProfileList());
+    }
+
+    private void updateFields(
+        List<ProfileEntity> profileEntityList,
+        List<Profile> profileList
+    ) {
+        Map<Long, Profile> idProfileMap = profileList.stream()
+            .collect(Collectors.toMap(Profile::getId, profile -> profile));
 
         profileEntityList.forEach(profileEntity -> {
             Profile profile = idProfileMap.get(profileEntity.getUser().getId());
@@ -63,7 +94,6 @@ public class ProfileRepositoryImpl implements ProfileRepository {
             }
         });
 
-        return new ProfileList(idProfileMap.values().stream().toList());
     }
 
     @Override

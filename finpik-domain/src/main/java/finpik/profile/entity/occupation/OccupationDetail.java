@@ -6,7 +6,7 @@ import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.profile.entity.policy.ProfileCreationSpec;
 
-import static finpik.util.Preconditions.require;
+import static finpik.util.Preconditions.requirePositive;
 
 public sealed interface OccupationDetail
     permits EmployeeDetail, PublicServantDetail, SelfEmployedDetail, FreelancerDetail, OtherDetail
@@ -16,7 +16,7 @@ public sealed interface OccupationDetail
     EmploymentForm getEmploymentForm();
 
     static OccupationDetail of(ProfileCreationSpec spec) {
-        require(spec.annualIncome(), ErrorCode.INVALID_ANNUAL_INCOME.getMessage());
+        requirePositive(spec.annualIncome(), ErrorCode.INVALID_ANNUAL_INCOME.getMessage());
 
         return switch (spec.occupation()) {
             case EMPLOYEE -> new EmployeeDetail(

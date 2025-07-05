@@ -1,9 +1,8 @@
-package finpik.history.handler;
+package finpik.resolver.loanproduct.application.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.Mockito.verify;
-
+import finpik.history.entity.UserProductViewHistory;
+import finpik.history.repository.UserProductViewHistoryRepository;
+import finpik.resolver.loanproduct.application.CreateRelatedLoanProductUseCase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,14 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import finpik.dto.UserProductViewEvent;
-import finpik.history.entity.UserProductViewHistory;
-import finpik.history.repository.UserProductViewHistoryRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UserProductViewHistoryEventHandlerTest {
+class CreateRelatedLoanProductUseCaseImplTest {
     @InjectMocks
-    private UserProductViewHistoryEventHandler userProductViewHistoryEventHandler;
+    private CreateRelatedLoanProductUseCaseImpl createRelatedLoanProductUseCase;
 
     @Mock
     private UserProductViewHistoryRepository userProductViewHistoryRepository;
@@ -30,18 +29,16 @@ class UserProductViewHistoryEventHandlerTest {
         // given
         Long userId = 1L;
         Long productId = 2L;
-        UserProductViewEvent event = new UserProductViewEvent(userId, productId);
-
         ArgumentCaptor<UserProductViewHistory> captor = ArgumentCaptor.forClass(UserProductViewHistory.class);
 
         // when
-        userProductViewHistoryEventHandler.userProductViewEventHandle(event);
+        createRelatedLoanProductUseCase.createUserProductViewAsync(userId, productId);
 
         // then
         verify(userProductViewHistoryRepository).save(captor.capture());
         UserProductViewHistory userProductViewHistory = captor.getValue();
 
         assertAll(() -> assertThat(userId).isEqualTo(userProductViewHistory.userId()),
-                () -> assertThat(productId).isEqualTo(userProductViewHistory.productId()));
+            () -> assertThat(productId).isEqualTo(userProductViewHistory.productId()));
     }
 }

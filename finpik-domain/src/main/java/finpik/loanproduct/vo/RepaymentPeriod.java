@@ -9,14 +9,18 @@ public record RepaymentPeriod(Integer repaymentPeriod, RepaymentPeriodUnit repay
     }
 
     private void validateLoanPeriod(Integer loanPeriod) {
-        if (loanPeriod == null || loanPeriod < 0) {
-            throw new IllegalArgumentException("LoanPeriod must be greater than or equal to 0");
+        if (loanPeriod == null) {
+            throw new IllegalArgumentException("LoanPeriod must not be null");
+        }
+
+        if (loanPeriod < 0) {
+            throw new IllegalArgumentException("LoanPeriod must not be negative");
         }
     }
 
     private void validateLoanPeriodUnit(RepaymentPeriodUnit repaymentPeriodUnit) {
         if (repaymentPeriodUnit == null) {
-            throw new IllegalArgumentException("LoanPeriodUnit must not be null");
+            throw new IllegalArgumentException("RepaymentPeriodUnit must not be null");
         }
     }
 }

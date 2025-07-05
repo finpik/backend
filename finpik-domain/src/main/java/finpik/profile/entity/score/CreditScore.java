@@ -14,11 +14,11 @@ public record CreditScore(
 
         this.creditScore = creditScore != null
             ? creditScore
-            : determineCreditScoreByGradeStatus();
+            : determineCreditScoreByGradeStatus(creditGradeStatus);
 
         this.creditGradeStatus = creditGradeStatus != null
             ? creditGradeStatus
-            : determineCreditGradeStatusByScore();
+            : determineCreditGradeStatusByScore(creditScore);
     }
 
     private void validateCredits(Integer creditScore, CreditGradeStatus creditGradeStatus) {
@@ -27,11 +27,11 @@ public record CreditScore(
         }
     }
 
-    private CreditGradeStatus determineCreditGradeStatusByScore() {
+    private CreditGradeStatus determineCreditGradeStatusByScore(Integer creditScore) {
         return NiceCreditGradePolicy.fromScore(creditScore);
     }
 
-    private Integer determineCreditScoreByGradeStatus() {
+    private Integer determineCreditScoreByGradeStatus(CreditGradeStatus creditGradeStatus) {
         return NiceCreditGradePolicy.getRange(creditGradeStatus).min();
     }
 }
