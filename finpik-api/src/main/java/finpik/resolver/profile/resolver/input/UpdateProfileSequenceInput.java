@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record UpdateProfileSequenceInput(
     @NotNull(message = "프로필 id가 필요합니다.")

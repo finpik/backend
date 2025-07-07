@@ -1,6 +1,6 @@
 package finpik.resolver.loanproduct.resolver.result;
 
-import finpik.entity.enums.LoanPeriodUnit;
+import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.resolver.loanproduct.application.dto.LoanProductDto;
 import lombok.Getter;
 
@@ -12,21 +12,21 @@ TODO(대출 필수 조건에 대해 어떻게 넣을지 확인 필요)
 public class LoanProductResult {
     private final String productName;
     private final String bankName;
-    private final Integer loanLimitAmount;
+    private final Long loanLimitAmount;
     private final Float maxInterestRate;
     private final Float minInterestRate;
-    private final Integer loanPeriod;
-    private final LoanPeriodUnit loanPeriodUnit;
+    private final Integer repaymentPeriod;
+    private final RepaymentPeriodUnit repaymentPeriodUnit;
     private final LoanProductDescriptionResult descriptionResult;
 
     public LoanProductResult(LoanProductDto dto) {
         productName = dto.getProductName();
         bankName = dto.getBankName();
-        loanLimitAmount = dto.getLoanLimitAmount();
+        loanLimitAmount = dto.getMaxLoanLimitAmount();
         maxInterestRate = dto.getMaxInterestRate();
         minInterestRate = dto.getMinInterestRate();
-        loanPeriod = dto.getLoanPeriod();
-        loanPeriodUnit = dto.getLoanPeriodUnit();
+        repaymentPeriod = dto.getRepaymentPeriod();
+        repaymentPeriodUnit = dto.getRepaymentPeriodUnit();
         descriptionResult = new LoanProductDescriptionResult(dto.getDescription());
     }
 }

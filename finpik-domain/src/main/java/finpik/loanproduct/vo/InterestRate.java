@@ -2,24 +2,23 @@ package finpik.loanproduct.vo;
 
 public record InterestRate(Float maxInterestRate, Float minInterestRate) {
     public InterestRate {
-        validateInterestRate(maxInterestRate, minInterestRate);
+        validateMinInterestRate(minInterestRate);
+        validateMaxInterestRate(maxInterestRate);
     }
 
-    private void validateInterestRate(Float maxInterestRate, Float minInterestRate) {
-        if (minInterestRate == null || maxInterestRate == null) {
-            throw new IllegalArgumentException("Interest rate must not be null");
-        }
+    private void validateMinInterestRate(Float minInterestRate) {
+        if (minInterestRate == null) return;
 
         if (minInterestRate < 0) {
-            throw new IllegalArgumentException("Interest rate must not be negative");
+            throw new IllegalArgumentException("minInterestRate must not be negative");
         }
+    }
+
+    private void validateMaxInterestRate(Float maxInterestRate) {
+        if (maxInterestRate == null) return;
 
         if (maxInterestRate < 0) {
-            throw new IllegalArgumentException("Interest rate must not be negative");
-        }
-
-        if (maxInterestRate < minInterestRate) {
-            throw new IllegalArgumentException("Interest rate must be between " + minInterestRate + " and " + maxInterestRate);
+            throw new IllegalArgumentException("maxInterestRate must not be negative");
         }
     }
 }

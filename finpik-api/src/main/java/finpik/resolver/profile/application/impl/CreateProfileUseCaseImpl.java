@@ -9,7 +9,7 @@ import finpik.repository.profile.ProfileRepository;
 import finpik.repository.user.UserRepository;
 import finpik.resolver.profile.application.usecase.CreateProfileUseCase;
 import finpik.resolver.profile.application.dto.CreateProfileUseCaseDto;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,22 +24,21 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
     private final ProfileRepository profileRepository;
     private final ApplicationEventPublisher eventPublisher;
 
-    private static final int START_SEQ = 1;
-
     @Override
-    public ProfileDto execute(CreateProfileUseCaseDto dto) {
+    public ProfileResultDto execute(CreateProfileUseCaseDto dto) {
         User user = getUser(dto.userId());
 
         Profile profile = dto.toDomain(user);
 
         ProfileList profileList = findProfileListBy(user);
-        profileList.validateProfileCountLimit();
 
-        profileList.balanceSequence(START_SEQ);
+        ProfileList addedProfileList = profileList.addProfile(profile);
 
-        sendEvent(profile);
+        Profile savedProfile = profileRepository.saveNewAndUpdateExistProfileList(addedProfileList);
 
-        return new ProfileDto(profileRepository.save(profile));
+        sendEvent(savedProfile);
+
+        return new ProfileResultDto(savedProfile);
     }
 
     private User getUser(Long userId) {
@@ -49,9 +48,15 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
 
 
     private void sendEvent(Profile profile) {
-        RecommendLoanProductProfileEvent event = RecommendLoanProductProfileEvent.builder().profileId(profile.getId())
-            .creditScore(profile.getCreditScore()).purposeOfLoan(profile.getPurposeOfLoan())
-            .occupation(profile.getOccupation()).build();
+        RecommendLoanProductProfileEvent event = RecommendLoanProductProfileEvent.builder()
+            .profileId(profile.getId())
+            .desiredLimit(profile.getDesiredLoanAmount())
+            .creditScore(profile.getCreditScore().creditScore())
+            .occupation(profile.getOccupationDetail().getOccupation())
+            .employmentForm(profile.getOccupationDetail().getEmploymentForm())
+            .gender(profile.getUser().getGender())
+            .age(profile.getUser().getAge())
+            .build();
 
         eventPublisher.publishEvent(event);
     }

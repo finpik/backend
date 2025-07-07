@@ -1,10 +1,12 @@
 package finpik.loanproduct;
 
+import finpik.entity.enums.CertificateRequirement;
+import finpik.entity.enums.Gender;
 import finpik.entity.enums.Occupation;
-import finpik.entity.enums.PurposeOfLoan;
-import finpik.loanproduct.vo.CreditGrade;
+import finpik.loanproduct.dto.LoanProductCreationDto;
+import finpik.loanproduct.vo.BankDetails;
 import finpik.loanproduct.vo.InterestRate;
-import finpik.loanproduct.vo.LoanPeriod;
+import finpik.loanproduct.vo.RepaymentPeriod;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,61 +24,59 @@ import static finpik.util.Preconditions.requirePositive;
 public class LoanProduct {
     private Long id;
     private String productName;
-    private String bankName;
+    private RepaymentPeriod repaymentPeriod;
+    private BankDetails bankDetails;
     private InterestRate interestRate;
-    private Integer maxCreditLine;
-    private LoanPeriod loanPeriod;
-    private CreditGrade creditGrade;
-    private Integer age;
-    private Integer loanLimitAmount;
+    private Integer minAge;
+    private Integer maxAge;
+    private Gender gender;
+    private Long maxLoanLimitAmount;
     private LoanProductDescription description;
+    private CertificateRequirement certificateRequirement;
     private Occupation occupation;
-    private PurposeOfLoan purposeOfLoan;
+    private String url;
+    private Integer minCreditScore;
 
-    public static LoanProduct of(
-        String productName, String bankName, InterestRate interestRate,
-        Integer maxCreditLine, LoanPeriod loanPeriod,
-        CreditGrade creditGrade, Integer age,
-        Integer loanLimitAmount, LoanProductDescription description,
-        Occupation occupation, PurposeOfLoan purposeOfLoan
-    ) {
-        return new LoanProduct(
-            null,
-            require(productName, "대출 상품의 상품명이 비었습니다."),
-            require(bankName, "은행명은 필수입니다"),
-            interestRate,
-            requirePositive(maxCreditLine, "최대 한도는 양수여야 합니다"),
-            loanPeriod,
-            creditGrade,
-            requirePositive(age, "나이는 양수여야 합니다"),
-            requirePositive(loanLimitAmount, "대출 한도는 양수여야 합니다"),
-            require(description, "설명은 필수입니다"),
-            require(occupation, "직업은 필수입니다"),
-            require(purposeOfLoan, "대출 목적은 필수입니다")
-        );
+    public static LoanProduct of(LoanProductCreationDto dto) {
+        return rebuild(dto);
     }
 
-    public static LoanProduct withId(
-        Long id,
-        String productName, String bankName, InterestRate interestRate,
-        Integer maxCreditLine, LoanPeriod loanPeriod,
-        CreditGrade creditGrade, Integer age,
-        Integer loanLimitAmount, LoanProductDescription description,
-        Occupation occupation, PurposeOfLoan purposeOfLoan
-    ) {
+    public static LoanProduct withId(LoanProductCreationDto dto) {
+        return rebuild(dto);
+    }
+
+    private static LoanProduct rebuild(LoanProductCreationDto dto) {
+        BankDetails bankDetails = new BankDetails(
+            dto.bankName(),
+            dto.bankPhoneNumber(),
+            dto.loanAvailableTime(),
+            dto.bankImgUrl()
+        );
+        InterestRate interestRate = new InterestRate(dto.maxInterestRate(), dto.minInterestRate());
+        RepaymentPeriod repaymentPeriod = new RepaymentPeriod(dto.repaymentPeriod(), dto.repaymentPeriodUnit());
+        LoanProductDescription description = new LoanProductDescription(
+            dto.loanPrerequisite(), dto.loanTargetGuide(), dto.loanLimitGuide(),
+            dto.repaymentPeriodGuide(), dto.interestRateGuide(), dto.certificationRequirementGuide(),
+            dto.loanAvailableTimeGuide(), dto.repaymentFeeGuide(), dto.delinquencyInterestRateGuide(),
+            dto.notesOnLoan(), dto.preLoanChecklist()
+        );
+
+
         return new LoanProduct(
-            require(id, "ID는 null일 수 없습니다."),
-            require(productName, "상품명은 필수입니다."),
-            require(bankName, "은행명은 필수입니다."),
+            dto.id(),
+            require(dto.productName(), "productName must not be null."),
+            repaymentPeriod,
+            bankDetails,
             interestRate,
-            requirePositive(maxCreditLine, "최대 한도는 양수여야 합니다"),
-            loanPeriod,
-            creditGrade,
-            requirePositive(age, "나이는 양수여야 합니다"),
-            requirePositive(loanLimitAmount, "대출 한도는 양수여야 합니다"),
-            require(description, "설명은 필수입니다"),
-            require(occupation, "직업은 필수입니다"),
-            require(purposeOfLoan, "대출 목적은 필수입니다")
+            dto.minAge(),
+            dto.maxAge(),
+            require(dto.genderLimit(), "genderLimit must not be null."),
+            dto.maxLoanLimitAmount(),
+            description,
+            dto.certificateRequirement(),
+            require(dto.occupation(), "occupation must not be null."),
+            dto.url(),
+            requirePositive(dto.minCreditScore(), "minCreditScore must not be null.")
         );
     }
 }

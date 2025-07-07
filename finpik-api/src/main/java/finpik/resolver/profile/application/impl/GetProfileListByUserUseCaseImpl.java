@@ -5,7 +5,7 @@ import finpik.error.exception.BusinessException;
 import finpik.profile.entity.ProfileList;
 import finpik.repository.profile.ProfileRepository;
 import finpik.repository.user.UserRepository;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.resolver.profile.application.usecase.GetProfileListByUserUseCase;
 import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +22,12 @@ public class GetProfileListByUserUseCaseImpl implements GetProfileListByUserUseC
     private final UserRepository userRepository;
 
     @Override
-    public List<ProfileDto> execute(Long userId) {
+    public List<ProfileResultDto> execute(Long userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_USER));
 
         ProfileList profileList = profileRepository.findByUser(user);
 
-        return profileList.getProfiles().stream().map(ProfileDto::new).toList();
+        return profileList.getProfileList().stream().map(ProfileResultDto::new).toList();
     }
 }

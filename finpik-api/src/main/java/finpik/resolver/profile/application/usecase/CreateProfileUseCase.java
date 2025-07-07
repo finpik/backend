@@ -1,8 +1,8 @@
 package finpik.resolver.profile.application.usecase;
 
 import finpik.resolver.profile.application.dto.CreateProfileUseCaseDto;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 
 public interface CreateProfileUseCase {
-    ProfileDto execute(CreateProfileUseCaseDto profileDto);
+    ProfileResultDto execute(CreateProfileUseCaseDto profileDto);
 }

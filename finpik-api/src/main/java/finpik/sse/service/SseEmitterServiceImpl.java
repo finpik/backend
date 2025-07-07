@@ -3,15 +3,15 @@ package finpik.sse.service;
 import static finpik.util.Values.ONE_MINUTE_MILL;
 
 import java.util.List;
+import java.util.UUID;
 
+import finpik.entity.history.sse.SseFailHistory;
+import finpik.loanproduct.RecommendedLoanProduct;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import finpik.dto.RecommendedCompleteEvent;
-import finpik.resolver.loanproduct.resolver.result.RecommendedLoanProductResult;
 import finpik.sse.service.repository.SseEmitterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,23 +30,24 @@ public class SseEmitterServiceImpl implements SseEmitterService {
     }
 
     @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void notifyRecommendationCompleted(RecommendedCompleteEvent event) {
-        log.info("Notify recommendation completed for {}", event.eventId());
+    public void notifyRecommendationCompleted(
+        UUID eventId,
+        Long profileId,
+        List<RecommendedLoanProduct> recommendedLoanProductList
+    ) {
+        log.info("Notify recommendation completed for {}", eventId);
 
-        List<RecommendedLoanProductResult> resultList = event.contentList().stream()
-                .map(it -> new RecommendedLoanProductResult(it.loanProductId(), it.productName(), it.minInterestRate(),
-                        it.maxInterestRate(), it.loanLimitAmount()))
-                .toList();
+        SseEmitter emitter = sseEmitterRepository.get(profileId);
 
-        SseEmitter emitter = sseEmitterRepository.get(event.profileId());
         if (emitter != null) {
             try {
-                emitter.send(SseEmitter.event().name("recommendation").data(resultList));
+                emitter.send(SseEmitter.event().name("recommendation")
+                    .data(recommendedLoanProductList, MediaType.APPLICATION_JSON));
                 emitter.complete();
+
             } catch (Exception e) {
                 emitter.completeWithError(e);
-                sseEmitterRepository.delete(event.profileId());
+                sseEmitterRepository.delete(profileId);
             }
         }
     }

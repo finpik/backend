@@ -6,7 +6,6 @@ import finpik.entity.enums.Gender;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record SignUpResult(
     Long userId,

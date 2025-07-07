@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -88,5 +89,11 @@ public class KafkaReliableAsyncProducerService {
         } catch (Exception e) {
             log.error("로컬 백업 실패 [{}] [message={}]", now, message, e);
         }
+    }
+
+    @PreDestroy
+    public void shutdownExecutor() {
+        log.info("Kafka RetryExecutor 종료 시작...");
+        retryExecutor.shutdown();
     }
 }

@@ -5,7 +5,7 @@ import finpik.error.exception.BusinessException;
 import finpik.profile.entity.ProfileList;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.DeleteProfileUseCase;
-import finpik.resolver.profile.application.dto.ProfileDto;
+import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,21 +21,17 @@ public class DeleteProfileUseCaseImpl implements DeleteProfileUseCase {
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
 
-    private static final int START_SEQ = 0;
-
     @Override
-    public List<ProfileDto> execute(Long deletedId, Long userId) {
+    public List<ProfileResultDto> execute(Long deletedId, Long userId) {
         User user = findUserBy(userId);
 
         ProfileList foundProfileList = findProfileListBy(user);
 
-        profileRepository.deleteById(deletedId);
-
         ProfileList profileList = foundProfileList.deleteProfile(deletedId);
 
-        profileList.balanceSequence(START_SEQ);
+        profileRepository.deleteById(deletedId);
 
-        return profileList.getProfiles().stream().map(ProfileDto::new).toList();
+        return profileList.getProfileList().stream().map(ProfileResultDto::new).toList();
     }
 
     private ProfileList findProfileListBy(User user) {

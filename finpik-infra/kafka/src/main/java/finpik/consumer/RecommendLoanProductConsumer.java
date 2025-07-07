@@ -1,9 +1,7 @@
 package finpik.consumer;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Headers;
@@ -13,21 +11,16 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import finpik.consumer.mapper.RecommendedContentMapper;
-import finpik.dto.RecommendedCompleteEvent;
-import finpik.dto.RecommendedLoanProductDto;
+import finpik.dto.CreateRecommendedLoanProductEvent;
 import finpik.entity.history.dlq.KafkaFailedMessage;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.jpa.repository.history.dlq.KafkaFailedMessageJpaRepository;
-import finpik.service.loanproduct.LoanProductRedisRepository;
-import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,44 +28,34 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 public class RecommendLoanProductConsumer {
-    private static final String RECOMMENDATION_TOPIC = "recommendations";
+    private static final String RECOMMENDATION_TOPIC = "recommendation-results";
     private static final String LOAN_RECOMMENDER_GROUP_ID = "loan-recommender";
-    private final LoanProductRedisRepository loanProductRedisRepository;
     private final KafkaFailedMessageJpaRepository kafkaFailedMessageJpaRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final ObjectMapper objectMapper;
 
     /**
      * @param message
-     *            기본 설정 시도 3번, dlq 토픽 서픽스 기본 설정 -dlq 사용
+     * 기본 설정 시도 3번, dlq 토픽 서픽스 기본 설정 -dlq 사용
      */
     @RetryableTopic(backoff = @Backoff(delay = 1000, multiplier = 2))
     @KafkaListener(topics = RECOMMENDATION_TOPIC, groupId = LOAN_RECOMMENDER_GROUP_ID)
-    @Transactional
     public void recommendLoanProduct(String message) {
-        RecommendedLoanProductDto loanProductDto = toRecommendedLoanProductDto(message);
+        log.info("[컨슈머가 받은 메세지]: " + message);
 
-        Long profileId = loanProductDto.profileId();
-
-        List<CachedRecommendedLoanProduct> cachedRecommendedLoanProductList = loanProductDto
-                .toCachedRecommendedLoanProductList();
-
-        loanProductRedisRepository.cacheRecommendations(profileId, cachedRecommendedLoanProductList);
-
-        List<RecommendedCompleteEvent.RecommendedCompleteEventContent> contentList = RecommendedContentMapper
-                .fromCached(cachedRecommendedLoanProductList);
-
-        UUID eventId = UUID.randomUUID();
-
-        RecommendedCompleteEvent event = RecommendedCompleteEvent.of(eventId, profileId, contentList);
+        CreateRecommendedLoanProductEvent event = toEvent(message);
 
         eventPublisher.publishEvent(event);
     }
 
-    private RecommendedLoanProductDto toRecommendedLoanProductDto(String message) {
+    private CreateRecommendedLoanProductEvent toEvent(String message) {
         try {
-            return objectMapper.readValue(message, new TypeReference<>() {
-            });
+            CreateRecommendedLoanProductEvent createRecommendedLoanProductEvent =
+                objectMapper.readValue(message, new TypeReference<>() {});
+
+            createRecommendedLoanProductEvent.validateFields();
+
+            return createRecommendedLoanProductEvent;
         } catch (JsonProcessingException e) {
             throw new BusinessException(ErrorCode.NOT_CONVERT_KAFKA_MESSAGE_LOAN_PRODUCT);
         }

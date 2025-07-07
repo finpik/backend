@@ -15,8 +15,10 @@ public class GraphQLExceptionHandlerDispatcher {
     private final Map<Class<? extends Throwable>, GraphQLExceptionHandler<? extends Throwable>> handlerMap = new HashMap<>();
     private final DefaultExceptionHandler defaultExceptionHandler;
 
-    public GraphQLExceptionHandlerDispatcher(List<GraphQLExceptionHandler<? extends Throwable>> handlers,
-            DefaultExceptionHandler defaultExceptionHandler) {
+    public GraphQLExceptionHandlerDispatcher(
+        List<GraphQLExceptionHandler<? extends Throwable>> handlers,
+        DefaultExceptionHandler defaultExceptionHandler
+    ) {
         this.defaultExceptionHandler = defaultExceptionHandler;
         for (GraphQLExceptionHandler<? extends Throwable> handler : handlers) {
             handlerMap.put(handler.supportedExceptionType(), handler);
@@ -29,15 +31,16 @@ public class GraphQLExceptionHandlerDispatcher {
         while (current != null && Throwable.class.isAssignableFrom(current)) {
             GraphQLExceptionHandler<?> handler = handlerMap.get(current);
             if (handler != null) {
-                @SuppressWarnings("unchecked")
-                GraphQLExceptionHandler<T> casted = (GraphQLExceptionHandler<T>) handler;
-                return casted;
+                return castHandler(handler);
             }
-            current = current.getSuperclass(); // 상위 클래스로 이동
+            current = current.getSuperclass();
         }
 
-        @SuppressWarnings("unchecked")
-        GraphQLExceptionHandler<T> fallback = (GraphQLExceptionHandler<T>) defaultExceptionHandler;
-        return fallback;
+        return castHandler(defaultExceptionHandler);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Throwable> GraphQLExceptionHandler<T> castHandler(GraphQLExceptionHandler<?> handler) {
+        return (GraphQLExceptionHandler<T>) handler;
     }
 }

@@ -1,6 +1,7 @@
 package finpik.entity.profile;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
@@ -9,9 +10,10 @@ import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.entity.user.UserEntity;
-import finpik.error.enums.ErrorCode;
-import finpik.error.exception.BusinessException;
+import finpik.mapper.profile.OccupationMapper;
 import finpik.profile.entity.Profile;
+import finpik.profile.entity.policy.ProfileCreationSpec;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,14 +26,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jdk.jfr.Description;
 import lombok.AccessLevel;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "profile")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,9 +48,7 @@ public class ProfileEntity {
 
     private Integer creditScore;
 
-    private Integer income;
-
-    private String workplaceName;
+    private Integer annualIncome;
 
     private String profileName;
 
@@ -74,72 +75,64 @@ public class ProfileEntity {
 
     private LocalDate employmentDate;
 
+    private LocalDate businessStartDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @Builder
-    public ProfileEntity(Integer desiredLoanAmount, Integer loanProductUsageCount, Integer totalLoanUsageAmount,
-            Integer creditScore, CreditGradeStatus creditGradeStatus, Integer income, Integer seq, String workplaceName,
-            EmploymentForm employmentForm, LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan,
-            LocalDate employmentDate, String profileName, Occupation occupation, UserEntity user,
-            ProfileColor profileColor) {
-        this.desiredLoanAmount = desiredLoanAmount;
-        this.loanProductUsageCount = loanProductUsageCount;
-        this.totalLoanUsageAmount = totalLoanUsageAmount;
-        this.creditScore = creditScore;
-        this.creditGradeStatus = creditGradeStatus;
-        this.income = income;
-        this.workplaceName = workplaceName;
-        this.employmentForm = employmentForm;
-        this.loanProductUsageStatus = loanProductUsageStatus;
-        this.purposeOfLoan = purposeOfLoan;
-        this.employmentDate = employmentDate;
-        this.profileName = profileName;
-        this.occupation = occupation;
-        this.user = user;
-        this.profileColor = profileColor;
-        this.seq = seq == null ? 0 : seq;
-    }
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public static ProfileEntity from(Profile profile, UserEntity userEntity) {
-        return ProfileEntity.builder().purposeOfLoan(profile.getPurposeOfLoan())
-                .desiredLoanAmount(profile.getDesiredLoanAmount())
-                .loanProductUsageCount(profile.getLoanProductUsageCount())
-                .totalLoanUsageAmount(profile.getTotalLoanUsageAmount()).creditScore(profile.getCreditScore())
-                .creditGradeStatus(profile.getCreditGradeStatus()).income(profile.getIncome())
-                .workplaceName(profile.getWorkplaceName()).profileName(profile.getProfileName())
-                .occupation(profile.getOccupation()).profileColor(profile.getProfileColor())
-                .employmentDate(profile.getEmploymentDate()).user(userEntity).profileColor(profile.getProfileColor())
-                .seq(profile.getSeq()).build();
-    }
+        OccupationMapper mapper = OccupationMapper.from(profile.getOccupationDetail());
 
-    public Profile toDomain() {
-        return Profile.withId(
-            id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
-            creditScore, creditGradeStatus, income, seq, workplaceName,
-            employmentForm, loanProductUsageStatus, purposeOfLoan,
-            employmentDate, profileName, occupation,
-            user.toDomain(), profileColor
+        return new ProfileEntity(
+            profile.getId(), profile.getDesiredLoanAmount(), profile.getLoanProductUsageCount(),
+            profile.getTotalLoanUsageAmount(), profile.getCreditScore().creditScore(),
+            mapper.annualIncome(), profile.getProfileName(), profile.getSeq(),
+            mapper.employmentForm(), profile.getCreditScore().creditGradeStatus(),
+            profile.getLoanProductUsageStatus(), profile.getPurposeOfLoan(),
+            mapper.occupation(), profile.getProfileColor(), mapper.employmentDate(),
+            mapper.businessStartDate(), userEntity, profile.getCreatedAt(), profile.getUpdatedAt()
         );
     }
 
+    public Profile toDomain() {
+        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
+            id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
+            creditScore, profileName, seq, creditGradeStatus, loanProductUsageStatus,
+            purposeOfLoan, profileColor, annualIncome, businessStartDate,
+            employmentDate, occupation, employmentForm,
+            user.toDomain(), createdAt, updatedAt
+        );
+
+        return Profile.withId(spec);
+    }
+
     public void updateAllFields(Profile profile) {
+        OccupationMapper mapper = OccupationMapper.from(profile.getOccupationDetail());
+
         desiredLoanAmount = profile.getDesiredLoanAmount();
         loanProductUsageCount = profile.getLoanProductUsageCount();
         totalLoanUsageAmount = profile.getTotalLoanUsageAmount();
-        creditScore = profile.getCreditScore();
-        income = profile.getIncome();
-        workplaceName = profile.getWorkplaceName();
+        creditScore = profile.getCreditScore().creditScore();
+        annualIncome = mapper.annualIncome();
         profileName = profile.getProfileName();
         seq = profile.getSeq();
-        employmentForm = profile.getEmploymentForm();
-        creditGradeStatus = profile.getCreditGradeStatus();
+        employmentForm = mapper.employmentForm();
+        creditGradeStatus = profile.getCreditScore().creditGradeStatus();
         loanProductUsageStatus = profile.getLoanProductUsageStatus();
         purposeOfLoan = profile.getPurposeOfLoan();
-        occupation = profile.getOccupation();
+        occupation = mapper.occupation();
         profileColor = profile.getProfileColor();
-        employmentDate = profile.getEmploymentDate();
+        employmentDate = mapper.employmentDate();
         profileColor = profile.getProfileColor();
+        updatedAt = LocalDateTime.now();
+    }
+
+    public void updateSeq(Integer seq) {
+        this.seq = seq;
     }
 }

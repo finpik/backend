@@ -9,13 +9,13 @@ public class RelatedLoanProductResult {
     private final String productName;
     private final Float maxInterestRate;
     private final Float minInterestRate;
-    private final Integer loanLimitAmount;
+    private final Long maxLoanLimitAmount;
 
     public RelatedLoanProductResult(RelatedLoanProductDto dto) {
         productId = dto.getProductId();
         productName = dto.getProductName();
         maxInterestRate = dto.getMaxInterestRate();
         minInterestRate = dto.getMinInterestRate();
-        loanLimitAmount = dto.getLoanLimitAmount();
+        maxLoanLimitAmount = dto.getMaxLoanLimitAmount();
     }
 }

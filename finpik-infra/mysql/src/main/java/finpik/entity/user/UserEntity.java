@@ -40,7 +40,6 @@ public class UserEntity {
 
     private LocalDateTime registrationDate;
 
-    //@formatter:off
     @Builder
     public UserEntity(
         String username, String email,

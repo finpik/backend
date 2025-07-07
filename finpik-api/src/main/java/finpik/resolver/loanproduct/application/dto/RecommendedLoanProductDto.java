@@ -9,13 +9,13 @@ public class RecommendedLoanProductDto {
     private final String productName;
     private final Float minInterestRate;
     private final Float maxInterestRate;
-    private final Integer loanLimitAmount;
+    private final Long maxLoanLimitAmount;
 
     public RecommendedLoanProductDto(RecommendedLoanProduct recommendedLoanProduct) {
         this.loanProductId = recommendedLoanProduct.getLoanProductId();
         this.productName = recommendedLoanProduct.getProductName();
         this.minInterestRate = recommendedLoanProduct.getInterestRate().minInterestRate();
         this.maxInterestRate = recommendedLoanProduct.getInterestRate().maxInterestRate();
-        this.loanLimitAmount = recommendedLoanProduct.getLoanLimitAmount();
+        this.maxLoanLimitAmount = recommendedLoanProduct.getMaxLoanLimitAmount();
     }
 }

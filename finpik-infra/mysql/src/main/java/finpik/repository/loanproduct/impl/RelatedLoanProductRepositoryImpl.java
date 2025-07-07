@@ -30,16 +30,14 @@ public class RelatedLoanProductRepositoryImpl implements RelatedLoanProductRepos
         List<LoanProductEntity> entityList = loanProductJpaRepository.findAllById(relatedProductIdList);
 
         return entityList.stream()
-            .map(entity -> {
-                InterestRate interestRate =
-                    new InterestRate(entity.getMaxInterestRate(), entity.getMinInterestRate());
-
-                return RelatedLoanProduct.of(
+            .map(entity ->
+                RelatedLoanProduct.of(
                     entity.getId(),
                     entity.getProductName(),
-                    interestRate,
-                    entity.getLoanLimitAmount()
-                );
-            }).toList();
+                    entity.getMaxInterestRate(),
+                    entity.getMinInterestRate(),
+                    entity.getMaxLoanLimitAmount()
+                )
+            ).toList();
     }
 }

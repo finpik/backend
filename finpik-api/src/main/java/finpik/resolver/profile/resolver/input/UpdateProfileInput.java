@@ -14,7 +14,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
-//@formatter:off
 @Builder
 public record UpdateProfileInput(
     @NotNull(message = "프로필 id가 필요합니다.")
@@ -23,7 +22,7 @@ public record UpdateProfileInput(
     Occupation occupation,
     String workplaceName,
     EmploymentForm employmentForm,
-    Integer income,
+    Integer annualIncome,
     LocalDate employmentDate,
     @NotNull(message = "대출 목적을 선택해 주세요.")
     PurposeOfLoan purposeOfLoan,
@@ -46,7 +45,7 @@ public record UpdateProfileInput(
             .occupation(occupation)
             .workplaceName(workplaceName)
             .employmentForm(employmentForm)
-            .income(income)
+            .annualIncome(annualIncome)
             .employmentDate(employmentDate)
             .purposeOfLoan(purposeOfLoan)
             .desiredLoanAmount(desiredLoanAmount)
