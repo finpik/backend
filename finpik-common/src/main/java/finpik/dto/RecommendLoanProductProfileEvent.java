@@ -6,9 +6,12 @@ import finpik.entity.enums.Occupation;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class RecommendLoanProductProfileEvent {
     Long profileId;
+    UUID eventId;
     Integer desiredLimit;
     Integer creditScore;
     Occupation occupation;
@@ -22,6 +25,7 @@ public class RecommendLoanProductProfileEvent {
         Occupation occupation, EmploymentForm employmentForm,
         Integer age, Gender gender
     ) {
+        this.eventId = UUID.randomUUID();
         this.profileId = profileId;
         this.desiredLimit = desiredLimit;
         this.creditScore = creditScore;

@@ -1,5 +1,9 @@
 jar.enabled = true
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
+}
+
 dependencies {
     implementation project(":finpik-domain")
 

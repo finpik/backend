@@ -7,16 +7,16 @@ import finpik.repository.loanproduct.RecommendedLoanProductRepository;
 import finpik.resolver.loanproduct.application.CreateRecommendLoanProductUseCase;
 import finpik.sse.service.SseEmitterService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CreateRecommendLoanProductUseCaseImpl implements
@@ -47,6 +47,10 @@ public class CreateRecommendLoanProductUseCaseImpl implements
 
         List<RecommendedLoanProduct> recommendedLoanProducts =
             recommendedLoanProductRepository.saveAll(event.profileId(), recommendedLoanProductList);
+
+        recommendedLoanProducts.forEach(p ->
+            log.info("cache 대상: id={}, profileId={}", p.getRecommendedLoanProductId(), p.getProfileId())
+        );
 
         recommendedLoanProductCacheRepository.cacheAsync(event.profileId(), recommendedLoanProducts);
 
