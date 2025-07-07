@@ -34,11 +34,11 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
 
         ProfileList addedProfileList = profileList.addProfile(profile);
 
-        sendEvent(profile);
+        Profile savedProfile = profileRepository.saveNewAndUpdateExistProfileList(addedProfileList);
 
-        return new ProfileResultDto(
-            profileRepository.saveNewAndUpdateExistProfileList(addedProfileList)
-        );
+        sendEvent(savedProfile);
+
+        return new ProfileResultDto(savedProfile);
     }
 
     private User getUser(Long userId) {
@@ -48,10 +48,14 @@ public class CreateProfileUseCaseImpl implements CreateProfileUseCase {
 
 
     private void sendEvent(Profile profile) {
-        RecommendLoanProductProfileEvent event = RecommendLoanProductProfileEvent.builder().profileId(profile.getId())
+        RecommendLoanProductProfileEvent event = RecommendLoanProductProfileEvent.builder()
+            .profileId(profile.getId())
+            .desiredLimit(profile.getDesiredLoanAmount())
             .creditScore(profile.getCreditScore().creditScore())
             .occupation(profile.getOccupationDetail().getOccupation())
             .employmentForm(profile.getOccupationDetail().getEmploymentForm())
+            .gender(profile.getUser().getGender())
+            .age(profile.getUser().getAge())
             .build();
 
         eventPublisher.publishEvent(event);

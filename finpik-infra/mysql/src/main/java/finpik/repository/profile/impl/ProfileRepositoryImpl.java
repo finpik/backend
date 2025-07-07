@@ -1,5 +1,6 @@
 package finpik.repository.profile.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,15 +48,17 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         List<Long> existProfileIdList = profileList.profileList().stream().map(Profile::getId)
             .filter(Objects::nonNull).toList();
 
-        List<ProfileEntity> exsitProfileEntityList = profileEntityJpaRepository.findAllById(existProfileIdList);
+        List<ProfileEntity> exsitProfileEntityList =
+            new ArrayList<>(profileEntityJpaRepository.findAllById(existProfileIdList));
 
         updateFields(exsitProfileEntityList, profileList.profileList());
 
         exsitProfileEntityList.add(ProfileEntity.from(profileList.getProfileList().getFirst(), userEntity));
 
-        profileEntityJpaRepository.saveAll(exsitProfileEntityList);
+        ProfileEntity profileEntity = profileEntityJpaRepository.saveAll(exsitProfileEntityList)
+            .stream().filter(entity -> entity.getSeq() == 0).toList().getFirst();
 
-        return profileList.profileList().getFirst();
+        return profileEntity.toDomain();
     }
 
 
@@ -84,10 +87,11 @@ public class ProfileRepositoryImpl implements ProfileRepository {
         List<Profile> profileList
     ) {
         Map<Long, Profile> idProfileMap = profileList.stream()
+            .filter(profile -> profile.getId() != null)
             .collect(Collectors.toMap(Profile::getId, profile -> profile));
 
         profileEntityList.forEach(profileEntity -> {
-            Profile profile = idProfileMap.get(profileEntity.getUser().getId());
+            Profile profile = idProfileMap.get(profileEntity.getId());
 
             if (profile != null) {
                 profileEntity.updateAllFields(profile);
