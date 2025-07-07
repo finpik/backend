@@ -29,15 +29,4 @@ public class RecommendedLoanProductResult {
         this.maxInterestRate = maxInterestRate;
         this.loanLimitAmount = loanLimitAmount;
     }
-
-    public RecommendedLoanProductResult(
-        Long loanProductId, String productName, Float minInterestRate,
-        Float maxInterestRate, Integer loanLimitAmount
-    ) {
-        this.loanProductId = loanProductId;
-        this.productName = productName;
-        this.minInterestRate = minInterestRate;
-        this.maxInterestRate = maxInterestRate;
-        this.loanLimitAmount = loanLimitAmount;
-    }
 }

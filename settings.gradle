@@ -3,7 +3,6 @@ rootProject.name = 'finpik'
 include 'finpik-api'
 include 'finpik-common'
 include 'finpik-domain'
-include 'finpik-external'
 
 include 'finpik-infra'
 include 'finpik-infra:mysql'
