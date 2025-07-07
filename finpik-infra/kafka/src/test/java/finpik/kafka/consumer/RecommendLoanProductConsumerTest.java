@@ -21,7 +21,7 @@ import finpik.kafka.config.KafkaTestConfig;
 
 @SpringBootTest(classes = InfraTestApplication.class)
 @Import(KafkaTestConfig.class)
-@EmbeddedKafka(partitions = 1, topics = {"recommendations", "recommendations-dlt"})
+@EmbeddedKafka(partitions = 1, topics = {"recommendation-results", "recommendations-dlt"})
 @DirtiesContext
 @ActiveProfiles("test")
 class RecommendLoanProductConsumerTest {
@@ -37,7 +37,7 @@ class RecommendLoanProductConsumerTest {
     void testDlqHandling_whenMessageFails() throws InterruptedException {
         String failingMessage = "{\"profileId\": 99, \"message\": \"fail\"}";
 
-        kafkaTemplate.send("recommendations", failingMessage);
+        kafkaTemplate.send("recommendation-results", failingMessage);
 
         Thread.sleep(10_000);
 
