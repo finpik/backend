@@ -42,6 +42,6 @@ class RecommendLoanProductConsumerTest {
         Thread.sleep(10_000);
 
         List<KafkaFailedMessage> failed = kafkaFailedMessageJpaRepository.findAll();
-        assertThat(failed).anySatisfy(msg -> assertThat(msg.getPayload()).contains("fail"));
+        assertThat(failed).anySatisfy(msg -> assertThat(msg.getPayload()).contains("{\"profileId\":99,\"eventId\":99}"));
     }
 }
