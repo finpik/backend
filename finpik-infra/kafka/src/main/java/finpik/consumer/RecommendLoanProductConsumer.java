@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 public class RecommendLoanProductConsumer {
-    private static final String RECOMMENDATION_TOPIC = "recommendations";
+    private static final String RECOMMENDATION_TOPIC = "recommendation-results";
     private static final String LOAN_RECOMMENDER_GROUP_ID = "loan-recommender";
     private final KafkaFailedMessageJpaRepository kafkaFailedMessageJpaRepository;
     private final ApplicationEventPublisher eventPublisher;
@@ -41,6 +41,8 @@ public class RecommendLoanProductConsumer {
     @RetryableTopic(backoff = @Backoff(delay = 1000, multiplier = 2))
     @KafkaListener(topics = RECOMMENDATION_TOPIC, groupId = LOAN_RECOMMENDER_GROUP_ID)
     public void recommendLoanProduct(String message) {
+        log.info("[컨슈머가 받은 메세지]: " + message);
+
         CreateRecommendedLoanProductEvent event = toEvent(message);
 
         eventPublisher.publishEvent(event);
