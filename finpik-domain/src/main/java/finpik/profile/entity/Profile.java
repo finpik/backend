@@ -36,35 +36,37 @@ public class Profile {
     private LocalDateTime updatedAt;
 
     public static Profile of(ProfileCreationSpec spec) {
-        LocalDateTime createdAt = LocalDateTime.now();
-        return create(spec, null, createdAt, null);
+        return create(spec);
     }
 
     public static Profile withId(ProfileCreationSpec spec) {
         require(spec.id(), "profile id must not be null.");
 
-        return create(spec, spec.id(), spec.createdAt(), spec.updatedAt());
+        return create(spec);
     }
 
-    private static Profile create(ProfileCreationSpec spec, Long id, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private static Profile create(
+        ProfileCreationSpec spec
+    ) {
         CreditScore creditScore = new CreditScore(spec.creditScore(), spec.creditGradeStatus());
         OccupationDetail occupationDetail = OccupationDetail.of(spec);
+        LocalDateTime createdAt = LocalDateTime.now();
 
         return new Profile(
-            id,
+            spec.id(),
             require(spec.desiredLoanAmount(), "desiredLoanAmount must not be null."),
             require(spec.loanProductUsageCount(), "loanProductUsageCount must not be null."),
             require(spec.totalLoanUsageAmount(), "totalLoanUsageAmount must not be null."),
             creditScore,
             require(spec.profileName(), "profileName must not be null."),
-            require(spec.seq(), "seq must not be null."),
+            spec.seq() == null ? 0 : spec.seq() ,
             require(spec.loanProductUsageStatus(), "loanProductUsageStatus must not be null."),
             require(spec.purposeOfLoan(), "purposeOfLoan must not be null."),
             require(spec.profileColor(), "profileColor must not be null."),
             occupationDetail,
             require(spec.user(), "user must not be null."),
-            require(createdAt, "createdAt must not be null."),
-            updatedAt
+            spec.createdAt() == null ? createdAt : spec.createdAt(),
+            spec.updatedAt()
         );
     }
 

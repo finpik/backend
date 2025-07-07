@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import finpik.service.loanproduct.dto.CachedRecommendedLoanProductList;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class RecommendedLoanProductCacheRepositoryImpl implements RecommendedLoanProductCacheRepository {

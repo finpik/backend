@@ -31,7 +31,6 @@ public record CreateProfileUseCaseDto(
     ProfileColor profileColor,
     LocalDate businessStartDate
 ) {
-
     public Profile toDomain(User user) {
         ProfileCreationSpec spec = ProfileCreationSpec.createNew(
             desiredLoanAmount, loanProductUsageCount,
