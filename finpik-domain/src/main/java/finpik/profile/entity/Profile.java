@@ -5,6 +5,7 @@ import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.profile.entity.occupation.OccupationDetail;
 import finpik.profile.entity.policy.ProfileCreationSpec;
+import finpik.profile.entity.policy.ProfileUpdateSpec;
 import finpik.profile.entity.score.CreditScore;
 import finpik.user.entity.User;
 import lombok.AccessLevel;
@@ -27,6 +28,7 @@ public class Profile {
     private CreditScore creditScore;
     private String profileName;
     private Integer seq;
+    //TODO loanusage 사용필요
     private LoanProductUsageStatus loanProductUsageStatus;
     private PurposeOfLoan purposeOfLoan;
     private ProfileColor profileColor;
@@ -49,7 +51,11 @@ public class Profile {
         ProfileCreationSpec spec
     ) {
         CreditScore creditScore = new CreditScore(spec.creditScore(), spec.creditGradeStatus());
-        OccupationDetail occupationDetail = OccupationDetail.of(spec);
+        OccupationDetail occupationDetail = OccupationDetail.of(
+            spec.annualIncome(), spec.occupation(), spec.employmentForm(),
+            spec.employmentDate(), spec.businessStartDate()
+        );
+
         LocalDateTime createdAt = LocalDateTime.now();
 
         return new Profile(
@@ -70,15 +76,25 @@ public class Profile {
         );
     }
 
-    public void updateProfile(Profile updatedProfile) {
-        this.occupationDetail = updatedProfile.getOccupationDetail();
-        this.desiredLoanAmount = updatedProfile.getDesiredLoanAmount();
-        this.loanProductUsageCount = updatedProfile.getLoanProductUsageCount();
-        this.totalLoanUsageAmount = updatedProfile.getTotalLoanUsageAmount();
-        this.creditScore = updatedProfile.getCreditScore();
-        this.loanProductUsageStatus = updatedProfile.getLoanProductUsageStatus();
-        this.purposeOfLoan = updatedProfile.getPurposeOfLoan();
-        this.profileName = updatedProfile.getProfileName();
+    public void updateProfile(ProfileUpdateSpec spec) {
+        OccupationDetail occupationDetail = OccupationDetail.of(
+            spec.annualIncome(),
+            spec.occupation(),
+            spec.employmentForm(),
+            spec.employmentDate(),
+            spec.businessStartDate()
+        );
+
+        CreditScore creditScore = new CreditScore(spec.creditScore(), spec.creditGradeStatus());
+
+        this.occupationDetail = occupationDetail;
+        this.purposeOfLoan = spec.purposeOfLoan() == null ? this.purposeOfLoan : spec.purposeOfLoan();
+        this.desiredLoanAmount = spec.desiredLoanAmount() == null ? this.desiredLoanAmount : spec.desiredLoanAmount();
+        this.loanProductUsageStatus = spec.loanProductUsageStatus() == null ? this.loanProductUsageStatus : spec.loanProductUsageStatus();
+        this.loanProductUsageCount = spec.loanProductUsageCount() == null ? this.loanProductUsageCount : spec.loanProductUsageCount();
+        this.totalLoanUsageAmount = spec.totalLoanUsageAmount() == null ? this.totalLoanUsageAmount : spec.totalLoanUsageAmount();
+        this.creditScore = creditScore;
+        this.profileName = spec.profileName() == null ? this.profileName : spec.profileName();
         this.updatedAt = LocalDateTime.now();
     }
 

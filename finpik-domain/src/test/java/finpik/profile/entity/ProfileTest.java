@@ -8,6 +8,7 @@ import finpik.entity.enums.Gender;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.RegistrationType;
 import finpik.profile.entity.policy.ProfileCreationSpec;
+import finpik.profile.entity.policy.ProfileUpdateSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,32 +35,25 @@ class ProfileTest {
         );
 
         Profile profile = getDefaultProfile(user);
-        ProfileCreationSpec spec = ProfileCreationSpec.rebuild(
+        ProfileUpdateSpec spec = new ProfileUpdateSpec(
             1L,
-            100,
-            100,
-            100,
-            1000,
-            "profile name",
-            0,
-            CreditGradeStatus.EXCELLENT,
-            LoanProductUsageStatus.NOT_USING,
-            PurposeOfLoan.LOAN_REPAYMENT,
-            ProfileColor.GRAY_TWO,
-            1000,
-            LocalDate.now(),
-            LocalDate.now(),
             Occupation.EMPLOYEE,
-            EmploymentForm.CONTRACT,
-            user,
-            LocalDateTime.now(),
-            LocalDateTime.now()
+            EmploymentForm.FULL_TIME,
+            1000000000,
+            LocalDate.now(),
+            PurposeOfLoan.LOAN_REPAYMENT,
+            1000000000,
+            LoanProductUsageStatus.NOT_USING,
+            0,
+            0,
+            900,
+            CreditGradeStatus.EXCELLENT,
+            "test profile",
+            null
         );
 
-        Profile updatingProfile = Profile.withId(spec);
-
         // when
-        profile.updateProfile(updatingProfile);
+        profile.updateProfile(spec);
 
         // then
         assertAll(() -> assertThat(profile.getOccupationDetail().getOccupation()).isEqualTo(Occupation.EMPLOYEE),
