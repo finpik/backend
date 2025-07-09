@@ -28,19 +28,19 @@ input CreateProfileInput {
 }
 
 input UpdateProfileInput {
-    profileId: Long
+    profileId: Long!
     occupation: Occupation!
-    employmentForm: EmploymentForm
-    annualIncome: Int
+    employmentForm: EmploymentForm!
+    annualIncome: Int!
     employmentDate: Date
-    purposeOfLoan: PurposeOfLoan!
-    desiredLoanAmount: Int!
-    loanProductUsageStatus: LoanProductUsageStatus!
-    loanProductUsageCount: Int!
-    totalLoanUsageAmount: Int!
-    creditScore: Int!
-    creditGradeStatus: CreditGradeStatus!
-    profileName: String!
+    purposeOfLoan: PurposeOfLoan
+    desiredLoanAmount: Int
+    loanProductUsageStatus: LoanProductUsageStatus
+    loanProductUsageCount: Int
+    totalLoanUsageAmount: Int
+    creditScore: Int
+    creditGradeStatus: CreditGradeStatus
+    profileName: String
     businessStartDate: Date
 }
 

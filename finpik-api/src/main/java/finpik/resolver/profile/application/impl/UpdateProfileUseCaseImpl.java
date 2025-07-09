@@ -3,6 +3,7 @@ package finpik.resolver.profile.application.impl;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.profile.entity.Profile;
+import finpik.profile.entity.policy.ProfileUpdateSpec;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileUseCase;
 import finpik.resolver.profile.application.dto.ProfileResultDto;
@@ -19,8 +20,8 @@ public class UpdateProfileUseCaseImpl implements UpdateProfileUseCase {
 
     @Override
     public ProfileResultDto execute(UpdateProfileUseCaseDto dto) {
-        Profile changedProfile = dto.toDomain();
-        Profile profile = findProfileBy(dto.id());
+        Profile profile = findProfileBy(dto.profileId());
+        ProfileUpdateSpec changedProfile = dto.toSpec();
 
         profile.updateProfile(changedProfile);
 

@@ -1,18 +1,14 @@
-package finpik.resolver.profile.application.dto;
-
-import java.time.LocalDate;
+package finpik.profile.entity.policy;
 
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.profile.entity.Profile;
-import finpik.profile.entity.policy.ProfileUpdateSpec;
-import lombok.Builder;
 
-@Builder
-public record UpdateProfileUseCaseDto(
+import java.time.LocalDate;
+
+public record ProfileUpdateSpec(
     Long profileId,
     Occupation occupation,
     EmploymentForm employmentForm,
@@ -28,14 +24,4 @@ public record UpdateProfileUseCaseDto(
     String profileName,
     LocalDate businessStartDate
 ) {
-    public ProfileUpdateSpec toSpec() {
-        return new ProfileUpdateSpec(
-            profileId, occupation, employmentForm,
-            annualIncome, employmentDate, purposeOfLoan,
-            desiredLoanAmount, loanProductUsageStatus,
-            loanProductUsageCount, totalLoanUsageAmount,
-            creditScore, creditGradeStatus, profileName,
-            businessStartDate
-        );
-    }
 }
