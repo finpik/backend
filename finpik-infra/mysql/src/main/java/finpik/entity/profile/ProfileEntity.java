@@ -3,16 +3,16 @@ package finpik.entity.profile;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import finpik.entity.Profile;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
+import finpik.entity.policy.ProfileCreationSpec;
 import finpik.entity.user.UserEntity;
 import finpik.mapper.profile.OccupationMapper;
-import finpik.profile.entity.Profile;
-import finpik.profile.entity.policy.ProfileCreationSpec;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -2,12 +2,12 @@ package finpik.mapper.profile;
 
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
-import finpik.profile.entity.occupation.EmployeeDetail;
-import finpik.profile.entity.occupation.FreelancerDetail;
-import finpik.profile.entity.occupation.OccupationDetail;
-import finpik.profile.entity.occupation.OtherDetail;
-import finpik.profile.entity.occupation.PublicServantDetail;
-import finpik.profile.entity.occupation.SelfEmployedDetail;
+import finpik.entity.occupation.EmployeeDetail;
+import finpik.entity.occupation.FreelancerDetail;
+import finpik.entity.occupation.OccupationDetail;
+import finpik.entity.occupation.OtherDetail;
+import finpik.entity.occupation.PublicServantDetail;
+import finpik.entity.occupation.SelfEmployedDetail;
 
 import java.time.LocalDate;
 

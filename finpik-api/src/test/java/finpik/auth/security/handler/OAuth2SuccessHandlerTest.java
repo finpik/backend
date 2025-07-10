@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.time.Duration;
 import java.util.Optional;
 
+import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
 import finpik.util.Values;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import finpik.JwtProvider;
 import finpik.auth.security.user.CustomOAuth2User;
 import finpik.repository.auth.AuthRedisRepository;
-import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
 import jakarta.servlet.http.Cookie;
 

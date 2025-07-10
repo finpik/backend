@@ -1,8 +1,8 @@
 package finpik.repository.user;
 
-import java.util.Optional;
+import finpik.entity.User;
 
-import finpik.user.entity.User;
+import java.util.Optional;
 
 public interface UserRepository {
     User save(User user);

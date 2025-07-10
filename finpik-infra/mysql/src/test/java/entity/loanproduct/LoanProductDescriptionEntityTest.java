@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import finpik.entity.loanproduct.LoanProductDescriptionEntity;
-import finpik.loanproduct.LoanProductDescription;
 
 class LoanProductDescriptionEntityTest {
 

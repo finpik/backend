@@ -1,7 +1,7 @@
 package finpik.resolver.loanproduct.application.impl;
 
-import finpik.history.entity.UserProductViewHistory;
-import finpik.history.repository.UserProductViewHistoryRepository;
+import finpik.entity.UserProductViewHistory;
+import finpik.repository.UserProductViewHistoryRepository;
 import finpik.resolver.loanproduct.application.CreateRelatedLoanProductUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;

@@ -1,6 +1,6 @@
 package finpik.resolver.loanproduct.application.dto;
 
-import finpik.loanproduct.RelatedLoanProduct;
+import finpik.RelatedLoanProduct;
 import lombok.Getter;
 
 @Getter

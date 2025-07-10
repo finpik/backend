@@ -1,12 +1,12 @@
 package finpik.entity.loanproduct;
 
+import finpik.LoanProduct;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
-import finpik.loanproduct.LoanProduct;
-import finpik.loanproduct.dto.LoanProductCreationDto;
+import finpik.dto.LoanProductCreationDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

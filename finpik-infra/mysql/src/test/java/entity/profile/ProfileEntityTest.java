@@ -2,10 +2,12 @@ package entity.profile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import finpik.entity.Profile;
+import finpik.entity.User;
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.RegistrationType;
-import finpik.profile.entity.policy.ProfileCreationSpec;
+import finpik.entity.policy.ProfileCreationSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +17,6 @@ import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
 import finpik.entity.profile.ProfileEntity;
 import finpik.entity.user.UserEntity;
-import finpik.profile.entity.Profile;
-import finpik.user.entity.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

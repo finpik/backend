@@ -1,8 +1,7 @@
 package finpik.resolver.loanproduct.application.impl;
 
-import finpik.history.entity.UserProductViewHistory;
-import finpik.history.repository.UserProductViewHistoryRepository;
-import finpik.resolver.loanproduct.application.CreateRelatedLoanProductUseCase;
+import finpik.entity.UserProductViewHistory;
+import finpik.repository.UserProductViewHistoryRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
+import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,6 @@ import finpik.auth.security.handler.reponse.OAuth2Response;
 import finpik.auth.security.user.CustomOAuth2User;
 import finpik.dto.CreateTokenDto;
 import finpik.repository.auth.AuthRedisRepository;
-import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

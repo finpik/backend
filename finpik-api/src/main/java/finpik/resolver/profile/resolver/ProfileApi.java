@@ -2,6 +2,7 @@ package finpik.resolver.profile.resolver;
 
 import java.util.List;
 
+import finpik.entity.User;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.ContextValue;
 
@@ -10,7 +11,6 @@ import finpik.resolver.profile.resolver.input.UpdateProfileColorInput;
 import finpik.resolver.profile.resolver.input.UpdateProfileInput;
 import finpik.resolver.profile.resolver.input.UpdateProfileSequenceInput;
 import finpik.resolver.profile.resolver.result.ProfileResult;
-import finpik.user.entity.User;
 import jakarta.validation.Valid;
 
 public interface ProfileApi {

@@ -5,7 +5,7 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    implementation project(":finpik-domain")
+    implementation project(":finpik-domain:loanproduct")
 
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'

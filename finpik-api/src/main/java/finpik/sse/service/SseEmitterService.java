@@ -1,6 +1,6 @@
 package finpik.sse.service;
 
-import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.RecommendedLoanProduct;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;

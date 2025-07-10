@@ -3,12 +3,12 @@ package finpik.config.interceptor;
 import static finpik.util.Values.REFRESH_TOKEN;
 import static finpik.util.Values.USER;
 
+import finpik.entity.User;
 import org.springframework.graphql.server.WebGraphQlInterceptor;
 import org.springframework.graphql.server.WebGraphQlRequest;
 import org.springframework.graphql.server.WebGraphQlResponse;
 import org.springframework.stereotype.Component;
 
-import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 

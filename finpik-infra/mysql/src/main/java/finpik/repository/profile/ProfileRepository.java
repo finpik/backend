@@ -1,11 +1,11 @@
 package finpik.repository.profile;
 
+import finpik.entity.Profile;
+import finpik.entity.ProfileList;
+import finpik.entity.User;
+
 import java.util.List;
 import java.util.Optional;
-
-import finpik.profile.entity.Profile;
-import finpik.profile.entity.ProfileList;
-import finpik.user.entity.User;
 
 public interface ProfileRepository {
     Profile save(Profile profile);
