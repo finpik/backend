@@ -28,6 +28,8 @@ public record CachedRecommendedLoanProduct(
 
     public static CachedRecommendedLoanProduct from(RecommendedLoanProduct recommendedLoanProduct) {
         return CachedRecommendedLoanProduct.builder()
+            .recommendedLoanProductId(recommendedLoanProduct.getRecommendedLoanProductId())
+            .profileId(recommendedLoanProduct.getProfileId())
             .loanProductId(recommendedLoanProduct.getLoanProductId())
             .productName(recommendedLoanProduct.getProductName())
             .minInterestRate(recommendedLoanProduct.getInterestRate().minInterestRate())

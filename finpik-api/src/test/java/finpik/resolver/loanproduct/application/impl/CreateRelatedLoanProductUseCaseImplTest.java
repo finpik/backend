@@ -39,6 +39,6 @@ class CreateRelatedLoanProductUseCaseImplTest {
         UserProductViewHistory userProductViewHistory = captor.getValue();
 
         assertAll(() -> assertThat(userId).isEqualTo(userProductViewHistory.userId()),
-            () -> assertThat(productId).isEqualTo(userProductViewHistory.productId()));
+            () -> assertThat(productId).isEqualTo(userProductViewHistory.loanProductId()));
     }
 }

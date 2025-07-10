@@ -2,6 +2,8 @@ package finpik.jpa.repository.history.userproductview;
 
 import java.util.List;
 
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.Projections;
@@ -11,6 +13,8 @@ import finpik.entity.history.userproductview.QUserProductViewHistoryEntity;
 import finpik.jpa.repository.history.userproductview.projection.RelatedLoanProductProjection;
 import lombok.RequiredArgsConstructor;
 
+import static finpik.entity.history.userproductview.QUserProductViewHistoryEntity.userProductViewHistoryEntity;
+
 @Repository
 @RequiredArgsConstructor
 public class CustomUserProductViewHistoryRepositoryImpl implements CustomUserProductViewHistoryRepository {
@@ -19,12 +23,25 @@ public class CustomUserProductViewHistoryRepositoryImpl implements CustomUserPro
 
     @Override
     public List<RelatedLoanProductProjection> getRelatedLoanProductList(Long productId) {
-        QUserProductViewHistoryEntity upvh1 = QUserProductViewHistoryEntity.userProductViewHistoryEntity;
-        QUserProductViewHistoryEntity upvh2 = new QUserProductViewHistoryEntity("upvh2");
+        JPQLQuery<Long> userIdSubquery = JPAExpressions
+            .select(userProductViewHistoryEntity.userId)
+            .from(userProductViewHistoryEntity)
+            .where(userProductViewHistoryEntity.loanProductId.eq(productId));
 
-        return jpaQueryFactory.select(Projections.constructor(RelatedLoanProductProjection.class, upvh1)).from(upvh1)
-                .join(upvh2).on(upvh1.userId.eq(upvh2.userId))
-                .where(upvh1.productId.eq(productId), upvh2.productId.ne(productId)).groupBy(upvh2.productId)
-                .orderBy(upvh2.productId.desc()).limit(RELATED_LOAN_PRODUCT_SEARCH_LIMIT).fetch();
-    };
+
+        return jpaQueryFactory
+            .select(Projections.constructor(
+                RelatedLoanProductProjection.class,
+                userProductViewHistoryEntity.loanProductId
+            ))
+            .from(userProductViewHistoryEntity)
+            .where(
+                userProductViewHistoryEntity.userId.in(userIdSubquery),
+                userProductViewHistoryEntity.loanProductId.ne(productId)
+            )
+            .groupBy(userProductViewHistoryEntity.loanProductId)
+            .orderBy(userProductViewHistoryEntity.loanProductId.count().desc())
+            .limit(RELATED_LOAN_PRODUCT_SEARCH_LIMIT)
+            .fetch();
+    }
 }

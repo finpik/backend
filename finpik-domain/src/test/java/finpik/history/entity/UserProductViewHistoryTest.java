@@ -18,6 +18,6 @@ class UserProductViewHistoryTest {
 
         //then
         Assertions.assertThat(userProductViewHistory.userId()).isEqualTo(userId);
-        Assertions.assertThat(userProductViewHistory.productId()).isEqualTo(productId);
+        Assertions.assertThat(userProductViewHistory.loanProductId()).isEqualTo(productId);
     }
 }

@@ -20,14 +20,14 @@ public class RelatedLoanProductRepositoryImpl implements RelatedLoanProductRepos
     private final LoanProductJpaRepository loanProductJpaRepository;
 
     @Override
-    public List<RelatedLoanProduct> findAllById(Long productId) {
+    public List<RelatedLoanProduct> findAllById(Long loanProductId) {
         List<RelatedLoanProductProjection> projectionList = viewHistoryJpaRepository
-            .getRelatedLoanProductList(productId);
+            .getRelatedLoanProductList(loanProductId);
 
-        List<Long> relatedProductIdList = projectionList.stream().map(RelatedLoanProductProjection::getProductId)
+        List<Long> relatedLoanProductIdList = projectionList.stream().map(RelatedLoanProductProjection::loanProductId)
             .toList();
 
-        List<LoanProductEntity> entityList = loanProductJpaRepository.findAllById(relatedProductIdList);
+        List<LoanProductEntity> entityList = loanProductJpaRepository.findAllById(relatedLoanProductIdList);
 
         return entityList.stream()
             .map(entity ->

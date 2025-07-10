@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RelatedLoanProductRepository {
-    List<RelatedLoanProduct> findAllById(Long productId);
+    List<RelatedLoanProduct> findAllById(Long loanProductId);
 }

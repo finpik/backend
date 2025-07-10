@@ -17,9 +17,9 @@ public interface ProfileApi {
     ProfileResult createProfile(@Argument @Valid CreateProfileInput input,
             @ContextValue(value = "user", required = false) User userInput);
 
-    List<ProfileResult> profileByUser(@ContextValue(value = "user", required = false) User userInput);
+    List<ProfileResult> getProfilesByUser(@ContextValue(value = "user", required = false) User userInput);
 
-    ProfileResult profileById(@Argument Long id, @ContextValue(value = "user", required = false) User userInput);
+    ProfileResult getProfileById(@Argument Long profileId, @ContextValue(value = "user", required = false) User userInput);
 
     ProfileResult updateProfile(@Argument @Valid UpdateProfileInput input,
             @ContextValue(value = "user", required = false) User userInput);

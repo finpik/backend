@@ -13,8 +13,8 @@ import finpik.user.entity.User;
 public interface LoanProductApi {
     List<RecommendedLoanProductResult> getLoanProducts(@ContextValue("user") User userInput, @Argument Long profileId);
 
-    LoanProductResult getLoanProduct(@ContextValue("user") User userInput, @Argument Long productId);
+    LoanProductResult getLoanProduct(@ContextValue("user") User userInput, @Argument Long loanProductId);
 
     List<RelatedLoanProductResult> getRelatedLoanProductList(@ContextValue("user") User userInput,
-            @Argument Long productId);
+            @Argument Long loanProductId);
 }

@@ -51,7 +51,7 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @QueryMapping
-    public List<ProfileResult> profileByUser(@ContextValue(value = "user", required = false) User userInput) {
+    public List<ProfileResult> getProfilesByUser(@ContextValue(value = "user", required = false) User userInput) {
         User userDto = validateUser(userInput);
 
         List<ProfileResultDto> profileList = getProfileListByUserUseCase.execute(userDto.getId());
@@ -61,11 +61,13 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @QueryMapping
-    public ProfileResult profileById(@Argument Long id,
-            @ContextValue(value = "user", required = false) User userInput) {
+    public ProfileResult getProfileById(
+        @Argument Long profileId,
+        @ContextValue(value = "user", required = false) User userInput
+    ) {
         validateUser(userInput);
 
-        ProfileResultDto profile = getProfileByIdUseCase.execute(id, userInput.getId());
+        ProfileResultDto profile = getProfileByIdUseCase.execute(profileId, userInput.getId());
 
         return ProfileResult.of(profile);
     }

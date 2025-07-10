@@ -33,9 +33,10 @@ public class GetLoanProductUseCaseImpl implements GetLoanProductUseCase {
 
         List<RecommendedLoanProduct> fromDBIfNotExistInRedis =
             findFromDBIfNotExistInRedis(profileId, recommendedLoanProducts);
+
         recommendedLoanProductCacheRepository.cacheAsync(profileId, fromDBIfNotExistInRedis);
 
-        return recommendedLoanProducts.stream().map(RecommendedLoanProductDto::new).toList();
+        return fromDBIfNotExistInRedis.stream().map(RecommendedLoanProductDto::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -47,8 +48,8 @@ public class GetLoanProductUseCaseImpl implements GetLoanProductUseCase {
     }
 
     @Transactional(readOnly = true)
-    public List<RelatedLoanProductDto> getRelatedLoanProductList(Long productId) {
-        List<RelatedLoanProduct> relatedLoanProductList = relatedLoanProductRepository.findAllById(productId);
+    public List<RelatedLoanProductDto> getRelatedLoanProductList(Long loanProductId) {
+        List<RelatedLoanProduct> relatedLoanProductList = relatedLoanProductRepository.findAllById(loanProductId);
 
         return relatedLoanProductList.stream().map(RelatedLoanProductDto::new).toList();
     }

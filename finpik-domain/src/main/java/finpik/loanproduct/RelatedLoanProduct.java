@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RelatedLoanProduct {
-    private Long productId;
+    private Long loanProductId;
     private String productName;
     private InterestRate interestRate;
     private Long maxLoanLimitAmount;
 
     public static RelatedLoanProduct of(
-        Long productId,
+        Long loanProductId,
         String productName,
         Float maxInterestRate,
         Float minInterestRate,
@@ -24,6 +24,6 @@ public class RelatedLoanProduct {
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 
-        return new RelatedLoanProduct(productId, productName, interestRate, maxLoanLimitAmount);
+        return new RelatedLoanProduct(loanProductId, productName, interestRate, maxLoanLimitAmount);
     }
 }

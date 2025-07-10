@@ -7,8 +7,8 @@ extend type Mutation {
 }
 
 extend type Query {
-    profileByUser: [ProfileResult]!
-    profileById(id: Long): ProfileResult!
+    getProfilesByUser: [ProfileResult]!
+    getProfileById(profileId: Long): ProfileResult!
 }
 
 input CreateProfileInput {
