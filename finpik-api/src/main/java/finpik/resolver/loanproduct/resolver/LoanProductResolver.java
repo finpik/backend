@@ -8,7 +8,6 @@ import java.util.List;
 import finpik.resolver.loanproduct.application.CreateRelatedLoanProductUseCase;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.ContextValue;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -32,8 +31,7 @@ public class LoanProductResolver implements LoanProductApi {
 
     @Override
     @QueryMapping
-    public List<RecommendedLoanProductResult> getLoanProducts(@ContextValue(USER) User userInput,
-            @Argument Long profileId) {
+    public List<RecommendedLoanProductResult> getLoanProducts(User userInput, @Argument Long profileId) {
         require(userInput);
 
         List<RecommendedLoanProductDto> recommendedLoanProductDtoList =
@@ -44,28 +42,23 @@ public class LoanProductResolver implements LoanProductApi {
 
     @Override
     @QueryMapping
-    public LoanProductResult getLoanProduct(User userInput, Long productId) {
+    public LoanProductResult getLoanProduct(User userInput, Long loanProductId) {
         require(userInput);
 
-        LoanProductDto loanProduct = getLoanProductUseCase.getLoanProduct(productId);
+        LoanProductDto loanProduct = getLoanProductUseCase.getLoanProduct(loanProductId);
 
-        createRelatedLoanProductUseCase.createUserProductViewAsync(userInput.getId(), productId);
+        createRelatedLoanProductUseCase.createUserProductViewAsync(userInput.getId(), loanProductId);
 
         return new LoanProductResult(loanProduct);
     }
 
     @Override
     @QueryMapping
-    public List<RelatedLoanProductResult> getRelatedLoanProductList(User userInput, Long productId) {
+    public List<RelatedLoanProductResult> getRelatedLoanProductList(User userInput, Long loanProductId) {
         require(userInput);
 
-        List<RelatedLoanProductDto> relatedLoanProductList = getLoanProductUseCase.getRelatedLoanProductList(productId);
+        List<RelatedLoanProductDto> relatedLoanProductList = getLoanProductUseCase.getRelatedLoanProductList(loanProductId);
 
         return relatedLoanProductList.stream().map(RelatedLoanProductResult::new).toList();
-    }
-
-    private void userProductViewEvent(Long userId, Long productId) {
-        UserProductViewEvent userProductViewEvent = new UserProductViewEvent(userId, productId);
-        eventPublisher.publishEvent(userProductViewEvent);
     }
 }

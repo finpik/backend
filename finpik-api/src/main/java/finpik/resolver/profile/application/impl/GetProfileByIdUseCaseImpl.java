@@ -33,7 +33,7 @@ public class GetProfileByIdUseCaseImpl implements GetProfileByIdUseCase {
     }
 
     private void validateProfileOwner(Profile profile, User user) {
-        if (!profile.getUser().equals(user)) {
+        if (!profile.getUser().getId().equals(user.getId())) {
             throw new BusinessException(ErrorCode.NOT_PROFILE_OWNER);
         }
     }

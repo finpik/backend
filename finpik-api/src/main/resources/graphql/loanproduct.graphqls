@@ -1,25 +1,27 @@
 type Query {
     getLoanProducts(profileId: Long!): [RecommendedLoanProductResult]!
-    getLoanProduct(productId: Long!): LoanProductResult!
-    getRelatedLoanProductList(productId: Long!): [RelatedLoanProductResult]!
+    getLoanProduct(loanProductId: Long!): LoanProductResult!
+    getRelatedLoanProductList(loanProductId: Long!): [RelatedLoanProductResult]!
 }
 
 type RecommendedLoanProductResult {
+    recommendedLoanProductId: Long!
+    profileId: Long!
     loanProductId: Long!
     productName: String!
-    minInterestRate: Float!
-    maxInterestRate: Float!
-    loanLimitAmount: Int!
+    minInterestRate: Float
+    maxInterestRate: Float
+    maxLoanLimitAmount: Long
 }
 
 type LoanProductResult {
     productName: String!
     bankName: String!
-    maxLoanLimitAmount: Int!
-    maxInterestRate: Float!
-    minInterestRate: Float!
-    repaymentPeriod: Int!
-    repaymentPeriodUnit: LoanPeriodUnit!
+    maxLoanLimitAmount: Int
+    maxInterestRate: Float
+    minInterestRate: Float
+    repaymentPeriod: Int
+    repaymentPeriodUnit: RepaymentPeriodUnit
     descriptionResult: LoanProductDescriptionResult!
 }
 
@@ -34,13 +36,13 @@ type LoanProductDescriptionResult {
 }
 
 type RelatedLoanProductResult {
-    productId: Long!,
+    loanProductId: Long!,
     productName: String!,
-    maxInterestRate: Float!,
-    minInterestRate: Float!,
-    loanLimitAmount: Int!
+    maxInterestRate: Float,
+    minInterestRate: Float,
+    maxLoanLimitAmount: Int
 }
 
-enum LoanPeriodUnit {
+enum RepaymentPeriodUnit {
     YEAR, MONTH
 }

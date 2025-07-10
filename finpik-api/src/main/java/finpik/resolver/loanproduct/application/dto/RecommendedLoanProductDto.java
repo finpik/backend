@@ -5,6 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class RecommendedLoanProductDto {
+    private final Long recommendedLoanProductId;
+    private final Long profileId;
     private final Long loanProductId;
     private final String productName;
     private final Float minInterestRate;
@@ -12,6 +14,8 @@ public class RecommendedLoanProductDto {
     private final Long maxLoanLimitAmount;
 
     public RecommendedLoanProductDto(RecommendedLoanProduct recommendedLoanProduct) {
+        this.recommendedLoanProductId = recommendedLoanProduct.getRecommendedLoanProductId();
+        this.profileId = recommendedLoanProduct.getProfileId();
         this.loanProductId = recommendedLoanProduct.getLoanProductId();
         this.productName = recommendedLoanProduct.getProductName();
         this.minInterestRate = recommendedLoanProduct.getInterestRate().minInterestRate();

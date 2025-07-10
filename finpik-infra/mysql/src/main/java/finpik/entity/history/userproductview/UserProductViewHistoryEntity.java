@@ -22,14 +22,14 @@ public class UserProductViewHistoryEntity {
 
     private Long userId;
 
-    private Long productId;
+    private Long loanProductId;
 
     private LocalDateTime viewedAt;
 
     @Builder
     public UserProductViewHistoryEntity(UserProductViewHistory domain, LocalDateTime viewedAt) {
         this.userId = domain.userId();
-        this.productId = domain.productId();
+        this.loanProductId = domain.loanProductId();
         this.viewedAt = viewedAt;
     }
 }
