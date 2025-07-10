@@ -24,7 +24,7 @@ class RelatedLoanProductTest {
 
         //then
         assertAll(
-            () -> assertThat(relatedLoanProduct.getProductId()).isEqualTo(productId),
+            () -> assertThat(relatedLoanProduct.getLoanProductId()).isEqualTo(productId),
             () -> assertThat(relatedLoanProduct.getProductName()).isEqualTo(productName),
             () -> assertThat(relatedLoanProduct.getMaxLoanLimitAmount()).isEqualTo(maxLoanLimitAmount)
         );
