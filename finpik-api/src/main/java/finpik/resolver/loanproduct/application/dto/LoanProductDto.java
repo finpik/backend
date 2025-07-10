@@ -1,7 +1,7 @@
 package finpik.resolver.loanproduct.application.dto;
 
+import finpik.LoanProduct;
 import finpik.entity.enums.RepaymentPeriodUnit;
-import finpik.loanproduct.LoanProduct;
 import lombok.Getter;
 
 @Getter

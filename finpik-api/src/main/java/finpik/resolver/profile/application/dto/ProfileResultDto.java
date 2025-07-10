@@ -1,10 +1,10 @@
 package finpik.resolver.profile.application.dto;
 
+import finpik.entity.Profile;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.ProfileColor;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.profile.entity.Profile;
 import lombok.Getter;
 
 @Getter

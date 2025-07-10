@@ -7,8 +7,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import finpik.entity.Profile;
+import finpik.entity.ProfileList;
+import finpik.entity.User;
 import finpik.jpa.repository.profile.ProfileEntityJpaRepository;
-import finpik.profile.entity.ProfileList;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +19,7 @@ import finpik.entity.user.UserEntity;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.jpa.repository.user.UserEntityJpaRepository;
-import finpik.profile.entity.Profile;
 import finpik.repository.profile.ProfileRepository;
-import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
 
 @Repository

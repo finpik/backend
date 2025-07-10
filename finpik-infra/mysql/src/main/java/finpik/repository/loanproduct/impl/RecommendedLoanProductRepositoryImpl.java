@@ -1,9 +1,9 @@
 package finpik.repository.loanproduct.impl;
 
+import finpik.RecommendedLoanProduct;
 import finpik.entity.loanproduct.RecommendedLoanProductEntity;
 import finpik.jpa.repository.loanproduct.RecommendedLoanProductJpaRepository;
 import finpik.jpa.repository.loanproduct.projection.RecommendedLoanProductProjection;
-import finpik.loanproduct.RecommendedLoanProduct;
 import finpik.repository.loanproduct.RecommendedLoanProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -5,8 +5,7 @@ import static finpik.util.Values.ONE_MINUTE_MILL;
 import java.util.List;
 import java.util.UUID;
 
-import finpik.entity.history.sse.SseFailHistory;
-import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.RecommendedLoanProduct;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

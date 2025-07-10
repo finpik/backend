@@ -1,6 +1,6 @@
 package finpik.repository.loanproduct;
 
-import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.RecommendedLoanProduct;
 
 import java.util.List;
 

@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import finpik.entity.User;
 import finpik.entity.enums.RegistrationType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,6 @@ import finpik.global.error.handler.impl.DefaultExceptionHandler;
 import finpik.global.error.resolver.GlobalExceptionResolver;
 import finpik.resolver.user.usecase.SignUpUseCase;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
-import finpik.user.entity.User;
 
 @GraphQlTest(UserResolver.class)
 @Import({GlobalExceptionResolver.class, GraphQLExceptionHandlerDispatcher.class, DefaultExceptionHandler.class,

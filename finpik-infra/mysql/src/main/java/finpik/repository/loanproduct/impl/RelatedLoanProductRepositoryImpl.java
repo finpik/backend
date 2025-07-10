@@ -2,14 +2,13 @@ package finpik.repository.loanproduct.impl;
 
 import java.util.List;
 
+import finpik.RelatedLoanProduct;
 import finpik.jpa.repository.loanproduct.LoanProductJpaRepository;
-import finpik.loanproduct.vo.InterestRate;
 import org.springframework.stereotype.Repository;
 
 import finpik.entity.loanproduct.LoanProductEntity;
 import finpik.jpa.repository.history.userproductview.UserProductViewHistoryJpaRepository;
 import finpik.jpa.repository.history.userproductview.projection.RelatedLoanProductProjection;
-import finpik.loanproduct.RelatedLoanProduct;
 import finpik.repository.loanproduct.RelatedLoanProductRepository;
 import lombok.RequiredArgsConstructor;
 

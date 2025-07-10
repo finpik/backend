@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static finpik.entity.loanproduct.QLoanProductEntity.*;
-import static finpik.entity.loanproduct.QRecommendedLoanProductEntity.*;
+import static finpik.entity.loanproduct.QLoanProductEntity.loanProductEntity;
+import static finpik.entity.loanproduct.QRecommendedLoanProductEntity.recommendedLoanProductEntity;
+
 
 @RequiredArgsConstructor
 public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomRecommendedLoanProductJpaRepository {

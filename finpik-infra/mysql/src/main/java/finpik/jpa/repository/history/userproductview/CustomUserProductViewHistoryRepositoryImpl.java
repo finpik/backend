@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
-import finpik.entity.history.userproductview.QUserProductViewHistoryEntity;
 import finpik.jpa.repository.history.userproductview.projection.RelatedLoanProductProjection;
 import lombok.RequiredArgsConstructor;
 
 import static finpik.entity.history.userproductview.QUserProductViewHistoryEntity.userProductViewHistoryEntity;
+
 
 @Repository
 @RequiredArgsConstructor

@@ -5,6 +5,8 @@ import static finpik.util.Values.USER;
 
 import java.io.IOException;
 
+import finpik.JwtProvider;
+import finpik.entity.User;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
 import finpik.repository.user.UserRepository;
@@ -13,8 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import finpik.JwtProvider;
-import finpik.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

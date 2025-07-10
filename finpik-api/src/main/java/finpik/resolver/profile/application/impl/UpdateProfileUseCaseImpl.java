@@ -1,9 +1,9 @@
 package finpik.resolver.profile.application.impl;
 
+import finpik.entity.Profile;
+import finpik.entity.policy.ProfileUpdateSpec;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.profile.entity.Profile;
-import finpik.profile.entity.policy.ProfileUpdateSpec;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileUseCase;
 import finpik.resolver.profile.application.dto.ProfileResultDto;

@@ -2,6 +2,7 @@ package finpik.resolver.profile.resolver;
 
 import java.util.List;
 
+import finpik.entity.User;
 import finpik.resolver.profile.application.usecase.CreateProfileUseCase;
 import finpik.resolver.profile.application.usecase.DeleteProfileUseCase;
 import finpik.resolver.profile.application.usecase.GetProfileByIdUseCase;
@@ -22,7 +23,6 @@ import finpik.resolver.profile.resolver.input.UpdateProfileColorInput;
 import finpik.resolver.profile.resolver.input.UpdateProfileInput;
 import finpik.resolver.profile.resolver.input.UpdateProfileSequenceInput;
 import finpik.resolver.profile.resolver.result.ProfileResult;
-import finpik.user.entity.User;
 import finpik.util.UserUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

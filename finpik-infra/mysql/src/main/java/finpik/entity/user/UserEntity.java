@@ -3,9 +3,9 @@ package finpik.entity.user;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import finpik.entity.User;
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RegistrationType;
-import finpik.user.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

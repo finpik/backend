@@ -1,13 +1,13 @@
 package finpik.resolver.profile.application.impl;
 
+import finpik.entity.ProfileList;
+import finpik.entity.User;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.profile.entity.ProfileList;
 import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.profile.application.usecase.UpdateProfileSequenceUseCase;
 import finpik.resolver.profile.application.dto.ProfileResultDto;
 import finpik.resolver.profile.application.dto.UpdateProfileSequenceUseCaseDto;
-import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
