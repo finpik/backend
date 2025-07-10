@@ -3,8 +3,8 @@ package finpik.resolver.user.usecase.dto;
 import java.time.LocalDate;
 import java.util.Date;
 
+import finpik.entity.User;
 import finpik.entity.enums.Gender;
-import finpik.user.entity.User;
 import lombok.Builder;
 
 @Builder

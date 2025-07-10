@@ -1,10 +1,10 @@
 package finpik.resolver.loanproduct.application.impl;
 
+import finpik.LoanProduct;
+import finpik.RecommendedLoanProduct;
+import finpik.RelatedLoanProduct;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.loanproduct.LoanProduct;
-import finpik.loanproduct.RecommendedLoanProduct;
-import finpik.loanproduct.RelatedLoanProduct;
 import finpik.repository.loanproduct.RecommendedLoanProductCacheRepository;
 import finpik.repository.loanproduct.LoanProductRepository;
 import finpik.repository.loanproduct.RecommendedLoanProductRepository;

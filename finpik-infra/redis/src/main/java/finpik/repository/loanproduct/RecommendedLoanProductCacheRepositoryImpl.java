@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
-import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.RecommendedLoanProduct;
 import finpik.service.loanproduct.LoanProductRedisRepository;
 import finpik.service.loanproduct.dto.CachedRecommendedLoanProduct;
 import finpik.service.loanproduct.dto.CachedRecommendedLoanProductList;

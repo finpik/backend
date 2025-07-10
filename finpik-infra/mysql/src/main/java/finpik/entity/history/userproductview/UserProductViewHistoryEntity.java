@@ -2,7 +2,7 @@ package finpik.entity.history.userproductview;
 
 import java.time.LocalDateTime;
 
-import finpik.history.entity.UserProductViewHistory;
+import finpik.entity.UserProductViewHistory;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

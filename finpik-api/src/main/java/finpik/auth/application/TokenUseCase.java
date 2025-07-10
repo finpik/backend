@@ -3,6 +3,7 @@ package finpik.auth.application;
 import java.time.Duration;
 import java.util.Date;
 
+import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
 import finpik.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,6 @@ import finpik.auth.application.dto.TokenRefreshResultDto;
 import finpik.dto.CreateTokenDto;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.user.entity.User;
 import finpik.util.Values;
 import lombok.RequiredArgsConstructor;
 

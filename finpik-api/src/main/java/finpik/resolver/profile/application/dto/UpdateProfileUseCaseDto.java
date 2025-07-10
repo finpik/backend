@@ -7,8 +7,7 @@ import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.PurposeOfLoan;
-import finpik.profile.entity.Profile;
-import finpik.profile.entity.policy.ProfileUpdateSpec;
+import finpik.entity.policy.ProfileUpdateSpec;
 import lombok.Builder;
 
 @Builder

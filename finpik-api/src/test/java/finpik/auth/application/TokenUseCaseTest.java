@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import finpik.entity.User;
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RegistrationType;
 import finpik.repository.auth.AuthCacheRepository;
@@ -20,7 +21,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import finpik.JwtProvider;
 import finpik.auth.application.dto.TokenRefreshResultDto;
 import finpik.error.enums.ErrorCode;
-import finpik.user.entity.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

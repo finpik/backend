@@ -1,9 +1,0 @@
-package finpik.loanproduct.vo;
-
-public record BankDetails(
-    String bankName,
-    String bankPhoneNumber,
-    String loanAvailableTime,
-    String bankImgUrl
-) {
-}

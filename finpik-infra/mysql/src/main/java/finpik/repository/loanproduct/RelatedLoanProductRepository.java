@@ -2,7 +2,7 @@ package finpik.repository.loanproduct;
 
 import java.util.List;
 
-import finpik.loanproduct.RelatedLoanProduct;
+import finpik.RelatedLoanProduct;
 import org.springframework.stereotype.Repository;
 
 @Repository

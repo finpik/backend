@@ -1,7 +1,11 @@
 jar.enabled = true
 
 dependencies {
-    implementation project(":finpik-domain")
+    implementation project(":finpik-domain:alarm")
+    implementation project(":finpik-domain:history")
+    implementation project(":finpik-domain:loanproduct")
+    implementation project(":finpik-domain:profile")
+    implementation project(":finpik-domain:user")
 
     //jpa
     api 'org.springframework.boot:spring-boot-starter-data-jpa'

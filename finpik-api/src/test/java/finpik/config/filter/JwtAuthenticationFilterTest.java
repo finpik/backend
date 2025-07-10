@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+import finpik.entity.User;
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RegistrationType;
 import finpik.repository.user.UserRepository;
@@ -20,7 +21,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import finpik.JwtProvider;
-import finpik.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
 

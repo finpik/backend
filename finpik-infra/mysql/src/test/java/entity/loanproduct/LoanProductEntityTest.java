@@ -3,10 +3,11 @@ package entity.loanproduct;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import finpik.LoanProduct;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.Gender;
-import finpik.loanproduct.vo.InterestRate;
-import finpik.loanproduct.vo.RepaymentPeriod;
+import finpik.vo.InterestRate;
+import finpik.vo.RepaymentPeriod;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,6 @@ import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
 import finpik.entity.loanproduct.LoanProductDescriptionEntity;
 import finpik.entity.loanproduct.LoanProductEntity;
-import finpik.loanproduct.LoanProduct;
 
 class LoanProductEntityTest {
 

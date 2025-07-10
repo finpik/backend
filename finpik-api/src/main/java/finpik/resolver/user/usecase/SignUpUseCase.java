@@ -1,9 +1,9 @@
 package finpik.resolver.user.usecase;
 
+import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.user.entity.User;
 import finpik.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

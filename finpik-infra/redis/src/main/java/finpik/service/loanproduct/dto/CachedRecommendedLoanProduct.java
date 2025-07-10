@@ -1,6 +1,6 @@
 package finpik.service.loanproduct.dto;
 
-import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.RecommendedLoanProduct;
 import lombok.Builder;
 
 @Builder

@@ -1,7 +1,7 @@
 package finpik.resolver.loanproduct.application.impl;
 
+import finpik.RecommendedLoanProduct;
 import finpik.dto.CreateRecommendedLoanProductEvent;
-import finpik.loanproduct.RecommendedLoanProduct;
 import finpik.repository.loanproduct.RecommendedLoanProductCacheRepository;
 import finpik.repository.loanproduct.RecommendedLoanProductRepository;
 import finpik.resolver.loanproduct.application.CreateRecommendLoanProductUseCase;

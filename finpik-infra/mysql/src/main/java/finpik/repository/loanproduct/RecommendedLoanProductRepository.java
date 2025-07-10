@@ -1,6 +1,6 @@
 package finpik.repository.loanproduct;
 
-import finpik.loanproduct.RecommendedLoanProduct;
+import finpik.RecommendedLoanProduct;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

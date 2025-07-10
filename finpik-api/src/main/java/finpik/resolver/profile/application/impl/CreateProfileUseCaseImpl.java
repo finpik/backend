@@ -1,16 +1,16 @@
 package finpik.resolver.profile.application.impl;
 
 import finpik.dto.RecommendLoanProductProfileEvent;
+import finpik.entity.Profile;
+import finpik.entity.ProfileList;
+import finpik.entity.User;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.profile.entity.Profile;
-import finpik.profile.entity.ProfileList;
 import finpik.repository.profile.ProfileRepository;
 import finpik.repository.user.UserRepository;
 import finpik.resolver.profile.application.usecase.CreateProfileUseCase;
 import finpik.resolver.profile.application.dto.CreateProfileUseCaseDto;
 import finpik.resolver.profile.application.dto.ProfileResultDto;
-import finpik.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

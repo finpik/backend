@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
 import finpik.entity.enums.RegistrationType;
 import finpik.repository.user.UserRepository;
@@ -24,7 +25,6 @@ import finpik.JwtProvider;
 import finpik.entity.enums.Gender;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import finpik.resolver.user.usecase.dto.SignUpUseCaseDto;
-import finpik.user.entity.User;
 
 @ExtendWith(MockitoExtension.class)
 class SignUpUseCaseTest {

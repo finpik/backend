@@ -110,3 +110,4 @@ Features
 - feature/FP-22: 대출 상품 기획 변경으로 인한 수정
 - feature/FP-23: 카프카 consumer 책임 분리
 - feature/FP-24: 도메인 테스트 코드 추가
+- feature/FP-25: 도메인 모듈 나누기

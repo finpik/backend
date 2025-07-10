@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
+import finpik.entity.User;
 import finpik.entity.enums.Gender;
 import finpik.entity.enums.RegistrationType;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import finpik.config.interceptor.GraphQLJwtInterceptor;
-import finpik.user.entity.User;
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.ExecutionResultImpl;
