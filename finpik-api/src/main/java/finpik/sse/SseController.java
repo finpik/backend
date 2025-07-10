@@ -18,7 +18,7 @@ public class SseController {
 
     @GetMapping("/subscribe")
     public SseEmitter subscribe(Long profileId, HttpServletResponse response) {
-        response.setContentType("text/event-stream;charset=UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
 
         SseEmitter emitter = sseEmitterService.createSseEmitter(profileId);
 
