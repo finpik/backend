@@ -21,6 +21,7 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
             .select(Projections.constructor(RecommendedLoanProductProjection.class,
                     recommendedLoanProductEntity.id,
                     recommendedLoanProductEntity.profileId,
+                    loanProductEntity.bankName,
                     recommendedLoanProductEntity.loanProductId,
                     loanProductEntity.productName,
                     loanProductEntity.maxInterestRate,

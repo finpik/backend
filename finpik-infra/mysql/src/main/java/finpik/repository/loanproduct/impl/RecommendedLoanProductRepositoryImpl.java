@@ -33,6 +33,7 @@ public class RecommendedLoanProductRepositoryImpl implements RecommendedLoanProd
             RecommendedLoanProduct.rebuild(
                 loanProductIdMap.get(product.getLoanProductId()),
                 product.getProfileId(),
+                product.getBankName(),
                 product.getLoanProductId(),
                 product.getProductName(),
                 product.getInterestRate().maxInterestRate(),
@@ -51,6 +52,7 @@ public class RecommendedLoanProductRepositoryImpl implements RecommendedLoanProd
             RecommendedLoanProduct.rebuild(
                 product.recommendedLoanProductId(),
                 product.profileId(),
+                product.bankName(),
                 product.loanProductId(),
                 product.productName(),
                 product.maxInterestRate(),

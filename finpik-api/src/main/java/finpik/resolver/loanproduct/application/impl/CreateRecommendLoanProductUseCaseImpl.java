@@ -38,6 +38,7 @@ public class CreateRecommendLoanProductUseCaseImpl implements
             RecommendedLoanProduct.of(
                 event.profileId(),
                 content.loanProductId(),
+                content.bankName(),
                 content.productName(),
                 content.maxInterestRate(),
                 content.minInterestRate(),
