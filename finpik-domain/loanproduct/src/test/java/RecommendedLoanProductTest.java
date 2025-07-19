@@ -15,13 +15,14 @@ class RecommendedLoanProductTest {
         Long profileId = 2L;
         Long loanProductId = 3L;
         String productName = "test product";
+        String bankName = "test bank";
         InterestRate interestRate = new InterestRate(10.0f, 7.0f);
         Long maxLoanLimitAmount = 50000000L;
 
         //when
         RecommendedLoanProduct recommendedLoanProduct =
             RecommendedLoanProduct.of(
-                profileId, loanProductId, productName,
+                profileId, loanProductId, bankName, productName,
                 interestRate.maxInterestRate(), interestRate.minInterestRate(),
                 maxLoanLimitAmount
             );
