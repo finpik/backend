@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class RecommendedLoanProduct {
     private Long recommendedLoanProductId;
     private Long profileId;
+    private String bankName;
     private Long loanProductId;
     private String productName;
     private InterestRate interestRate;
@@ -21,6 +22,7 @@ public class RecommendedLoanProduct {
     public static RecommendedLoanProduct of(
         Long profileId,
         Long loanProductId,
+        String bankName,
         String productName,
         Float maxInterestRate,
         Float minInterestRate,
@@ -31,6 +33,7 @@ public class RecommendedLoanProduct {
         return new RecommendedLoanProduct(
             null,
             Preconditions.require(profileId, "profileId must not be null"),
+            Preconditions.require(bankName, "bankName must not be null"),
             Preconditions.require(loanProductId, "loanProductId must not be null"),
             Preconditions.require(productName, "productName must not be null"),
             interestRate,
@@ -41,6 +44,7 @@ public class RecommendedLoanProduct {
     public static RecommendedLoanProduct rebuild(
         Long recommendedLoanProductId,
         Long profileId,
+        String bankName,
         Long loanProductId,
         String productName,
         Float maxInterestRate,
@@ -52,6 +56,7 @@ public class RecommendedLoanProduct {
         return new RecommendedLoanProduct(
             Preconditions.require(recommendedLoanProductId, "recommendedLoanProductId must not be null"),
             Preconditions.require(profileId, "profileId must not be null"),
+            Preconditions.require(bankName, "bankName must not be null"),
             Preconditions.require(loanProductId, "loanProductId must not be null"),
             Preconditions.require(productName, "productName must not be null"),
             interestRate,

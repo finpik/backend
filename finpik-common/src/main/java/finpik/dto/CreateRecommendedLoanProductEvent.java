@@ -13,17 +13,19 @@ public record CreateRecommendedLoanProductEvent(
     public record CreateRecommendedLoanProductEventContent(
         Long loanProductId,
         String productName,
+        String bankName,
         Float minInterestRate,
         Float maxInterestRate,
         Long loanLimitAmount
     ) {
         public static CreateRecommendedLoanProductEventContent of(
             Long loanProductId, String productName, Float minInterestRate,
-            Float maxInterestRate, Long loanLimitAmount
+            Float maxInterestRate, Long loanLimitAmount, String bankName
         ) {
             return new CreateRecommendedLoanProductEventContent(
                 loanProductId,
                 productName,
+                bankName,
                 minInterestRate,
                 maxInterestRate,
                 loanLimitAmount

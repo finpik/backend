@@ -7,6 +7,7 @@ import lombok.Builder;
 public record CachedRecommendedLoanProduct(
     Long recommendedLoanProductId,
     Long profileId,
+    String bankName,
     Long loanProductId,
     String productName,
     Float minInterestRate,
@@ -18,6 +19,7 @@ public record CachedRecommendedLoanProduct(
         return RecommendedLoanProduct.rebuild(
             recommendedLoanProductId,
             profileId,
+            bankName,
             loanProductId,
             productName,
             maxInterestRate,
@@ -31,6 +33,7 @@ public record CachedRecommendedLoanProduct(
             .recommendedLoanProductId(recommendedLoanProduct.getRecommendedLoanProductId())
             .profileId(recommendedLoanProduct.getProfileId())
             .loanProductId(recommendedLoanProduct.getLoanProductId())
+            .bankName(recommendedLoanProduct.getBankName())
             .productName(recommendedLoanProduct.getProductName())
             .minInterestRate(recommendedLoanProduct.getInterestRate().minInterestRate())
             .maxInterestRate(recommendedLoanProduct.getInterestRate().maxInterestRate())
