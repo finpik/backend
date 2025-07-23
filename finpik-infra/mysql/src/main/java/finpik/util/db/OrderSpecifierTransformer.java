@@ -48,7 +48,7 @@ public class OrderSpecifierTransformer {
         try {
             return (Expression<Comparable<?>>) expression;
         } catch (ClassCastException e) {
-            throw new BusinessException(ErrorCode.OrderByPropertyNotFound);
+            throw new BusinessException(ErrorCode.ORDER_BY_PROPERTY_NOT_FOUND);
         }
     }
 
@@ -57,7 +57,7 @@ public class OrderSpecifierTransformer {
         try {
             return PropertyPath.from(order.getProperty(), base.getType());
         } catch (PropertyReferenceException ex) {
-            throw new BusinessException(ErrorCode.OrderByPropertyNotFound);
+            throw new BusinessException(ErrorCode.ORDER_BY_PROPERTY_NOT_FOUND);
         }
     }
 
