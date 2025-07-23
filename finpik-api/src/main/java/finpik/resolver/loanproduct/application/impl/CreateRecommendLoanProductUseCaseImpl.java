@@ -2,8 +2,7 @@ package finpik.resolver.loanproduct.application.impl;
 
 import finpik.RecommendedLoanProduct;
 import finpik.dto.CreateRecommendedLoanProductEvent;
-import finpik.repository.loanproduct.RecommendedLoanProductCacheRepository;
-import finpik.repository.loanproduct.RecommendedLoanProductRepository;
+import finpik.repository.loanproduct.LoanProductRepository;
 import finpik.resolver.loanproduct.application.CreateRecommendLoanProductUseCase;
 import finpik.sse.service.SseEmitterService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +21,8 @@ import java.util.List;
 public class CreateRecommendLoanProductUseCaseImpl implements
     CreateRecommendLoanProductUseCase
 {
-    private final RecommendedLoanProductRepository recommendedLoanProductRepository;
+    private final LoanProductRepository loanProductRepository;
     private final SseEmitterService sseEmitterService;
-    private final RecommendedLoanProductCacheRepository recommendedLoanProductCacheRepository;
 
     @Async
     @Override
@@ -42,18 +40,12 @@ public class CreateRecommendLoanProductUseCaseImpl implements
                 content.productName(),
                 content.maxInterestRate(),
                 content.minInterestRate(),
-                content.loanLimitAmount()
+                content.loanLimitAmount(),
+                content.similarity()
             )
         ).toList();
 
-        List<RecommendedLoanProduct> recommendedLoanProducts =
-            recommendedLoanProductRepository.saveAll(event.profileId(), recommendedLoanProductList);
-
-        recommendedLoanProducts.forEach(p ->
-            log.info("cache 대상: id={}, profileId={}", p.getRecommendedLoanProductId(), p.getProfileId())
-        );
-
-        recommendedLoanProductCacheRepository.cacheAsync(event.profileId(), recommendedLoanProducts);
+        loanProductRepository.saveAllRecommendedLoanProduct(event.profileId(), recommendedLoanProductList);
 
         sseEmitterService.notifyRecommendationCompleted(
             event.eventId(),
