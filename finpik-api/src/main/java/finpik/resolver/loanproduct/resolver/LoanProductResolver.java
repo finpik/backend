@@ -5,7 +5,13 @@ import static finpik.util.UserUtil.require;
 import java.util.List;
 
 import finpik.entity.User;
+import finpik.entity.enums.SortDirection;
 import finpik.resolver.loanproduct.application.CreateRelatedLoanProductUseCase;
+import finpik.resolver.loanproduct.resolver.result.RecommendedLoanProductResultList;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -27,18 +33,33 @@ public class LoanProductResolver implements LoanProductApi {
 
     @Override
     @QueryMapping
-    public List<RecommendedLoanProductResult> getLoanProducts(User userInput, @Argument Long profileId) {
+    public RecommendedLoanProductResultList getLoanProductList(
+        User userInput,
+        @Argument Long profileId,
+        @Argument Integer page,
+        @Argument Integer size,
+        @Argument String sortProperty,
+        @Argument SortDirection sortDirection
+    ) {
         require(userInput);
+        Sort sort = convertToSpringSort(sortProperty, sortDirection);
 
-        List<RecommendedLoanProductDto> recommendedLoanProductDtoList =
-            getLoanProductUseCase.getRecommendedLoanProducts(profileId);
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        return recommendedLoanProductDtoList.stream().map(RecommendedLoanProductResult::new).toList();
+        Slice<RecommendedLoanProductDto> recommendedLoanProductDtoList =
+            getLoanProductUseCase.getRecommendedLoanProductList(profileId, pageable);
+
+        return new RecommendedLoanProductResultList(
+            recommendedLoanProductDtoList.stream().map(RecommendedLoanProductResult::new).toList(),
+            recommendedLoanProductDtoList.hasNext(),
+            page,
+            size
+        );
     }
 
     @Override
     @QueryMapping
-    public LoanProductResult getLoanProduct(User userInput, Long loanProductId) {
+    public LoanProductResult getLoanProduct(User userInput, @Argument Long loanProductId) {
         require(userInput);
 
         LoanProductDto loanProduct = getLoanProductUseCase.getLoanProduct(loanProductId);
@@ -50,11 +71,23 @@ public class LoanProductResolver implements LoanProductApi {
 
     @Override
     @QueryMapping
-    public List<RelatedLoanProductResult> getRelatedLoanProductList(User userInput, Long loanProductId) {
+    public List<RelatedLoanProductResult> getRelatedLoanProductList(User userInput, @Argument Long loanProductId) {
         require(userInput);
 
         List<RelatedLoanProductDto> relatedLoanProductList = getLoanProductUseCase.getRelatedLoanProductList(loanProductId);
 
         return relatedLoanProductList.stream().map(RelatedLoanProductResult::new).toList();
+    }
+
+    public Sort convertToSpringSort(String sortProperty, SortDirection sortDirection) {
+        if (sortProperty == null || sortProperty.isBlank()) {
+            return Sort.unsorted();
+        }
+
+        Sort.Direction direction = (sortDirection == SortDirection.DESC)
+            ? Sort.Direction.DESC
+            : Sort.Direction.ASC;
+
+        return Sort.by(new Sort.Order(direction, sortProperty));
     }
 }
