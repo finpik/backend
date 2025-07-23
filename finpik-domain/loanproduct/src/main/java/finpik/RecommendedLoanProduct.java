@@ -18,6 +18,7 @@ public class RecommendedLoanProduct {
     private String productName;
     private InterestRate interestRate;
     private Long maxLoanLimitAmount;
+    private Float similarity;
 
     public static RecommendedLoanProduct of(
         Long profileId,
@@ -26,7 +27,8 @@ public class RecommendedLoanProduct {
         String productName,
         Float maxInterestRate,
         Float minInterestRate,
-        Long maxLoanLimitAmount
+        Long maxLoanLimitAmount,
+        Float similarity
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 
@@ -37,7 +39,8 @@ public class RecommendedLoanProduct {
             Preconditions.require(loanProductId, "loanProductId must not be null"),
             Preconditions.require(productName, "productName must not be null"),
             interestRate,
-            maxLoanLimitAmount
+            maxLoanLimitAmount,
+            Preconditions.require(similarity, "similarity must not be null")
         );
     }
 
@@ -49,7 +52,8 @@ public class RecommendedLoanProduct {
         String productName,
         Float maxInterestRate,
         Float minInterestRate,
-        Long maxLoanLimitAmount
+        Long maxLoanLimitAmount,
+        Float similarity
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 
@@ -60,7 +64,12 @@ public class RecommendedLoanProduct {
             Preconditions.require(loanProductId, "loanProductId must not be null"),
             Preconditions.require(productName, "productName must not be null"),
             interestRate,
-            maxLoanLimitAmount
+            maxLoanLimitAmount,
+            Preconditions.require(similarity, "similarity must not be null")
         );
+    }
+
+    public Float getMinInterestRate() {
+        return this.interestRate.minInterestRate();
     }
 }
