@@ -1,9 +1,9 @@
 package finpik.jpa.repository.loanproduct;
 
 import finpik.jpa.repository.loanproduct.projection.RecommendedLoanProductProjection;
-
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 public interface CustomRecommendedLoanProductJpaRepository {
-    List<RecommendedLoanProductProjection> findAllByProfileId(Long productId);
+    Slice<RecommendedLoanProductProjection> findAllByProfileId(Long productId, Pageable pageable);
 }
