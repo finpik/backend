@@ -20,8 +20,8 @@ public class RecommendedLoanProductResult {
         bankName = dto.getBankName();
         loanProductId = dto.getLoanProductId();
         productName = dto.getProductName();
-        minInterestRate = dto.getMinInterestRate();
-        maxInterestRate = dto.getMaxInterestRate();
+        maxInterestRate = dto.getMinInterestRate();
+        minInterestRate = dto.getMaxInterestRate();
         maxLoanLimitAmount = dto.getMaxLoanLimitAmount();
     }
 }
