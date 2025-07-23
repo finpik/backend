@@ -18,8 +18,9 @@ public class RecommendedLoanProductEntity {
     private Long id;
     private Long profileId;
     private Long loanProductId;
+    private Float similarity;
 
-    public static RecommendedLoanProductEntity of(Long profileId, Long loanProductId) {
-        return new RecommendedLoanProductEntity(null, profileId, loanProductId);
+    public static RecommendedLoanProductEntity of(Long profileId, Long loanProductId, Float similarity) {
+        return new RecommendedLoanProductEntity(null, profileId, loanProductId, similarity);
     }
 }
