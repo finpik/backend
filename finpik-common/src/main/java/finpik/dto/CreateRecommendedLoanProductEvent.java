@@ -16,11 +16,13 @@ public record CreateRecommendedLoanProductEvent(
         String bankName,
         Float minInterestRate,
         Float maxInterestRate,
-        Long loanLimitAmount
+        Long loanLimitAmount,
+        Float similarity
     ) {
         public static CreateRecommendedLoanProductEventContent of(
             Long loanProductId, String productName, Float minInterestRate,
-            Float maxInterestRate, Long loanLimitAmount, String bankName
+            Float maxInterestRate, Long loanLimitAmount, String bankName,
+            Float similarity
         ) {
             return new CreateRecommendedLoanProductEventContent(
                 loanProductId,
@@ -28,7 +30,8 @@ public record CreateRecommendedLoanProductEvent(
                 bankName,
                 minInterestRate,
                 maxInterestRate,
-                loanLimitAmount
+                loanLimitAmount,
+                similarity
             );
         }
     }
