@@ -112,3 +112,4 @@ Features
 - feature/FP-24: 도메인 테스트 코드 추가
 - feature/FP-25: 도메인 모듈 나누기
 - feature/FP-26: 추천 대출 상품 조회시 Slice 될 수 있도록 변경 및 대출 상품 Repository들을 한곳으로 이동
+- feature/FP-27: 추천 대출 상품 Redis Cache 제거

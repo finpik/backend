@@ -5,15 +5,15 @@ import finpik.RecommendedLoanProduct;
 import finpik.RelatedLoanProduct;
 import finpik.error.enums.ErrorCode;
 import finpik.error.exception.BusinessException;
-import finpik.repository.loanproduct.RecommendedLoanProductCacheRepository;
 import finpik.repository.loanproduct.LoanProductRepository;
-import finpik.repository.loanproduct.RecommendedLoanProductRepository;
-import finpik.repository.loanproduct.RelatedLoanProductRepository;
 import finpik.resolver.loanproduct.application.GetLoanProductUseCase;
 import finpik.resolver.loanproduct.application.dto.LoanProductDto;
 import finpik.resolver.loanproduct.application.dto.RecommendedLoanProductDto;
 import finpik.resolver.loanproduct.application.dto.RelatedLoanProductDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,20 +23,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetLoanProductUseCaseImpl implements GetLoanProductUseCase {
     private final LoanProductRepository loanProductRepository;
-    private final RelatedLoanProductRepository relatedLoanProductRepository;
-    private final RecommendedLoanProductCacheRepository recommendedLoanProductCacheRepository;
-    private final RecommendedLoanProductRepository recommendedLoanProductRepository;
 
     @Transactional(readOnly = true)
-    public List<RecommendedLoanProductDto> getRecommendedLoanProducts(Long profileId) {
-        List<RecommendedLoanProduct> recommendedLoanProducts = recommendedLoanProductCacheRepository.findAllById(profileId);
+    public Slice<RecommendedLoanProductDto> getRecommendedLoanProductList(Long profileId, Pageable pageable) {
+        Slice<RecommendedLoanProduct> recommendedLoanProductList =
+            loanProductRepository.findAllRecommendedLoanProductSliceByProfileId(profileId, pageable);
 
-        List<RecommendedLoanProduct> fromDBIfNotExistInRedis =
-            findFromDBIfNotExistInRedis(profileId, recommendedLoanProducts);
-
-        recommendedLoanProductCacheRepository.cacheAsync(profileId, fromDBIfNotExistInRedis);
-
-        return fromDBIfNotExistInRedis.stream().map(RecommendedLoanProductDto::new).toList();
+        return new SliceImpl<>(
+            recommendedLoanProductList.stream().map(RecommendedLoanProductDto::new).toList(),
+            pageable,
+            recommendedLoanProductList.hasNext()
+        );
     }
 
     @Transactional(readOnly = true)
@@ -49,17 +46,8 @@ public class GetLoanProductUseCaseImpl implements GetLoanProductUseCase {
 
     @Transactional(readOnly = true)
     public List<RelatedLoanProductDto> getRelatedLoanProductList(Long loanProductId) {
-        List<RelatedLoanProduct> relatedLoanProductList = relatedLoanProductRepository.findAllById(loanProductId);
+        List<RelatedLoanProduct> relatedLoanProductList = loanProductRepository.findAllRelatedLoanProductById(loanProductId);
 
         return relatedLoanProductList.stream().map(RelatedLoanProductDto::new).toList();
-    }
-
-    private List<RecommendedLoanProduct> findFromDBIfNotExistInRedis(
-        Long profileId,
-        List<RecommendedLoanProduct> recommendedLoanProductList
-    ) {
-        if (!recommendedLoanProductList.isEmpty()) return recommendedLoanProductList;
-
-        return recommendedLoanProductRepository.findAllByProfileId(profileId);
     }
 }
