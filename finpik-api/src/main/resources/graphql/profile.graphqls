@@ -67,10 +67,6 @@ type ProfileResult {
     profileColor: ProfileColor!
 }
 
-enum LoanUsageStatus {
-    USING, NOT_USING
-}
-
 enum Occupation {
     EMPLOYEE
     SELF_EMPLOYED
