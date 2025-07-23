@@ -12,7 +12,8 @@ public record CachedRecommendedLoanProduct(
     String productName,
     Float minInterestRate,
     Float maxInterestRate,
-    Long maxLoanLimitAmount
+    Long maxLoanLimitAmount,
+    Float similarity
 ) {
 
     public RecommendedLoanProduct toDomain() {
@@ -24,7 +25,8 @@ public record CachedRecommendedLoanProduct(
             productName,
             maxInterestRate,
             minInterestRate,
-            maxLoanLimitAmount
+            maxLoanLimitAmount,
+            similarity
         );
     }
 
@@ -38,6 +40,7 @@ public record CachedRecommendedLoanProduct(
             .minInterestRate(recommendedLoanProduct.getInterestRate().minInterestRate())
             .maxInterestRate(recommendedLoanProduct.getInterestRate().maxInterestRate())
             .maxLoanLimitAmount(recommendedLoanProduct.getMaxLoanLimitAmount())
+            .similarity(recommendedLoanProduct.getSimilarity())
             .build();
     }
 }
