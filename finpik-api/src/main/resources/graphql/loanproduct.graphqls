@@ -1,7 +1,21 @@
 type Query {
-    getLoanProducts(profileId: Long!): [RecommendedLoanProductResult]!
+    getLoanProductList(
+        profileId: Long!,
+        page: Int!,
+        size: Int!,
+        sortProperty: String!
+        sortDirection: SortDirection = DESC
+    ): RecommendedLoanProductResultList!
+
     getLoanProduct(loanProductId: Long!): LoanProductResult!
     getRelatedLoanProductList(loanProductId: Long!): [RelatedLoanProductResult]!
+}
+
+type RecommendedLoanProductResultList {
+    content: [RecommendedLoanProductResult]!,
+    hasNext: Boolean,
+    page: Int,
+    size: Int
 }
 
 type RecommendedLoanProductResult {
@@ -46,4 +60,9 @@ type RelatedLoanProductResult {
 
 enum RepaymentPeriodUnit {
     YEAR, MONTH
+}
+
+enum SortDirection {
+    ASC
+    DESC
 }
