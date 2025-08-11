@@ -9,7 +9,7 @@ RUN gradle :finpik-api:clean :finpik-api:build -x test
 FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
 
-COPY --from=builder /home/app/api/build/libs/*.jar app.jar
+COPY --from=builder /home/app/finpik-api/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
