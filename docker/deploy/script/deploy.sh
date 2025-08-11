@@ -79,7 +79,7 @@ health_check "${TARGET_PORT}"
 
 # 3) 트래픽 스위치 (Nginx 업스트림 포트 전환)
 echo "[3/4] Switching Nginx upstream to :${TARGET_PORT}"
-sudo "${COMPOSE_DIR}/scripts/switch_upstream.sh" "${TARGET_PORT}"
+sudo "${COMPOSE_DIR}/script/switch_upstream.sh" "${TARGET_PORT}"
 
 # 4) 이전 색 정리(선택) - 안전하게 남겨두고 싶다면 주석 처리
 echo "[4/4] Stopping old stack (optional cleanup)"
