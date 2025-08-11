@@ -73,7 +73,7 @@ jobs:
 
             # 2) Compose/스크립트 실행 권한 부여
             cd /srv/app/deploy
-            chmod +x scripts/*.sh
+            chmod +x script/*.sh
 
             # 3) 서버 .env 준비(최초 1회만)
             if [ ! -f "/srv/app/.env" ] && [ -f "./.env.template" ]; then
@@ -89,5 +89,5 @@ jobs:
             # short sha 재계산(원격)
             IMAGE_TAG=$(echo "${IMAGE_TAG}" | cut -c1-7)
 
-            cd /srv/app/deploy/scripts
+            cd /srv/app/deploy/script
             ./deploy.sh
