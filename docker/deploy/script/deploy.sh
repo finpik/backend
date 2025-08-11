@@ -1,7 +1,7 @@
 set -euo pipefail
 
 APP_DIR="/srv/app"                     # 서버 배포 디렉토리
-COMPOSE_DIR="${APP_DIR}/deploy"
+COMPOSE_DIR="${APP_DIR}/docker/deploy"
 ENV_FILE="${APP_DIR}/.env"             # 서버에 상주
 IMAGE_REPO_DEFAULT="ghcr.io/your/repo" # Actions에서 ENV로 덮어쓸 수 있음
 IMAGE_REPO="${IMAGE_REPO:-$IMAGE_REPO_DEFAULT}"
