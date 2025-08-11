@@ -3,7 +3,7 @@ FROM gradle:8.4-jdk21 AS builder
 WORKDIR /home/app
 
 COPY . .
-RUN gradle :finpik-api:clean :api:build -x test
+RUN gradle :finpik-api:clean :finpik-api:build -x test
 
 # 2단계: 실행 이미지
 FROM eclipse-temurin:21-jdk-jammy
