@@ -60,6 +60,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }} # pem 키페어
           script: |
             set -e
+            
+            if [ -n "${{ secrets.GHCR_TOKEN }}" ]; then
+              echo "${{ secrets.GHCR_TOKEN }}" \
+                | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME }}" --password-stdin
+            fi
+            
             # 1) 배포 디렉토리 존재/갱신
             if [ ! -d "/srv/app/.git" ]; then
               sudo mkdir -p /srv/app
