@@ -97,3 +97,5 @@ jobs:
 
             cd /srv/app/docker/deploy/script
             ./deploy.sh
+
+#test
