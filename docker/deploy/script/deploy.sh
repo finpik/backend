@@ -39,15 +39,6 @@ current_active_port() {
 # ===== 시작 =====
 cd "${APP_DIR}"
 
-# .env 존재 확인
-if [[ ! -f "${ENV_FILE}" ]]; then
-  echo "[WARN] ${ENV_FILE} not found. Creating from template if exists."
-  if [[ -f "${APP_DIR}/.env.template" ]]; then
-    cp "${APP_DIR}/.env.template" "${ENV_FILE}"
-    echo "[WARN] Fill ${ENV_FILE} with real values before deploying."
-  fi
-fi
-
 ACTIVE_PORT="$(current_active_port)"
 if [[ "${ACTIVE_PORT}" == "${BLUE_PORT}" ]]; then
   TARGET_COLOR="green"
