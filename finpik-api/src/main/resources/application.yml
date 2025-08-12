@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
 
 spring:
   application:
@@ -15,25 +15,25 @@ spring:
       client:
         registration:
           kakao:
-            client-id: ${KAKAO_CLIENT_ID:089246de56563808ef86e863b201a1d9}
+            client-id: ${KAKAO_CLIENT_ID}
             #client-secret: MmDh2LcqW9fYUyvm5yGCEBJpQUz9z6Ty
-            redirect-uri: ${KAKAO_REDIRECT_URI:https://a4ba7f0d8b33.ngrok-free.app/login/oauth2/code/kakao}
+            redirect-uri: ${KAKAO_REDIRECT_URI}
             authorization-grant-type: authorization_code
             scope:
               - account_email
-            client-name: ${KAKAO_CLIENT_NAME:Kakao}
+            client-name: ${KAKAO_CLIENT_NAME}
         provider:
           kakao:
-            authorization-uri: ${KAKAO_AUTHORIZATION_URI:https://kauth.kakao.com/oauth/authorize}
-            token-uri: ${KAKAO_TOKEN_URI:https://kauth.kakao.com/oauth/token}
-            user-info-uri: ${KAKAO_USER_INFO_URI:https://kapi.kakao.com/v2/user/me}
+            authorization-uri: ${KAKAO_AUTHORIZATION_URI}
+            token-uri: ${KAKAO_TOKEN_URI}
+            user-info-uri: ${KAKAO_USER_INFO_URI}
             user-name-attribute: id
 
   datasource:
-    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/loanpick?serverTimezone=Asia/Seoul&characterEncoding=UTF-8}
+    url: ${DATABASE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DATABASE_USERNAME:user}
-    password: ${DATABASE_PASSWORD:password}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
 
 #  #h2
 #  datasource:
@@ -53,8 +53,8 @@ spring:
   #redis
   data:
     redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
   cache:
     type: none
 
@@ -83,6 +83,6 @@ logging:
 
 fin-pik:
   jwt:
-    secretKey: ${JWT_SECRET_KEY:c3ByaW5nLWp3dC1zZWNyZXQtbG9uZy1iYXNlNjQtZW5jb2RlZC1rZXktMTIzNDU2Nzg5}
+    secretKey: ${JWT_SECRET_KEY}
   kafka:
-    dlqLogFileName: ${KAFKA_DLQ_FILE_NAME:failed-kafka-messages.log}
+    dlqLogFileName: ${KAFKA_DLQ_FILE_NAME}
