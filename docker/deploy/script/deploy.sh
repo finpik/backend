@@ -42,8 +42,8 @@ cd "${APP_DIR}"
 # .env 존재 확인
 if [[ ! -f "${ENV_FILE}" ]]; then
   echo "[WARN] ${ENV_FILE} not found. Creating from template if exists."
-  if [[ -f "${COMPOSE_DIR}/.env.template" ]]; then
-    cp "${COMPOSE_DIR}/.env.template" "${ENV_FILE}"
+  if [[ -f "${APP_DIR}/.env.template" ]]; then
+    cp "${APP_DIR}/.env.template" "${ENV_FILE}"
     echo "[WARN] Fill ${ENV_FILE} with real values before deploying."
   fi
 fi
