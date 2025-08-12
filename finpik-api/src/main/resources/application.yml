@@ -35,16 +35,16 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
-#  #h2
-#  datasource:
-#    url: jdbc:h2:mem:testdb
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2-console
+  #  #h2
+  #  datasource:
+  #    url: jdbc:h2:mem:testdb
+  #    driver-class-name: org.h2.Driver
+  #    username: sa
+  #    password:
+  #  h2:
+  #    console:
+  #      enabled: true
+  #      path: /h2-console
   jpa:
     hibernate:
       ddl-auto: update    # create, update, none 등
@@ -80,6 +80,11 @@ logging:
     org.springframework.security.oauth2.client: DEBUG
     org.springframework.security.oauth2.client.web: DEBUG
     org.springframework.security.web.authentication: DEBUG
+    org.apache.kafka: WARN
+    org.apache.kafka.clients: WARN
+    org.springframework.kafka: WARN
+    org.springframework.kafka.listener: WARN
+    org.springframework.security: INFO
 
 fin-pik:
   jwt:
