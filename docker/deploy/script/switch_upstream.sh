@@ -22,5 +22,3 @@ EOF
 sudo nginx -t
 sudo systemctl reload nginx
 echo "[OK] Nginx upstream switched to ${TARGET_PORT}"
-
-#test
