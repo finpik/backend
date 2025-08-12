@@ -7,7 +7,7 @@ services:
     ports:
       - "8081:8080"
     env_file:
-      - .env
+      - /srv/app/.env
     environment:
       - SPRING_PROFILES_ACTIVE=green
     restart: unless-stopped
