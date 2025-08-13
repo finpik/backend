@@ -47,7 +47,7 @@ done
 
 if [[ "$STATUS" != '"healthy"' ]]; then
   echo "!! container is not healthy. recent logs:"
-  docker logs --tail=200 "$APP_NAME" || true
+  docker logs --tail=500 "$APP_NAME" || true
   exit 1
 fi
 
