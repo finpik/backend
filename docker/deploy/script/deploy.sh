@@ -8,7 +8,7 @@ JAVA_OPTS="${JAVA_OPTS:--Xms1g -Xmx1g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:
 
 # ★ 네트워크 설정 추가
 NETWORK="${NETWORK:-finpik-net}"
-NET_ARGS=(--network "$NETWORK")
+NET_ARGS="--network ${NETWORK}"
 
 echo "== Pull image =="
 docker pull "$IMAGE"
@@ -27,7 +27,7 @@ docker run -d \
   --health-cmd='wget -qO- http://localhost:8080/actuator/health || exit 1' \
   --health-interval=10s --health-timeout=5s --health-retries=5 \
   --restart "$RESTART_POLICY" \
-  "${NET_ARGS[@]}" \
+  ${NET_ARGS} \
   "$IMAGE"
 
 echo "== Wait for health (max ~60s) =="
