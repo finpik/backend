@@ -8,7 +8,6 @@ JAVA_OPTS="${JAVA_OPTS:--Xms1g -Xmx1g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:
 
 # ★ 네트워크 설정 추가
 NETWORK="${NETWORK:-finpik-net}"
-docker network inspect "$NETWORK" >/dev/null 2>&1 || docker network create "$NETWORK"
 
 echo "== Pull image =="
 docker pull "$IMAGE"
@@ -20,6 +19,7 @@ docker ps -a --filter "name=^/${APP_NAME}$" -q | xargs -r docker rm
 echo "== Run new container =="
 docker run -d \
   --name "$APP_NAME" \
+  --network "$NETWORK" \
   -p "${PORT}:8080" \
   --env-file "$ENV_FILE" \
   -e "SPRING_PROFILES_ACTIVE=prod" \
@@ -27,8 +27,9 @@ docker run -d \
   --health-cmd='curl -fsS http://localhost:8080/actuator/health || exit 1' \
   --health-interval=10s --health-timeout=5s --health-retries=5 \
   --restart "$RESTART_POLICY" \
-  --network "$NETWORK" \
   "$IMAGE"
+
+docker network connect "$NETWORK" "$APP_NAME" 2>/dev/null || true
 
 echo "== Wait for health (max ~60s) =="
 for i in {1..12}; do
