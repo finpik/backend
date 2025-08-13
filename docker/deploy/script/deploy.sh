@@ -6,6 +6,10 @@ ENV_FILE="${ENV_FILE:-/srv/app/.env}"
 RESTART_POLICY="${RESTART_POLICY:-no}"           # 자동재시작 끄기: no (원하면 unless-stopped)
 JAVA_OPTS="${JAVA_OPTS:--Xms1g -Xmx1g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError}"
 
+# ★ 네트워크 설정 추가
+NETWORK="${NETWORK:-finpik-net}"
+NET_ARGS=(--network "$NETWORK")
+
 echo "== Pull image =="
 docker pull "$IMAGE"
 
