@@ -71,20 +71,24 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
+      auto-startup: ${SPRING_KAFKA_LISTENER_AUTO_STARTUP:false}
       concurrency: 3
+    admin:
+      auto-create: ${SPRING_KAFKA_ADMIN_AUTO_CREATE:false}
+      fail-fast: ${SPRING_KAFKA_ADMIN_FAIL_FAST:false}
 
 
 #Log
 logging:
   level:
-    org.springframework.security.oauth2.client: DEBUG
-    org.springframework.security.oauth2.client.web: DEBUG
-    org.springframework.security.web.authentication: DEBUG
-    org.apache.kafka: WARN
-    org.apache.kafka.clients: WARN
-    org.springframework.kafka: WARN
-    org.springframework.kafka.listener: WARN
-    org.springframework.security: INFO
+    org.springframework.security.oauth2.client: debug
+    org.springframework.security.oauth2.client.web: debug
+    org.springframework.security.web.authentication: debug
+    org.apache.kafka: error
+    org.apache.kafka.clients: warn
+    org.springframework.kafka: error
+    org.springframework.kafka.listener: warn
+    org.springframework.security: info
 
 fin-pik:
   jwt:
