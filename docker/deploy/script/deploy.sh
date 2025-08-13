@@ -1,3 +1,7 @@
+set -euo pipefail
+set -x                           # ← 실행되는 명령을 그대로 출력
+export PS4='+ $(date "+%H:%M:%S") '  # 각 줄에 타임스탬프
+
 # ====== 커스터마이즈 ======
 IMAGE="${IMAGE:-ghcr.io/finpik/backend:latest}"   # 배포할 이미지
 APP_NAME="${APP_NAME:-finpik-app}"               # 컨테이너 이름(고정)
@@ -8,6 +12,7 @@ JAVA_OPTS="${JAVA_OPTS:--Xms1g -Xmx1g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:
 
 # ★ 네트워크 설정 추가
 NETWORK="${NETWORK:-finpik-net}"
+docker network ls | grep "$NETWORK" || true
 
 echo "== Pull image =="
 docker pull "$IMAGE"
@@ -29,6 +34,7 @@ docker run -d \
   --restart "$RESTART_POLICY" \
   "$IMAGE"
 
+docker inspect "$APP_NAME" --format '{{json .NetworkSettings.Networks}}' | jq . || true
 docker network connect "$NETWORK" "$APP_NAME" 2>/dev/null || true
 
 echo "== Wait for health (max ~60s) =="
