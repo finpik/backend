@@ -2,6 +2,7 @@ package finpik.resolver.profile.resolver.input;
 
 import java.time.LocalDate;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -33,7 +34,8 @@ public record UpdateProfileInput(
     CreditGradeStatus creditGradeStatus,
     @Size(min = 1, max = 14, message = "프로필 이름은 1자 이상 14자 이하로 작성해주세요.")
     String profileName,
-    LocalDate businessStartDate
+    LocalDate businessStartDate,
+    BusinessType businessType
 ) {
     public UpdateProfileUseCaseDto toDto() {
         return UpdateProfileUseCaseDto.builder()
@@ -51,6 +53,7 @@ public record UpdateProfileInput(
             .creditScore(creditScore)
             .profileName(profileName)
             .businessStartDate(businessStartDate)
+            .businessType(businessType)
             .build();
     }
 }

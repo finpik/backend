@@ -1,6 +1,7 @@
 package finpik.entity.policy;
 
 import finpik.entity.User;
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -27,6 +28,7 @@ public record ProfileCreationSpec(
     LocalDate businessStartDate,
     LocalDate employmentDate,
     Occupation occupation,
+    BusinessType businessType,
     EmploymentForm employmentForm,
     User user,
     LocalDateTime createdAt,
@@ -39,7 +41,7 @@ public record ProfileCreationSpec(
         LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan,
         ProfileColor profileColor, Integer annualIncome, LocalDate businessStartDate,
         LocalDate employmentDate, Occupation occupation,
-        EmploymentForm employmentForm, User user
+        EmploymentForm employmentForm, User user, BusinessType businessType
     ) {
         return new ProfileCreationSpec(
             null, desiredLoanAmount, loanProductUsageCount,
@@ -47,7 +49,7 @@ public record ProfileCreationSpec(
             profileName, null, creditGradeStatus,
             loanProductUsageStatus, purposeOfLoan,
             profileColor, annualIncome, businessStartDate,
-            employmentDate, occupation,
+            employmentDate, occupation, businessType,
             employmentForm, user, null, null
         );
     }
@@ -58,7 +60,7 @@ public record ProfileCreationSpec(
         String profileName, Integer seq, CreditGradeStatus creditGradeStatus,
         LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan,
         ProfileColor profileColor, Integer annualIncome, LocalDate businessStartDate,
-        LocalDate employmentDate, Occupation occupation,
+        LocalDate employmentDate, Occupation occupation, BusinessType businessType,
         EmploymentForm employmentForm, User user,
         LocalDateTime createdAt, LocalDateTime updatedAt
     ) {
@@ -68,7 +70,7 @@ public record ProfileCreationSpec(
             profileName, seq, creditGradeStatus,
             loanProductUsageStatus, purposeOfLoan,
             profileColor, annualIncome, businessStartDate,
-            employmentDate, occupation,
+            employmentDate, occupation, businessType,
             employmentForm, user, createdAt, updatedAt
         );
     }

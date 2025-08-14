@@ -108,6 +108,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
                 RelatedLoanProduct.of(
                     entity.getId(),
                     entity.getProductName(),
+                    entity.getBankName(),
                     entity.getMaxInterestRate(),
                     entity.getMinInterestRate(),
                     entity.getMaxLoanLimitAmount()

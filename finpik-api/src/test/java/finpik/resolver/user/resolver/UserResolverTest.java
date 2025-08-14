@@ -44,7 +44,7 @@ class UserResolverTest {
             RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
         );
 
-        SignUpResultDto dto = new SignUpResultDto(user, "testAccessToken");
+        SignUpResultDto dto = new SignUpResultDto(user, "testAccessToken", "testRefreshToken");
         given(signUpUseCase.signUp(any())).willReturn(dto);
 
         // when

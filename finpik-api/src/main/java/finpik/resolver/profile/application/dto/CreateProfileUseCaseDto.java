@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import finpik.entity.Profile;
 import finpik.entity.User;
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -29,7 +30,8 @@ public record CreateProfileUseCaseDto(
     String profileName,
     Long userId,
     ProfileColor profileColor,
-    LocalDate businessStartDate
+    LocalDate businessStartDate,
+    BusinessType businessType
 ) {
     public Profile toDomain(User user) {
         ProfileCreationSpec spec = ProfileCreationSpec.createNew(
@@ -39,7 +41,7 @@ public record CreateProfileUseCaseDto(
             loanProductUsageStatus, purposeOfLoan,
             profileColor, annualIncome, businessStartDate,
             employmentDate, occupation,
-            employmentForm, user
+            employmentForm, user, businessType
         );
 
         return Profile.of(spec);

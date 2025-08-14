@@ -1,5 +1,6 @@
 package finpik.entity.occupation;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
 import finpik.error.enums.ErrorCode;
@@ -11,6 +12,7 @@ import static finpik.util.Preconditions.require;
 public record SelfEmployedDetail(
     Occupation occupation,
     Integer annualIncome,
+    BusinessType businessType,
     LocalDate businessStartDate
 ) implements OccupationDetail {
     public SelfEmployedDetail {

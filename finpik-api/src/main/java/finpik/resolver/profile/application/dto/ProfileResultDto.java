@@ -19,6 +19,7 @@ public class ProfileResultDto {
     String profileName;
     Integer profileSeq;
     ProfileColor profileColor;
+    Integer annualIncome;
 
     public ProfileResultDto(Profile profile) {
         profileId = profile.getId();
@@ -31,5 +32,6 @@ public class ProfileResultDto {
         profileName = profile.getProfileName();
         profileColor = profile.getProfileColor();
         profileSeq = profile.getSeq();
+        annualIncome = profile.getOccupationDetail().getAnnualIncome();
     }
 }

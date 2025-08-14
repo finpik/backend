@@ -1,5 +1,6 @@
 package entity.occupation;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
 import finpik.entity.occupation.EmployeeDetail;
@@ -30,6 +31,7 @@ class OccupationDetailTest {
             Occupation.EMPLOYEE,
             EmploymentForm.FULL_TIME,
             LocalDate.now(),
+            null,
             null
         );
 
@@ -38,12 +40,14 @@ class OccupationDetailTest {
             Occupation.PUBLIC_SERVANT,
             EmploymentForm.FULL_TIME,
             LocalDate.now(),
+            null,
             null
         );
 
         OccupationDetail otherDetail = OccupationDetail.of(
             annualIncome,
             Occupation.OTHER,
+            null,
             null,
             null,
             null
@@ -54,13 +58,15 @@ class OccupationDetailTest {
             Occupation.SELF_EMPLOYED,
             EmploymentForm.FULL_TIME,
             null,
-            LocalDate.now()
+            LocalDate.now(),
+            BusinessType.MEDICAL
         );
         OccupationDetail freelancerDetail = OccupationDetail.of(
             annualIncome,
             Occupation.FREELANCER,
             null,
             LocalDate.now(),
+            null,
             null
         );
 
@@ -90,6 +96,7 @@ class OccupationDetailTest {
                 Occupation.EMPLOYEE,
                 EmploymentForm.FULL_TIME,
                 LocalDate.now(),
+                null,
                 null
             )).hasMessage(ErrorCode.INVALID_ANNUAL_INCOME.getMessage()),
 
@@ -98,6 +105,7 @@ class OccupationDetailTest {
                 Occupation.EMPLOYEE,
                 EmploymentForm.FULL_TIME,
                 LocalDate.now(),
+                null,
                 null
             )).hasMessage(ErrorCode.INVALID_ANNUAL_INCOME.getMessage())
         );

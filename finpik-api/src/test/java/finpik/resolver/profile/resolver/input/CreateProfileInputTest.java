@@ -63,7 +63,7 @@ class CreateProfileInputTest {
                 .desiredLoanAmount(10000000).loanProductUsageStatus(LoanProductUsageStatus.NOT_USING)
                 .loanProductUsageCount(2).totalLoanUsageAmount(5000000).creditScore(750)
                 .creditGradeStatus(CreditGradeStatus.EXCELLENT).profileName("테스트 프로필")
-                .profileColor(ProfileColor.GRAY_TWO).build();
+                .profileColor(ProfileColor.GRAY).build();
 
         // when
         CreateProfileUseCaseDto dto = input.toDto(userId);

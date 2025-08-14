@@ -2,6 +2,7 @@ package finpik.resolver.profile.resolver.input;
 
 import java.time.LocalDate;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -40,7 +41,9 @@ public record CreateProfileInput(
     @NotBlank(message = "작성하신 프로필의 이름을 만들어주세요.")
     @Size(min = 1, max = 14, message = "프로필 이름은 1자 이상 14자 이하로 작성해주세요.")
     String profileName,
-    ProfileColor profileColor
+    ProfileColor profileColor,
+    LocalDate businessStartDate,
+    BusinessType businessType
 ) {
     public CreateProfileUseCaseDto toDto(Long userId) {
         return CreateProfileUseCaseDto.builder()
@@ -58,6 +61,8 @@ public record CreateProfileInput(
             .occupation(occupation)
             .profileColor(profileColor)
             .userId(userId)
+            .businessStartDate(businessStartDate)
+            .businessType(businessType)
             .build();
     }
 }

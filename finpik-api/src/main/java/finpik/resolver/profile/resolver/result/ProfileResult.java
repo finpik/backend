@@ -18,7 +18,8 @@ public record ProfileResult(
     Integer desiredLoanAmount,
     Integer profileSeq,
     String profileName,
-    ProfileColor profileColor
+    ProfileColor profileColor,
+    Integer annualIncome
 ) {
 
     public static ProfileResult of(ProfileResultDto profile) {
@@ -33,6 +34,7 @@ public record ProfileResult(
             .profileName(profile.getProfileName())
             .profileSeq(profile.getProfileSeq())
             .profileColor(profile.getProfileColor())
+            .annualIncome(profile.getAnnualIncome())
             .build();
     }
 }

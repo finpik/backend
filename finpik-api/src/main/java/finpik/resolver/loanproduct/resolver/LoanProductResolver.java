@@ -88,6 +88,6 @@ public class LoanProductResolver implements LoanProductApi {
             ? Sort.Direction.DESC
             : Sort.Direction.ASC;
 
-        return Sort.by(new Sort.Order(direction, sortProperty));
+        return Sort.by(new Sort.Order(direction, sortProperty).nullsLast());
     }
 }

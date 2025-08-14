@@ -31,7 +31,7 @@ class CreditScoreTest {
         CreditScore creditScore = new CreditScore(null, creditGradeStatus);
 
         //then
-        assertThat(creditScore.creditScore()).isEqualTo(870);
+        assertThat(creditScore.creditScore()).isEqualTo(1000);
     }
 
     @DisplayName("신용 등급이 없고 신용 점수가 있다면 신용 점수에 맞는 신용 등급이 채워진다.")

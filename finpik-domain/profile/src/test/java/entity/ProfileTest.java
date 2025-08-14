@@ -50,6 +50,7 @@ class ProfileTest {
             900,
             CreditGradeStatus.EXCELLENT,
             "test profile",
+            null,
             null
         );
 
@@ -95,11 +96,12 @@ class ProfileTest {
             null,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
-            ProfileColor.GRAY_TWO,
+            ProfileColor.GRAY,
             1000,
             LocalDate.now(),
             LocalDate.now(),
             Occupation.EMPLOYEE,
+            null,
             EmploymentForm.CONTRACT,
             null,
             LocalDateTime.now(),
@@ -132,11 +134,12 @@ class ProfileTest {
             CreditGradeStatus.EXCELLENT,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
-            ProfileColor.GRAY_TWO,
+            ProfileColor.GRAY,
             1000,
             LocalDate.now(),
             LocalDate.now(),
             Occupation.EMPLOYEE,
+            null,
             EmploymentForm.CONTRACT,
             user,
             LocalDateTime.now(),
@@ -159,7 +162,7 @@ class ProfileTest {
             RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(2025, 5, 25)
         );
 
-        ProfileColor profileColor = ProfileColor.GRAY_TWO;
+        ProfileColor profileColor = ProfileColor.GRAY;
         Profile profile = getDefaultProfile(user);
 
         // when
@@ -181,11 +184,12 @@ class ProfileTest {
             CreditGradeStatus.EXCELLENT,
             LoanProductUsageStatus.NOT_USING,
             PurposeOfLoan.LOAN_REPAYMENT,
-            ProfileColor.GRAY_TWO,
+            ProfileColor.GRAY,
             1000,
             LocalDate.now(),
             LocalDate.now(),
             Occupation.OTHER,
+            null,
             null,
             user,
             LocalDateTime.now(),

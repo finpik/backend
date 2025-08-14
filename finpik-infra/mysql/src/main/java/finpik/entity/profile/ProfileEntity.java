@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import finpik.entity.Profile;
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -77,6 +78,9 @@ public class ProfileEntity {
 
     private LocalDate businessStartDate;
 
+    @Enumerated(EnumType.STRING)
+    private BusinessType businessType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -95,7 +99,8 @@ public class ProfileEntity {
             mapper.employmentForm(), profile.getCreditScore().creditGradeStatus(),
             profile.getLoanProductUsageStatus(), profile.getPurposeOfLoan(),
             mapper.occupation(), profile.getProfileColor(), mapper.employmentDate(),
-            mapper.businessStartDate(), userEntity, profile.getCreatedAt(), profile.getUpdatedAt()
+            mapper.businessStartDate(), mapper.businessType(),
+            userEntity, profile.getCreatedAt(), profile.getUpdatedAt()
         );
     }
 
@@ -104,7 +109,7 @@ public class ProfileEntity {
             id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
             creditScore, profileName, seq, creditGradeStatus, loanProductUsageStatus,
             purposeOfLoan, profileColor, annualIncome, businessStartDate,
-            employmentDate, occupation, employmentForm,
+            employmentDate, occupation, businessType, employmentForm,
             user.toDomain(), createdAt, updatedAt
         );
 

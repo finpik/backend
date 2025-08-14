@@ -14,9 +14,11 @@ public record EmployeeDetail(
     EmploymentForm employmentForm,
     LocalDate employmentDate
 ) implements OccupationDetail {
-    public EmployeeDetail {
-        require(employmentDate, ErrorCode.INVALID_EMPLOYMENT_FIELDS.getMessage());
-        require(employmentForm, ErrorCode.INVALID_EMPLOYMENT_FIELDS.getMessage());
+    public EmployeeDetail(Occupation occupation, Integer annualIncome, EmploymentForm employmentForm, LocalDate employmentDate) {
+        this.occupation = occupation;
+        this.annualIncome = annualIncome;
+        this.employmentForm = require(employmentForm, ErrorCode.INVALID_EMPLOYMENT_FIELDS.getMessage());
+        this.employmentDate = require(employmentDate, ErrorCode.INVALID_EMPLOYMENT_FIELDS.getMessage());
     }
 
     @Override

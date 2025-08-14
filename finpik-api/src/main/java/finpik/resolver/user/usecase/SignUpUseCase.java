@@ -37,7 +37,11 @@ public class SignUpUseCase {
             .expiration(dto.expiresAt())
             .build();
 
-        return new SignUpResultDto(savedUser, jwtProvider.createAccessToken(tokenDto));
+        return new SignUpResultDto(
+            savedUser,
+            jwtProvider.createAccessToken(tokenDto),
+            jwtProvider.createRefreshToken(tokenDto)
+        );
     }
 
     private void validateExistingUserBy(String email) {
