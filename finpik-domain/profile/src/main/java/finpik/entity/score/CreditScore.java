@@ -32,6 +32,6 @@ public record CreditScore(
     }
 
     private Integer determineCreditScoreByGradeStatus(CreditGradeStatus creditGradeStatus) {
-        return NiceCreditGradePolicy.getRange(creditGradeStatus).min();
+        return NiceCreditGradePolicy.getRange(creditGradeStatus).max();
     }
 }

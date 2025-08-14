@@ -1,5 +1,6 @@
 package finpik.entity.occupation;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Occupation;
 import finpik.error.enums.ErrorCode;
@@ -21,7 +22,8 @@ public sealed interface OccupationDetail
         Occupation occupation,
         EmploymentForm employmentForm,
         LocalDate employmentDate,
-        LocalDate businessStartDate
+        LocalDate businessStartDate,
+        BusinessType businessType
     ) {
         requirePositive(annualIncome, ErrorCode.INVALID_ANNUAL_INCOME.getMessage());
 
@@ -42,6 +44,7 @@ public sealed interface OccupationDetail
             case SELF_EMPLOYED -> new SelfEmployedDetail(
                 occupation,
                 annualIncome,
+                businessType,
                 businessStartDate
             );
 

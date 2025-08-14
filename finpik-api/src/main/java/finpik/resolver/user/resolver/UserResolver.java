@@ -1,6 +1,7 @@
 package finpik.resolver.user.resolver;
 
 import static finpik.util.Values.FIVE_MINUTE_MILL;
+import static finpik.util.Values.FOURTEEN_DAYS_MILL;
 
 import java.util.Date;
 
@@ -14,6 +15,8 @@ import finpik.resolver.user.usecase.SignUpUseCase;
 import finpik.resolver.user.usecase.dto.SignUpResultDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,9 +27,15 @@ public class UserResolver implements UserApi {
     @MutationMapping
     public SignUpResult signUp(@Argument @Valid SignUpInput input) {
         Date issuedAt = new Date();
-        Date expiresAt = new Date(issuedAt.getTime() + FIVE_MINUTE_MILL);
+        Date expiresAt = new Date(issuedAt.getTime() + FOURTEEN_DAYS_MILL);
 
         SignUpResultDto dto = signUpUseCase.signUp(input.toDto(issuedAt, expiresAt));
+
+        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+            attributes.setAttribute("refreshToken", dto.getRefreshToken(), RequestAttributes.SCOPE_REQUEST);
+            attributes.setAttribute("userId", dto.getUserId(), RequestAttributes.SCOPE_REQUEST);
+        }
 
         return SignUpResult.of(dto);
     }

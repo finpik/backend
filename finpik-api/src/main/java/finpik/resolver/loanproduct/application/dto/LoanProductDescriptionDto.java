@@ -10,6 +10,7 @@ public class LoanProductDescriptionDto {
     private final String interestRateGuide;
     private final String maxLoanLimitGuide;
     private final String repaymentPeriodGuide;
+    private final String repaymentFeeGuide;
     private final String notesOnLoan;
     private final String preLoanChecklist;
 
@@ -19,6 +20,7 @@ public class LoanProductDescriptionDto {
         interestRateGuide = description.getInterestRateGuide();
         maxLoanLimitGuide = description.getMaxLoanLimitGuide();
         repaymentPeriodGuide = description.getRepaymentPeriodGuide();
+        repaymentFeeGuide = description.getRepaymentFeeGuide();
         notesOnLoan = description.getNotesOnLoan();
         preLoanChecklist = description.getPreLoanChecklist();
     }

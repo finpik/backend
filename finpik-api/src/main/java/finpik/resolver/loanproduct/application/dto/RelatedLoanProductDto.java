@@ -7,6 +7,7 @@ import lombok.Getter;
 public class RelatedLoanProductDto {
     private final Long loanProductId;
     private final String productName;
+    private final String bankName;
     private final Float maxInterestRate;
     private final Float minInterestRate;
     private final Long maxLoanLimitAmount;
@@ -14,8 +15,9 @@ public class RelatedLoanProductDto {
     public RelatedLoanProductDto(RelatedLoanProduct relatedLoanProduct) {
         loanProductId = relatedLoanProduct.getLoanProductId();
         productName = relatedLoanProduct.getProductName();
-        maxInterestRate = relatedLoanProduct.getInterestRate().minInterestRate();
-        minInterestRate = relatedLoanProduct.getInterestRate().maxInterestRate();
+        bankName = relatedLoanProduct.getBankName();
+        maxInterestRate = relatedLoanProduct.getInterestRate().maxInterestRate();
+        minInterestRate = relatedLoanProduct.getInterestRate().minInterestRate();
         maxLoanLimitAmount = relatedLoanProduct.getMaxLoanLimitAmount();
     }
 }

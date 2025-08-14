@@ -12,18 +12,20 @@ import lombok.NoArgsConstructor;
 public class RelatedLoanProduct {
     private Long loanProductId;
     private String productName;
+    private String bankName;
     private InterestRate interestRate;
     private Long maxLoanLimitAmount;
 
     public static RelatedLoanProduct of(
         Long loanProductId,
         String productName,
+        String bankName,
         Float maxInterestRate,
         Float minInterestRate,
         Long maxLoanLimitAmount
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 
-        return new RelatedLoanProduct(loanProductId, productName, interestRate, maxLoanLimitAmount);
+        return new RelatedLoanProduct(loanProductId, productName, bankName, interestRate, maxLoanLimitAmount);
     }
 }

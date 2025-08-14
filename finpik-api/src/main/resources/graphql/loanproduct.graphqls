@@ -38,6 +38,7 @@ type LoanProductResult {
     repaymentPeriod: Int
     repaymentPeriodUnit: RepaymentPeriodUnit
     descriptionResult: LoanProductDescriptionResult!
+    url: String!
 }
 
 type LoanProductDescriptionResult {
@@ -53,6 +54,7 @@ type LoanProductDescriptionResult {
 type RelatedLoanProductResult {
     loanProductId: Long!,
     productName: String!,
+    bankName: String!,
     maxInterestRate: Float,
     minInterestRate: Float,
     maxLoanLimitAmount: Int

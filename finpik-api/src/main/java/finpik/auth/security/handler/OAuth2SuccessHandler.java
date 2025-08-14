@@ -1,48 +1,41 @@
 package finpik.auth.security.handler;
 
-import static finpik.util.Values.ACCESS_TOKEN;
 import static finpik.util.Values.FIFTEEN_MINUTE_MILL;
 import static finpik.util.Values.FOURTEEN_DAYS_MILL;
 import static finpik.util.Values.FOURTEEN_DAYS_SEC;
-import static finpik.util.Values.GRAPHQL_URL;
-import static finpik.util.Values.REFRESH_TOKEN;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Date;
-import java.util.Map;
 import java.util.Optional;
 
 import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import finpik.JwtProvider;
-import finpik.auth.security.handler.reponse.OAuth2Response;
 import finpik.auth.security.user.CustomOAuth2User;
 import finpik.dto.CreateTokenDto;
 import finpik.repository.auth.AuthRedisRepository;
 import finpik.repository.user.UserRepository;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.util.UriComponentsBuilder;
 
+//TODO: 리팩토링 대상
 @Component
 @RequiredArgsConstructor
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final AuthRedisRepository authRedisRepository;
-    private final ObjectMapper objectMapper;
     private final AuthCacheRepository authCacheRepository;
 
-    private static final String UTF_8 = "UTF-8";
+    private static final String REDIRECT_URI = "http://localhost:3000/sign-in";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -72,7 +65,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private String getAccessToken(User user) {
         Date issuedAt = new Date();
-        Date expiresAt = new Date(issuedAt.getTime() + FIFTEEN_MINUTE_MILL);
+        Date expiresAt = new Date(issuedAt.getTime() + FOURTEEN_DAYS_MILL);
         CreateTokenDto dto = CreateTokenDto.builder().userId(user.getId()).email(user.getEmail()).issuedAt(issuedAt)
                 .expiration(expiresAt).build();
 
@@ -90,33 +83,46 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void responseSuccessLogin(HttpServletResponse response, String accessToken, String refreshToken)
             throws IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(UTF_8);
+        String redirectUrl = UriComponentsBuilder
+            .fromUriString("http://localhost:3000/sign-in")
+            .queryParam("accessToken", accessToken)
+            .build()
+            .toUriString();
 
         setRefreshTokenOnCookie(response, refreshToken);
-
-        String body = objectMapper.writeValueAsString(Map.of(ACCESS_TOKEN, accessToken));
-        response.getWriter().write(body);
+        response.sendRedirect(redirectUrl);
     }
 
     private void setRefreshTokenOnCookie(HttpServletResponse response, String refreshToken) {
-        Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN, refreshToken);
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(true);
-        refreshTokenCookie.setPath(GRAPHQL_URL);
-        refreshTokenCookie.setMaxAge(FOURTEEN_DAYS_SEC);
-        response.addCookie(refreshTokenCookie);
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+            .domain("localhost")
+            .httpOnly(true)
+            .secure(false)
+            .path("/")
+            .maxAge(Duration.ofDays(7))
+            .sameSite("Lax")
+            .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 
     private void responseSignUpUser(HttpServletResponse response, String id, String provider) throws IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(UTF_8);
+        String redirectUrl = UriComponentsBuilder
+            .fromUriString(REDIRECT_URI)
+            .queryParam("id", id)
+            .queryParam("provider", provider)
+            .build()
+            .toUriString();
 
-        OAuth2Response oAuth2Response = OAuth2Response.builder().id(id).provider(provider).build();
-        String json = objectMapper.writeValueAsString(oAuth2Response);
+        response.sendRedirect(redirectUrl);
 
-        response.getWriter().write(json);
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+//        response.setCharacterEncoding(UTF_8);
+//
+//        OAuth2Response oAuth2Response = OAuth2Response.builder().id(id).provider(provider).build();
+//        String json = objectMapper.writeValueAsString(oAuth2Response);
+//
+//        response.getWriter().write(json);
     }
 }

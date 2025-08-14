@@ -1,6 +1,7 @@
 package entity.policy;
 
 import finpik.entity.User;
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Gender;
@@ -35,7 +36,7 @@ class ProfileCreationSpecTest {
         CreditGradeStatus creditGradeStatus = CreditGradeStatus.GOOD;
         LoanProductUsageStatus loanProductUsageStatus = LoanProductUsageStatus.USING;
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.LOAN_REPAYMENT;
-        ProfileColor profileColor = ProfileColor.GRAY_TWO;
+        ProfileColor profileColor = ProfileColor.GRAY;
         Integer annualIncome = 4500;
         LocalDate businessStartDate = LocalDate.of(2020, 1, 1);
         LocalDate employmentDate = LocalDate.of(2022, 6, 1);
@@ -44,13 +45,14 @@ class ProfileCreationSpecTest {
         User user = new User(1L, "username", "user@example.com", Gender.MALE, RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(1995, 1, 1));
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
+        BusinessType businessType = null;
 
         //when
         ProfileCreationSpec spec = new ProfileCreationSpec(
             id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
             creditScore, profileName, seq, creditGradeStatus, loanProductUsageStatus,
             purposeOfLoan, profileColor, annualIncome, businessStartDate, employmentDate,
-            occupation, employmentForm, user, createdAt, updatedAt
+            occupation, businessType, employmentForm, user, createdAt, updatedAt
         );
 
         //then

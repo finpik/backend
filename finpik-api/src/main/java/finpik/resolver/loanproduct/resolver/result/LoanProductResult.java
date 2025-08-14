@@ -18,6 +18,7 @@ public class LoanProductResult {
     private final Integer repaymentPeriod;
     private final RepaymentPeriodUnit repaymentPeriodUnit;
     private final LoanProductDescriptionResult descriptionResult;
+    private final String url;
 
     public LoanProductResult(LoanProductDto dto) {
         productName = dto.getProductName();
@@ -28,5 +29,6 @@ public class LoanProductResult {
         repaymentPeriod = dto.getRepaymentPeriod();
         repaymentPeriodUnit = dto.getRepaymentPeriodUnit();
         descriptionResult = new LoanProductDescriptionResult(dto.getDescription());
+        url = dto.getUrl();
     }
 }

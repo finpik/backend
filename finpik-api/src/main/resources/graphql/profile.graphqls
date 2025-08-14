@@ -25,6 +25,8 @@ input CreateProfileInput {
     creditGradeStatus: CreditGradeStatus
     profileName: String!
     profileColor: ProfileColor!
+    businessStartDate: Date
+    businessType: BusinessType
 }
 
 input UpdateProfileInput {
@@ -42,6 +44,7 @@ input UpdateProfileInput {
     creditGradeStatus: CreditGradeStatus
     profileName: String
     businessStartDate: Date
+    businessType: BusinessType
 }
 
 input UpdateProfileSequenceInput {
@@ -59,6 +62,7 @@ type ProfileResult {
     purposeOfLoan: PurposeOfLoan!
     occupation: Occupation!
     creditGradeStatus: CreditGradeStatus!
+    annualIncome: Int!
     loanProductUsageCount: Int!
     totalLoanUsageAmount: Int!
     desiredLoanAmount: Int!
@@ -78,6 +82,7 @@ enum Occupation {
 enum EmploymentForm {
     FULL_TIME
     CONTRACT
+    OTHER
 }
 
 enum PurposeOfLoan {
@@ -103,13 +108,22 @@ enum CreditGradeStatus {
 }
 
 enum ProfileColor {
-    RED_TWO
-    PINK_TWO
-    ORANGE_THREE
-    YELLOW_TWO
-    GREEN_TWO
-    BLUE_TWO
-    PURPLE_TWO
-    GRAY_TWO
+    RED
+    PINK
+    ORANGE
+    YELLOW
+    GREEN
+    BLUE
+    PURPLE
+    GRAY
+}
+
+enum BusinessType {
+    RETAIL
+    MEDICAL
+    FRANCHISE
+    RESTAURANT
+    ONLINE_SHOP
+    ETC
 }
 

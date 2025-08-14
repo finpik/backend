@@ -2,6 +2,7 @@ package finpik.resolver.profile.application.dto;
 
 import java.time.LocalDate;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -25,7 +26,8 @@ public record UpdateProfileUseCaseDto(
     Integer creditScore,
     CreditGradeStatus creditGradeStatus,
     String profileName,
-    LocalDate businessStartDate
+    LocalDate businessStartDate,
+    BusinessType businessType
 ) {
     public ProfileUpdateSpec toSpec() {
         return new ProfileUpdateSpec(
@@ -34,7 +36,7 @@ public record UpdateProfileUseCaseDto(
             desiredLoanAmount, loanProductUsageStatus,
             loanProductUsageCount, totalLoanUsageAmount,
             creditScore, creditGradeStatus, profileName,
-            businessStartDate
+            businessStartDate, businessType
         );
     }
 }

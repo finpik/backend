@@ -12,13 +12,14 @@ class RelatedLoanProductTest {
         //given
         Long productId = 1L;
         String productName = "test product";
+        String bankName = "test bank";
         Float maxInterestRate = 10.0f;
         Float minInterestRate = 7.0f;
         Long maxLoanLimitAmount = 50000000L;
 
         //when
         RelatedLoanProduct relatedLoanProduct = RelatedLoanProduct.of(
-            productId, productName, maxInterestRate, minInterestRate, maxLoanLimitAmount
+            productId, productName, bankName, maxInterestRate, minInterestRate, maxLoanLimitAmount
         );
 
         //then

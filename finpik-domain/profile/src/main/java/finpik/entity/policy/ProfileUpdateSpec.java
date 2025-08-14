@@ -1,5 +1,6 @@
 package finpik.entity.policy;
 
+import finpik.entity.enums.BusinessType;
 import finpik.entity.enums.CreditGradeStatus;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.LoanProductUsageStatus;
@@ -22,6 +23,7 @@ public record ProfileUpdateSpec(
     Integer creditScore,
     CreditGradeStatus creditGradeStatus,
     String profileName,
-    LocalDate businessStartDate
+    LocalDate businessStartDate,
+    BusinessType businessType
 ) {
 }

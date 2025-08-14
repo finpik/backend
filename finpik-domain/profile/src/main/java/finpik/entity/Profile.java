@@ -52,7 +52,7 @@ public class Profile {
         CreditScore creditScore = new CreditScore(spec.creditScore(), spec.creditGradeStatus());
         OccupationDetail occupationDetail = OccupationDetail.of(
             spec.annualIncome(), spec.occupation(), spec.employmentForm(),
-            spec.employmentDate(), spec.businessStartDate()
+            spec.employmentDate(), spec.businessStartDate(), spec.businessType()
         );
 
         LocalDateTime createdAt = LocalDateTime.now();
@@ -81,7 +81,8 @@ public class Profile {
             spec.occupation(),
             spec.employmentForm(),
             spec.employmentDate(),
-            spec.businessStartDate()
+            spec.businessStartDate(),
+            spec.businessType()
         );
 
         CreditScore creditScore = new CreditScore(spec.creditScore(), spec.creditGradeStatus());
