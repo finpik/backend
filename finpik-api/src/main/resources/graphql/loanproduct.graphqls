@@ -42,12 +42,12 @@ type LoanProductResult {
 }
 
 type LoanProductDescriptionResult {
-    loanPrerequisite: String!
-    loanTargetGuide: String!
-    interestRateGuide: String!
-    maxLoanLimitGuide: String!
-    repaymentPeriodGuide: String!
-    notesOnLoan: String!
+    loanPrerequisite: String
+    loanTargetGuide: String
+    interestRateGuide: String
+    maxLoanLimitGuide: String
+    repaymentPeriodGuide: String
+    notesOnLoan: String
     preLoanChecklist: String!
 }
 
