@@ -84,4 +84,24 @@ public class LoanProduct {
             dto.loanProductBadgeList()
         );
     }
+
+    public void changeLoanProductBadgeList(List<LoanProductBadge> loanProductBadgeList) {
+        this.loanProductBadgeList = loanProductBadgeList;
+    }
+
+    public void changeLoanProductPrerequisite(String loanProductPrerequisite) {
+        this.description = new LoanProductDescription(
+            loanProductPrerequisite,
+            description.getLoanTargetGuide(),
+            description.getMaxLoanLimitGuide(),
+            description.getRepaymentPeriodGuide(),
+            description.getInterestRateGuide(),
+            description.getCertificationRequirementGuide(),
+            description.getLoanAvailableTimeGuide(),
+            description.getRepaymentFeeGuide(),
+            description.getDelinquencyInterestRateGuide(),
+            description.getNotesOnLoan(),
+            description.getPreLoanChecklist()
+        );
+    }
 }

@@ -123,4 +123,9 @@ public class LoanProductEntity {
 
         return LoanProduct.withId(dto);
     }
+
+    public void changeLoanProductBadgeListAndPrerequisite(List<LoanProductBadge> loanProductBadgeList, String loanPrerequisite) {
+        this.loanProductBadgeList = loanProductBadgeList;
+        this.getDescription().changeLoanPrerequisite(loanPrerequisite);
+    }
 }

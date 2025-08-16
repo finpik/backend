@@ -58,4 +58,8 @@ public class LoanProductDescriptionEntity {
         this.preLoanChecklist = preLoanChecklist;
         this.certificationRequirementGuide = certificationRequirementGuide;
     }
+
+    public void changeLoanPrerequisite(String loanPrerequisite) {
+        this.loanPrerequisite = loanPrerequisite;
+    }
 }
