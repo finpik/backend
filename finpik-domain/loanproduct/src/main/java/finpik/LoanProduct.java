@@ -2,6 +2,7 @@ package finpik;
 
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.Occupation;
 import finpik.dto.LoanProductCreationDto;
 import finpik.vo.BankDetails;
@@ -11,6 +12,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 import static finpik.util.Preconditions.require;
 import static finpik.util.Preconditions.requirePositive;
@@ -36,6 +39,7 @@ public class LoanProduct {
     private Occupation occupation;
     private String url;
     private Integer minCreditScore;
+    private List<LoanProductBadge> loanProductBadgeList;
 
     public static LoanProduct of(LoanProductCreationDto dto) {
         return rebuild(dto);
@@ -76,7 +80,8 @@ public class LoanProduct {
             dto.certificateRequirement(),
             require(dto.occupation(), "occupation must not be null."),
             dto.url(),
-            requirePositive(dto.minCreditScore(), "minCreditScore must not be null.")
+            requirePositive(dto.minCreditScore(), "minCreditScore must not be null."),
+            dto.loanProductBadgeList()
         );
     }
 }
