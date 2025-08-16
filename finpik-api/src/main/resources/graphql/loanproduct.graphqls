@@ -39,6 +39,7 @@ type LoanProductResult {
     repaymentPeriodUnit: RepaymentPeriodUnit
     descriptionResult: LoanProductDescriptionResult!
     url: String!
+    loanProductBadgeList: [LoanProductBadgeList]
 }
 
 type LoanProductDescriptionResult {
@@ -65,6 +66,13 @@ enum RepaymentPeriodUnit {
 }
 
 enum SortDirection {
-    ASC
-    DESC
+    ASC,
+    DESC,
+}
+
+enum LoanProductBadgeList {
+    LOWEST_MIN_INTEREST_RATE,
+    BEST_PROFILE_MATCH,
+    HIGHEST_MAX_LOAN_AMOUNT_LIMIT,
+    INSTANT_DEPOSIT,
 }
