@@ -3,8 +3,11 @@ package finpik.dto;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
+
+import java.util.List;
 
 public record LoanProductCreationDto(
     Long id,
@@ -36,6 +39,7 @@ public record LoanProductCreationDto(
     String url,
     Integer minCreditScore,
     EmploymentForm employmentForm,
-    String bankImgUrl
+    String bankImgUrl,
+    List<LoanProductBadge> loanProductBadgeList
 ) {
 }
