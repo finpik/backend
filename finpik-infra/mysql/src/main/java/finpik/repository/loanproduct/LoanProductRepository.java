@@ -19,4 +19,8 @@ public interface LoanProductRepository {
     Slice<RecommendedLoanProduct> findAllRecommendedLoanProductSliceByProfileId(Long profileId, Pageable pageable);
 
     List<RelatedLoanProduct> findAllRelatedLoanProductById(Long loanProductId);
+
+    List<LoanProduct> updateAll(List<LoanProduct> loanProductList);
+
+    List<LoanProduct> findAllById(List<Long> ids);
 }

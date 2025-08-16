@@ -115,4 +115,32 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
                 )
             ).toList();
     }
+
+    @Override
+    public List<LoanProduct> updateAll(List<LoanProduct> loanProductList) {
+        List<LoanProductEntity> entities =
+            loanProductJpaRepository.findAllById(loanProductList.stream().map(LoanProduct::getId).toList());
+
+        Map<Long, LoanProduct> loanProductIdLoanProductMap = loanProductList.stream().collect(
+            Collectors.toMap(LoanProduct::getId, loanProduct -> loanProduct
+        ));
+
+        entities.forEach(entity -> {
+            LoanProduct loanProduct = loanProductIdLoanProductMap.get(entity.getId());
+
+            entity.changeLoanProductBadgeListAndPrerequisite(
+                loanProduct.getLoanProductBadgeList(),
+                loanProduct.getDescription().getLoanPrerequisite()
+            );
+        });
+
+        loanProductJpaRepository.saveAll(entities);
+
+        return entities.stream().map(LoanProductEntity::toDomain).toList();
+    }
+
+    @Override
+    public List<LoanProduct> findAllById(List<Long> ids) {
+        return loanProductJpaRepository.findAllById(ids).stream().map(LoanProductEntity::toDomain).toList();
+    }
 }

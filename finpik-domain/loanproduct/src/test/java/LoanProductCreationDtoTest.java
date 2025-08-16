@@ -2,11 +2,14 @@ import finpik.dto.LoanProductCreationDto;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,6 +49,7 @@ class LoanProductCreationDtoTest {
         Integer minCreditScore = 600;
         EmploymentForm employmentForm = EmploymentForm.FULL_TIME;
         String bankImgUrl = "https://finpik.bank/img/bank.png";
+        List<LoanProductBadge> loanProductBadgeList = List.of(LoanProductBadge.BEST_PROFILE_MATCH);
 
         // when
         LoanProductCreationDto dto = new LoanProductCreationDto(
@@ -56,7 +60,7 @@ class LoanProductCreationDtoTest {
             loanLimitGuide, repaymentPeriodGuide, interestRateGuide,
             loanAvailableTimeGuide, repaymentFeeGuide, delinquencyInterestRateGuide,
             notesOnLoan, preLoanChecklist, certificateRequirement, occupation,
-            url, minCreditScore, employmentForm, bankImgUrl
+            url, minCreditScore, employmentForm, bankImgUrl, loanProductBadgeList
         );
 
         // then
@@ -66,7 +70,8 @@ class LoanProductCreationDtoTest {
             ()-> assertThat(dto.repaymentPeriod()).isEqualTo(12),
             ()-> assertThat(dto.genderLimit()).isEqualTo(Gender.ALL),
             ()-> assertThat(dto.repaymentPeriodUnit()).isEqualTo(RepaymentPeriodUnit.MONTH),
-            ()-> assertThat(dto.certificateRequirement()).isEqualTo(CertificateRequirement.YES)
+            ()-> assertThat(dto.certificateRequirement()).isEqualTo(CertificateRequirement.YES),
+            ()-> assertThat(dto.loanProductBadgeList().getFirst()).isEqualTo(LoanProductBadge.BEST_PROFILE_MATCH)
         );
     }
 }

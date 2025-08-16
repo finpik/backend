@@ -2,11 +2,14 @@ import finpik.LoanProduct;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.Occupation;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.dto.LoanProductCreationDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -63,6 +66,7 @@ class LoanProductTest {
         Integer minCreditScore = 600;
         EmploymentForm employmentForm = EmploymentForm.FULL_TIME;
         String bankImgUrl = "https://finpik.bank/img/bank.png";
+        List<LoanProductBadge> loanProductBadgeList = List.of(LoanProductBadge.BEST_PROFILE_MATCH);
 
         return new LoanProductCreationDto(
             id, productName, repaymentPeriod, bankName, bankPhoneNumber, loanAvailableTime,
@@ -72,7 +76,7 @@ class LoanProductTest {
             loanLimitGuide, repaymentPeriodGuide, interestRateGuide,
             loanAvailableTimeGuide, repaymentFeeGuide, delinquencyInterestRateGuide,
             notesOnLoan, preLoanChecklist, certificateRequirement, occupation,
-            url, minCreditScore, employmentForm, bankImgUrl
+            url, minCreditScore, employmentForm, bankImgUrl, loanProductBadgeList
         );
     }
 }
