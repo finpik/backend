@@ -1,8 +1,11 @@
 package finpik.resolver.loanproduct.application.dto;
 
 import finpik.LoanProduct;
+import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class LoanProductDto {
@@ -16,6 +19,7 @@ public class LoanProductDto {
     private final RepaymentPeriodUnit repaymentPeriodUnit;
     private final LoanProductDescriptionDto description;
     private final String url;
+    private final List<LoanProductBadge> loanProductBadgeList;
 
     public LoanProductDto(LoanProduct loanProduct) {
         loanProductId = loanProduct.getId();
@@ -28,5 +32,6 @@ public class LoanProductDto {
         repaymentPeriodUnit = loanProduct.getRepaymentPeriod().repaymentPeriodUnit();
         description = new LoanProductDescriptionDto(loanProduct.getDescription());
         url = loanProduct.getUrl();
+        loanProductBadgeList = loanProduct.getLoanProductBadgeList();
     }
 }

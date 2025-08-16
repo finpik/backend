@@ -1,8 +1,11 @@
 package finpik.resolver.loanproduct.resolver.result;
 
+import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.resolver.loanproduct.application.dto.LoanProductDto;
 import lombok.Getter;
+
+import java.util.List;
 
 /*
 TODO(대출 필수 조건에 대해 어떻게 넣을지 확인 필요)
@@ -19,6 +22,7 @@ public class LoanProductResult {
     private final RepaymentPeriodUnit repaymentPeriodUnit;
     private final LoanProductDescriptionResult descriptionResult;
     private final String url;
+    private final List<LoanProductBadge> loanProductBadgeList;
 
     public LoanProductResult(LoanProductDto dto) {
         productName = dto.getProductName();
@@ -30,5 +34,6 @@ public class LoanProductResult {
         repaymentPeriodUnit = dto.getRepaymentPeriodUnit();
         descriptionResult = new LoanProductDescriptionResult(dto.getDescription());
         url = dto.getUrl();
+        loanProductBadgeList = dto.getLoanProductBadgeList();
     }
 }

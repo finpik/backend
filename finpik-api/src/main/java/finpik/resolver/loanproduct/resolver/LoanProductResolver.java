@@ -7,12 +7,15 @@ import java.util.List;
 import finpik.entity.User;
 import finpik.entity.enums.SortDirection;
 import finpik.resolver.loanproduct.application.CreateRelatedLoanProductUseCase;
+import finpik.resolver.loanproduct.application.UpdateLoanProductUseCase;
+import finpik.resolver.loanproduct.resolver.input.UpdateLoanProductAndPrerequisiteInput;
 import finpik.resolver.loanproduct.resolver.result.RecommendedLoanProductResultList;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -30,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 public class LoanProductResolver implements LoanProductApi {
     private final GetLoanProductUseCase getLoanProductUseCase;
     private final CreateRelatedLoanProductUseCase createRelatedLoanProductUseCase;
+    private final UpdateLoanProductUseCase updateLoanProductUseCase;
 
     @Override
     @QueryMapping
@@ -89,5 +93,15 @@ public class LoanProductResolver implements LoanProductApi {
             : Sort.Direction.ASC;
 
         return Sort.by(new Sort.Order(direction, sortProperty).nullsLast());
+    }
+
+    /**
+     * admin용 대출 상품 변경 api
+     */
+    @MutationMapping
+    public List<LoanProductResult> updateLoanProductBadgeAndPrerequisite(
+        @Argument List<UpdateLoanProductAndPrerequisiteInput> inputList
+    ) {
+        return updateLoanProductUseCase.execute(inputList).stream().map(LoanProductResult::new).toList();
     }
 }
