@@ -58,6 +58,7 @@ type LoanProductDescriptionResult {
     interestRateGuide: String
     maxLoanLimitGuide: String
     repaymentPeriodGuide: String
+    repaymentFeeGuide:String
     notesOnLoan: String
     preLoanChecklist: String!
 }
@@ -81,8 +82,12 @@ enum SortDirection {
 }
 
 enum LoanProductBadge {
+    """최저금리가 제일 낮은 상품"""
     LOWEST_MIN_INTEREST_RATE,
+    """프로필의 조건과 제일 잘 맞아요"""
     BEST_PROFILE_MATCH,
+    """최대한도가 가장 높아요"""
     HIGHEST_MAX_LOAN_AMOUNT_LIMIT,
+    """즉시 입금 가능해요"""
     INSTANT_DEPOSIT,
 }
