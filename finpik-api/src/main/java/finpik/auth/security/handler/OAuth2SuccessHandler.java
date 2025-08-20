@@ -36,6 +36,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final AuthCacheRepository authCacheRepository;
 
     private static final String REDIRECT_URI = "http://localhost:3000/sign-in";
+    private static final String DEPLOYED_REDIRECT_URI = "https://finpik.vercel.app/sign-in";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -84,7 +85,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private void responseSuccessLogin(HttpServletResponse response, String accessToken, String refreshToken)
             throws IOException {
         String redirectUrl = UriComponentsBuilder
-            .fromUriString("http://localhost:3000/sign-in")
+            .fromUriString(DEPLOYED_REDIRECT_URI)
             .queryParam("accessToken", accessToken)
             .build()
             .toUriString();
@@ -108,7 +109,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void responseSignUpUser(HttpServletResponse response, String id, String provider) throws IOException {
         String redirectUrl = UriComponentsBuilder
-            .fromUriString(REDIRECT_URI)
+            .fromUriString(DEPLOYED_REDIRECT_URI)
             .queryParam("id", id)
             .queryParam("provider", provider)
             .build()
