@@ -85,7 +85,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private void responseSuccessLogin(HttpServletResponse response, String accessToken, String refreshToken)
             throws IOException {
         String redirectUrl = UriComponentsBuilder
-            .fromUriString(DEPLOYED_REDIRECT_URI)
+            .fromUriString(REDIRECT_URI)
             .queryParam("accessToken", accessToken)
             .build()
             .toUriString();
@@ -109,7 +109,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void responseSignUpUser(HttpServletResponse response, String id, String provider) throws IOException {
         String redirectUrl = UriComponentsBuilder
-            .fromUriString(DEPLOYED_REDIRECT_URI)
+            .fromUriString(REDIRECT_URI)
             .queryParam("id", id)
             .queryParam("provider", provider)
             .build()
