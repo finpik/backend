@@ -81,8 +81,6 @@ spring:
 #Log
 logging:
   level:
-    org.springframework.security.oauth2.client: debug
-    org.springframework.security.oauth2.client.web: debug
     org.springframework.security.web.authentication: debug
     org.apache.kafka: error
     org.apache.kafka.clients: warn
@@ -90,8 +88,29 @@ logging:
     org.springframework.kafka.listener: warn
     org.springframework.security: info
 
+    # 필터 체인과 보안 디버깅(요청마다 어떤 필터가 적용됐는지)
+    org.springframework.security.web.FilterChainProxy: TRACE
+    org.springframework.security.web.access.intercept: TRACE
+    org.springframework.security.authentication: TRACE
+
+    # OAuth2 클라이언트 전 구간
+    org.springframework.security.oauth2.client: TRACE
+    org.springframework.security.oauth2.client.web: TRACE
+    org.springframework.security.oauth2.client.endpoint: TRACE
+    org.springframework.security.oauth2.core: DEBUG
+
 fin-pik:
   jwt:
     secretKey: ${JWT_SECRET_KEY}
   kafka:
     dlqLogFileName: ${KAFKA_DLQ_FILE_NAME}
+  domain:
+    domain_url: ${DOMAIN_URL}
+    front_test_url: ${FRONT_TEST_URL}
+    front_app_url: ${FRONT_APP_URL}
+  redirect:
+    redirect_uri: ${REDIRECT_URI}
+  cookie:
+    secure: ${COOKIE_SECURE}
+    same-site: ${COOKIE_SAME_SITE}   # 프론트도 finpik.o-r.kr이면 Lax로 충분
+    max-age-days: ${COOKIE_MAX_AGE_DAYS}
