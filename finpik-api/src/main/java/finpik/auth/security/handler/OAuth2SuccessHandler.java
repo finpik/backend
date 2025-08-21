@@ -1,8 +1,10 @@
 package finpik.auth.security.handler;
 
+import static finpik.util.Values.ACCESS_TOKEN;
 import static finpik.util.Values.FIFTEEN_MINUTE_MILL;
 import static finpik.util.Values.FOURTEEN_DAYS_MILL;
 import static finpik.util.Values.FOURTEEN_DAYS_SEC;
+import static finpik.util.Values.REFRESH_TOKEN;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 import finpik.entity.User;
 import finpik.repository.auth.AuthCacheRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -35,8 +38,16 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final AuthRedisRepository authRedisRepository;
     private final AuthCacheRepository authCacheRepository;
 
-    private static final String REDIRECT_URI = "http://localhost:3000/sign-in";
-    private static final String DEPLOYED_REDIRECT_URI = "https://finpik.vercel.app/sign-in";
+    @Value("${fin-pik.redirect.redirect_uri}")
+    private String redirectUri;
+    @Value("${fin-pik.domain.domain_url}")
+    private String domainUrl;
+    @Value("${cookie.secure}")
+    private boolean cookieSecure;
+    @Value("${cookie.same-site:Lax}")
+    private String cookieSameSite;
+    @Value("${cookie.max-age-days:7}")
+    private long cookieMaxAgeDays;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -82,12 +93,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         return jwtProvider.createRefreshToken(dto);
     }
 
-    private void responseSuccessLogin(HttpServletResponse response, String accessToken, String refreshToken)
-            throws IOException {
+    private void responseSuccessLogin(
+        HttpServletResponse response,
+        String accessToken,
+        String refreshToken
+    ) throws IOException {
         String redirectUrl = UriComponentsBuilder
-            .fromUriString(REDIRECT_URI)
-            .queryParam("accessToken", accessToken)
-            .build()
+            .fromUriString(redirectUri)
+            .queryParam(ACCESS_TOKEN, accessToken)
+            .build(true)
             .toUriString();
 
         setRefreshTokenOnCookie(response, refreshToken);
@@ -95,13 +109,13 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private void setRefreshTokenOnCookie(HttpServletResponse response, String refreshToken) {
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
-            .domain("localhost")
+        ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, refreshToken)
+            .domain(domainUrl)
             .httpOnly(true)
-            .secure(false)
+            .secure(cookieSecure)
             .path("/")
-            .maxAge(Duration.ofDays(7))
-            .sameSite("Lax")
+            .maxAge(Duration.ofDays(cookieMaxAgeDays))
+            .sameSite(cookieSameSite)
             .build();
 
         response.addHeader("Set-Cookie", cookie.toString());
@@ -109,21 +123,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void responseSignUpUser(HttpServletResponse response, String id, String provider) throws IOException {
         String redirectUrl = UriComponentsBuilder
-            .fromUriString(REDIRECT_URI)
+            .fromUriString(redirectUri)
             .queryParam("id", id)
             .queryParam("provider", provider)
-            .build()
+            .build(true)
             .toUriString();
 
         response.sendRedirect(redirectUrl);
-
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.setCharacterEncoding(UTF_8);
-//
-//        OAuth2Response oAuth2Response = OAuth2Response.builder().id(id).provider(provider).build();
-//        String json = objectMapper.writeValueAsString(oAuth2Response);
-//
-//        response.getWriter().write(json);
     }
 }
