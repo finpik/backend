@@ -40,8 +40,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     @Value("${fin-pik.redirect.redirect_uri}")
     private String redirectUri;
-    @Value("${fin-pik.domain.domain_url}")
-    private String domainUrl;
     @Value("${cookie.secure}")
     private boolean cookieSecure;
     @Value("${cookie.same-site:Lax}")
@@ -110,7 +108,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private void setRefreshTokenOnCookie(HttpServletResponse response, String refreshToken) {
         ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, refreshToken)
-            .domain(domainUrl)
             .httpOnly(true)
             .secure(cookieSecure)
             .path("/")
