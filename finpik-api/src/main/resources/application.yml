@@ -1,5 +1,13 @@
 server:
+
   port: ${PORT}
+  forward-headers-strategy: ${SERVER_FORWARD_HEADERS_STRATEGY}
+
+  servlet:
+    session:
+      cookie:
+        same-site: ${SERVER_SERVLET_SESSION_COOKIE_SAME_SITE}
+        secure: ${SERVER_SERVLET_SESSION_COOKIE_SECURE}
 
 spring:
   application:
@@ -76,6 +84,8 @@ spring:
     admin:
       auto-create: ${SPRING_KAFKA_ADMIN_AUTO_CREATE:false}
       fail-fast: ${SPRING_KAFKA_ADMIN_FAIL_FAST:false}
+
+
 
 
 #Log
