@@ -2,6 +2,7 @@ package finpik.auth.security.config;
 
 import java.util.List;
 
+import finpik.auth.security.oauth.OAuth2AuthorizationRequestCookieRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,11 +48,17 @@ public class SecurityConfig {
                 .permitAll()
                 .anyRequest()
                 .permitAll()
-            ).oauth2Login(oauth -> oauth.userInfoEndpoint(
-                    user -> user.userService(kakaoOAuth2UserService))
+            ).oauth2Login(oauth -> oauth
+                .userInfoEndpoint(user -> user.userService(kakaoOAuth2UserService))
                 .successHandler(oAuth2SuccessHandler)
-                .failureHandler(oAuth2FailureHandler))
-            .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint));
+                .failureHandler(oAuth2FailureHandler)
+                .authorizationEndpoint(a ->
+                    a.authorizationRequestRepository(new OAuth2AuthorizationRequestCookieRepository())
+                )
+            )
+            .exceptionHandling(exception ->
+                exception.authenticationEntryPoint(authenticationEntryPoint)
+            );
 
         return http.build();
     }
