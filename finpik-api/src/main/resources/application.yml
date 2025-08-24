@@ -79,11 +79,10 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     listener:
-      auto-startup: ${SPRING_KAFKA_LISTENER_AUTO_STARTUP:false}
       concurrency: 3
     admin:
-      auto-create: ${SPRING_KAFKA_ADMIN_AUTO_CREATE:false}
-      fail-fast: ${SPRING_KAFKA_ADMIN_FAIL_FAST:false}
+      auto-create: ${SPRING_KAFKA_ADMIN_AUTO_CREATE}
+      fail-fast: ${SPRING_KAFKA_ADMIN_FAIL_FAST}
 
 
 
