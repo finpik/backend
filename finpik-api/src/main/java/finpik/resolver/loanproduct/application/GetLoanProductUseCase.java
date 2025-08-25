@@ -11,7 +11,7 @@ import org.springframework.data.domain.Slice;
 public interface GetLoanProductUseCase {
     Slice<RecommendedLoanProductDto> getRecommendedLoanProductList(Long profileId, Pageable pageable);
 
-    LoanProductDto getLoanProduct(Long loanProductId);
+    LoanProductDto getLoanProduct(Long loanProductId, Long profileId);
 
     List<RelatedLoanProductDto> getRelatedLoanProductList(Long productId);
 }

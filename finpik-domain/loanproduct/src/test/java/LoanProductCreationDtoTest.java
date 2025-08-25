@@ -48,7 +48,6 @@ class LoanProductCreationDtoTest {
         String url = "https://finpik.bank/loan/123";
         Integer minCreditScore = 600;
         EmploymentForm employmentForm = EmploymentForm.FULL_TIME;
-        String bankImgUrl = "https://finpik.bank/img/bank.png";
         List<LoanProductBadge> loanProductBadgeList = List.of(LoanProductBadge.BEST_PROFILE_MATCH);
 
         // when
@@ -60,7 +59,7 @@ class LoanProductCreationDtoTest {
             loanLimitGuide, repaymentPeriodGuide, interestRateGuide,
             loanAvailableTimeGuide, repaymentFeeGuide, delinquencyInterestRateGuide,
             notesOnLoan, preLoanChecklist, certificateRequirement, occupation,
-            url, minCreditScore, employmentForm, bankImgUrl, loanProductBadgeList
+            url, minCreditScore, employmentForm, loanProductBadgeList
         );
 
         // then
