@@ -53,8 +53,7 @@ public class LoanProduct {
         BankDetails bankDetails = new BankDetails(
             dto.bankName(),
             dto.bankPhoneNumber(),
-            dto.loanAvailableTime(),
-            dto.bankImgUrl()
+            dto.loanAvailableTime()
         );
         InterestRate interestRate = new InterestRate(dto.maxInterestRate(), dto.minInterestRate());
         RepaymentPeriod repaymentPeriod = new RepaymentPeriod(dto.repaymentPeriod(), dto.repaymentPeriodUnit());

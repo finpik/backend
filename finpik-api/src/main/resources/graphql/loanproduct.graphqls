@@ -7,7 +7,7 @@ type Query {
         sortDirection: SortDirection = DESC
     ): RecommendedLoanProductResultList!
 
-    getLoanProduct(loanProductId: Long!): LoanProductResult!
+    getLoanProduct(loanProductId: Long!, profileId: Long!): LoanProductResult!
     getRelatedLoanProductList(loanProductId: Long!): [RelatedLoanProductResult]!
 }
 

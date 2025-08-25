@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import finpik.LoanProduct;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.LoanProductBadge;
 import finpik.vo.InterestRate;
 import finpik.vo.RepaymentPeriod;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,8 @@ import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
 import finpik.entity.loanproduct.LoanProductDescriptionEntity;
 import finpik.entity.loanproduct.LoanProductEntity;
+
+import java.util.List;
 
 class LoanProductEntityTest {
 
@@ -46,8 +49,10 @@ class LoanProductEntityTest {
             .url("www.test.url")
             .build();
 
+        List<LoanProductBadge> badges = List.of();
+
         // when
-        LoanProduct result = entity.toDomain();
+        LoanProduct result = entity.toDomain(badges);
 
         // then
         InterestRate interestRate = result.getInterestRate();
