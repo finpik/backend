@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class RecommendedLoanProductEntity {
     private Long id;
     private Long profileId;
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "loan_product_id")
     private LoanProductEntity loanProductEntity;
     private Float similarity;
     @ElementCollection(fetch = EAGER)
