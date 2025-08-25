@@ -5,6 +5,7 @@ import static finpik.entity.loanproduct.QLoanProductDescriptionEntity.loanProduc
 import static finpik.entity.loanproduct.QLoanProductEntity.loanProductEntity;
 import static finpik.entity.loanproduct.QRecommendedLoanProductEntity.recommendedLoanProductEntity;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import finpik.entity.enums.LoanProductBadge;
+import finpik.entity.loanproduct.LoanProductEntity;
 import finpik.jpa.repository.loanproduct.CustomLoanProductRepository;
 import finpik.jpa.repository.loanproduct.projection.LoanProductProjection;
 import lombok.RequiredArgsConstructor;
@@ -28,22 +30,22 @@ public class CustomLoanProductRepositoryImpl implements CustomLoanProductReposit
     public Optional<LoanProductProjection> findByIdWithDescriptionAndBadge(Long loanProductId, Long profileId) {
         EnumPath<LoanProductBadge> badge = enumPath(LoanProductBadge.class, LOAN_PRODUCT_BADGE_ALIAS);
 
-        Map<Long, LoanProductProjection> result = jpaQueryFactory
-            .from(loanProductEntity)
+        LoanProductEntity loanProductEntityByRecommended = jpaQueryFactory
+            .selectFrom(loanProductEntity)
             .leftJoin(loanProductEntity.description, loanProductDescriptionEntity).fetchJoin()
-            .leftJoin(recommendedLoanProductEntity)
-            .on(recommendedLoanProductEntity.loanProductEntity.eq(loanProductEntity)
-                .and(recommendedLoanProductEntity.profileId.eq(profileId)))
-            .leftJoin(recommendedLoanProductEntity.loanProductBadgeList, badge)
             .where(loanProductEntity.id.eq(loanProductId))
-            .transform(GroupBy.groupBy(loanProductEntity.id).as(
-                Projections.constructor(
-                    LoanProductProjection.class,
-                    loanProductEntity,
-                    GroupBy.list(badge)
-                )
-            ));
+            .fetchOne();
 
-        return Optional.ofNullable(result.get(loanProductId));
+        if (loanProductEntityByRecommended == null) return Optional.empty();
+
+        List<LoanProductBadge> badges = jpaQueryFactory
+            .select(badge)
+            .from(recommendedLoanProductEntity)
+            .leftJoin(recommendedLoanProductEntity.loanProductBadgeList, badge)
+            .where(recommendedLoanProductEntity.loanProductEntity.eq(loanProductEntityByRecommended)
+                .and(recommendedLoanProductEntity.profileId.eq(profileId)))
+            .fetch();
+
+        return Optional.of(new LoanProductProjection(loanProductEntityByRecommended, badges));
     }
 }
