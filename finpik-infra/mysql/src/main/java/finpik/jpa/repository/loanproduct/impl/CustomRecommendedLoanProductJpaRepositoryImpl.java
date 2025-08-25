@@ -31,6 +31,7 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
                     recommendedLoanProductEntity.id,
                     recommendedLoanProductEntity.profileId,
                     loanProductEntity.bankName,
+                    loanProductEntity.id,
                     loanProductEntity.productName,
                     loanProductEntity.maxInterestRate,
                     loanProductEntity.minInterestRate,
