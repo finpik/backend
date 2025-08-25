@@ -4,12 +4,12 @@ import finpik.LoanProduct;
 import finpik.entity.enums.CertificateRequirement;
 import finpik.entity.enums.EmploymentForm;
 import finpik.entity.enums.Gender;
+import finpik.entity.enums.ImmediateDepositAvailable;
 import finpik.entity.enums.LoanProductBadge;
 import finpik.entity.enums.RepaymentPeriodUnit;
 import finpik.entity.enums.Occupation;
 import finpik.dto.LoanProductCreationDto;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -52,10 +52,6 @@ public class LoanProductEntity {
     @Lob
     private String url; //url
     private Integer minCreditScore;
-    private String bankImgUrl;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<LoanProductBadge> loanProductBadgeList;
-
 
     @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "loan_product_description_id")
@@ -76,15 +72,18 @@ public class LoanProductEntity {
     @Enumerated(EnumType.STRING)
     private EmploymentForm employmentForm;
 
+    @Enumerated(EnumType.STRING)
+    private ImmediateDepositAvailable immediateDepositAvailable;
+
     @Builder
     public LoanProductEntity(
         String productName, Integer repaymentPeriod, String bankName,
         String bankPhoneNumber, String loanAvailableTime, Float maxInterestRate,
         Float minInterestRate, RepaymentPeriodUnit repaymentPeriodUnit,
         Integer minAge, Integer maxAge, Long maxLoanLimitAmount,
-        LoanProductDescriptionEntity description,
-        CertificateRequirement certificateRequirement, Gender genderLimit,
-        Occupation occupation, String url, Integer minCreditScore, EmploymentForm employmentForm
+        LoanProductDescriptionEntity description, CertificateRequirement certificateRequirement,
+        Gender genderLimit, Occupation occupation, String url, Integer minCreditScore,
+        EmploymentForm employmentForm, ImmediateDepositAvailable immediateDepositAvailable
     ) {
         this.productName = productName;
         this.repaymentPeriod = repaymentPeriod;
@@ -104,9 +103,10 @@ public class LoanProductEntity {
         this.url = url;
         this.minCreditScore = minCreditScore;
         this.employmentForm = employmentForm;
+        this.immediateDepositAvailable = immediateDepositAvailable;
     }
 
-    public LoanProduct toDomain() {
+    public LoanProduct toDomain(List<LoanProductBadge> loanProductBadgeList) {
         LoanProductCreationDto dto = new LoanProductCreationDto(
             id, productName, repaymentPeriod, bankName, bankPhoneNumber, loanAvailableTime,
             maxInterestRate, minInterestRate, repaymentPeriodUnit,
@@ -117,15 +117,10 @@ public class LoanProductEntity {
             description.getInterestRateGuide(), description.getLoanAvailableTimeGuide(),
             description.getRepaymentFeeGuide(), description.getDelinquencyInterestRateGuide(),
             description.getNotesOnLoan(), description.getPreLoanChecklist(),
-            certificateRequirement, occupation, url, minCreditScore, employmentForm, bankImgUrl,
+            certificateRequirement, occupation, url, minCreditScore, employmentForm,
             loanProductBadgeList
         );
 
         return LoanProduct.withId(dto);
-    }
-
-    public void changeLoanProductBadgeListAndPrerequisite(List<LoanProductBadge> loanProductBadgeList, String loanPrerequisite) {
-        this.loanProductBadgeList = loanProductBadgeList;
-        this.getDescription().changeLoanPrerequisite(loanPrerequisite);
     }
 }

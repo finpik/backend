@@ -12,15 +12,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoanProductRepository {
-    Optional<LoanProduct> findByIdWithDescription(Long loanProductId);
+    Optional<LoanProduct> findByIdWithDescription(Long loanProductId, Long profileId);
 
     List<RecommendedLoanProduct> saveAllRecommendedLoanProduct(Long profileId, List<RecommendedLoanProduct> recommendedLoanProductList);
 
     Slice<RecommendedLoanProduct> findAllRecommendedLoanProductSliceByProfileId(Long profileId, Pageable pageable);
 
     List<RelatedLoanProduct> findAllRelatedLoanProductById(Long loanProductId);
-
-    List<LoanProduct> updateAll(List<LoanProduct> loanProductList);
-
-    List<LoanProduct> findAllById(List<Long> ids);
 }

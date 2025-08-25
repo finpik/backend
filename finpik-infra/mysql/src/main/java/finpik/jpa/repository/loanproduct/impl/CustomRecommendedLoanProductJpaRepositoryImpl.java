@@ -31,7 +31,6 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
                     recommendedLoanProductEntity.id,
                     recommendedLoanProductEntity.profileId,
                     loanProductEntity.bankName,
-                    recommendedLoanProductEntity.loanProductId,
                     loanProductEntity.productName,
                     loanProductEntity.maxInterestRate,
                     loanProductEntity.minInterestRate,
@@ -40,7 +39,7 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
                 ))
             .from(recommendedLoanProductEntity)
             .where(recommendedLoanProductEntity.profileId.eq(productId))
-            .leftJoin(loanProductEntity).on(recommendedLoanProductEntity.loanProductId.eq(loanProductEntity.id))
+            .leftJoin(loanProductEntity).on(recommendedLoanProductEntity.loanProductEntity.id.eq(loanProductEntity.id))
             .offset(pageable.getOffset())
             .limit(getLimit(pageable.getPageSize()))
             .orderBy(orderBySort(pageable.getSort()))

@@ -37,8 +37,8 @@ public class GetLoanProductUseCaseImpl implements GetLoanProductUseCase {
     }
 
     @Transactional(readOnly = true)
-    public LoanProductDto getLoanProduct(Long loanProductId) {
-        LoanProduct loanProduct = loanProductRepository.findByIdWithDescription(loanProductId)
+    public LoanProductDto getLoanProduct(Long loanProductId, Long profileId) {
+        LoanProduct loanProduct = loanProductRepository.findByIdWithDescription(loanProductId, profileId)
             .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_LOAN_PRODUCT));
 
         return new LoanProductDto(loanProduct);
