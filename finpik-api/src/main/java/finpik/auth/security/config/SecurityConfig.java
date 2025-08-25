@@ -67,6 +67,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(frontTestUrl, domainUrl, frontAppUrl));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "https://finpik.vercel.app"));
         config.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
