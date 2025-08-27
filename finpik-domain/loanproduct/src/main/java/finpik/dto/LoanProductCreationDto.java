@@ -39,7 +39,6 @@ public record LoanProductCreationDto(
     String url,
     Integer minCreditScore,
     EmploymentForm employmentForm,
-    String bankImgUrl,
     List<LoanProductBadge> loanProductBadgeList
 ) {
 }

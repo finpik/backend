@@ -2,8 +2,8 @@ package finpik.jpa.repository.loanproduct;
 
 import java.util.Optional;
 
-import finpik.entity.loanproduct.LoanProductEntity;
+import finpik.jpa.repository.loanproduct.projection.LoanProductProjection;
 
 public interface CustomLoanProductRepository {
-    Optional<LoanProductEntity> findByIdWithDescription(Long loanProductId);
+    Optional<LoanProductProjection> findByIdWithDescriptionAndBadge(Long loanProductId, Long profileId);
 }

@@ -46,6 +46,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private String cookieSameSite;
     @Value("${cookie.max-age-days:7}")
     private long cookieMaxAgeDays;
+    private static final String REDIRECT_URI = "http://localhost:3000/sign-in";
+    private static final String DEPLOYED_REDIRECT_URI = "https://finpik.vercel.app/sign-in";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
