@@ -1,7 +1,9 @@
 package finpik.jpa.repository.loanproduct.projection;
 
+import java.util.UUID;
+
 public record RecommendedLoanProductProjection(
-    Long recommendedLoanProductId,
+    UUID recommendedLoanProductId,
     Long profileId,
     String bankName,
     Long loanProductId,
