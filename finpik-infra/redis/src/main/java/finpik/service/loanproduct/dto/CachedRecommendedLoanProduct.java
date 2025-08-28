@@ -3,9 +3,11 @@ package finpik.service.loanproduct.dto;
 import finpik.RecommendedLoanProduct;
 import lombok.Builder;
 
+import java.util.UUID;
+
 @Builder
 public record CachedRecommendedLoanProduct(
-    Long recommendedLoanProductId,
+    UUID recommendedLoanProductId,
     Long profileId,
     String bankName,
     Long loanProductId,

@@ -7,11 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RecommendedLoanProduct {
-    private Long recommendedLoanProductId;
+    private UUID recommendedLoanProductId;
     private Long profileId;
     private String bankName;
     private Long loanProductId;
@@ -45,7 +47,7 @@ public class RecommendedLoanProduct {
     }
 
     public static RecommendedLoanProduct rebuild(
-        Long recommendedLoanProductId,
+        UUID recommendedLoanProductId,
         Long profileId,
         String bankName,
         Long loanProductId,
