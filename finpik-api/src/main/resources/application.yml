@@ -58,6 +58,13 @@ spring:
       ddl-auto: update    # create, update, none 등
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 500
+          batch_versioned_data: true
+        order_inserts: true
+
   #redis
   data:
     redis:
