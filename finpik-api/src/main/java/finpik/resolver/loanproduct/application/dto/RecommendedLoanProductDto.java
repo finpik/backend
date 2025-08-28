@@ -3,9 +3,11 @@ package finpik.resolver.loanproduct.application.dto;
 import finpik.RecommendedLoanProduct;
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public class RecommendedLoanProductDto {
-    private final Long recommendedLoanProductId;
+    private final UUID recommendedLoanProductId;
     private final Long profileId;
     private final String bankName;
     private final Long loanProductId;

@@ -114,3 +114,4 @@ Features
 - feature/FP-26: 추천 대출 상품 조회시 Slice 될 수 있도록 변경 및 대출 상품 Repository들을 한곳으로 이동
 - feature/FP-27: 추천 대출 상품 Redis Cache 제거
 - feature/FP-28: 대출 상품 뱃지 추가
+- feature/FP-29: 추천 대출 상품 insert batch 처리

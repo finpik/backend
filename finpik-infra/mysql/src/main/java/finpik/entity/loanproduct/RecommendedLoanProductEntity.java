@@ -1,10 +1,9 @@
 package finpik.entity.loanproduct;
 
 import finpik.entity.enums.LoanProductBadge;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
@@ -23,8 +23,8 @@ import static jakarta.persistence.FetchType.LAZY;
 @AllArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class RecommendedLoanProductEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID id;
     private Long profileId;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "loan_product_id")
@@ -38,7 +38,7 @@ public class RecommendedLoanProductEntity {
         List<LoanProductBadge> loanProductBadgeList
     ) {
         return new RecommendedLoanProductEntity(
-            null, profileId, loanProductEntity, similarity, loanProductBadgeList
+            UUID.randomUUID(), profileId, loanProductEntity, similarity, loanProductBadgeList
         );
     }
 }
