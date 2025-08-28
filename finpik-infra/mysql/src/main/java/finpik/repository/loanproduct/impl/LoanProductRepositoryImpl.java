@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 import finpik.LoanProduct;
 import finpik.RecommendedLoanProduct;
@@ -18,6 +19,7 @@ import finpik.jpa.repository.loanproduct.LoanProductJpaRepository;
 import finpik.jpa.repository.loanproduct.RecommendedLoanProductJpaRepository;
 import finpik.jpa.repository.loanproduct.projection.LoanProductProjection;
 import finpik.jpa.repository.loanproduct.projection.RecommendedLoanProductProjection;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -36,6 +38,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     private final LoanProductJpaRepository loanProductJpaRepository;
     private final RecommendedLoanProductJpaRepository recommendedLoanProductJpaRepository;
     private final UserProductViewHistoryJpaRepository viewHistoryJpaRepository;
+    private final EntityManager em;
 
     @Override
     @Transactional
@@ -60,18 +63,14 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
             .collect(toMap(LoanProductEntity::getId, loanProductEntity -> loanProductEntity));
 
         final Float globalExtremeMinInterestRate = getGlobalExtremeMinInterestRate(recommendedLoanProductList);
-
         final Float globalExtremeMaxSimilarity = getGlobalExtremeMaxSimilarity(recommendedLoanProductList);
-
         final Long globalExtremeMaxLoanLimitAmount = getGlobalExtremeMaxLoanLimitAmount(recommendedLoanProductList);
 
-        // 3) 배지 계산 + 엔티티 변환
         List<RecommendedLoanProductEntity> entityList = recommendedLoanProductList.stream()
             .map(recommendedLoanProduct -> {
                 Long loanProductId = recommendedLoanProduct.getLoanProductId();
                 LoanProductEntity loanProductEntity = idLoanProductEntityMap.get(loanProductId);
 
-                // 배지 계산
                 List<LoanProductBadge> badges = buildBadges(
                     recommendedLoanProduct, loanProductEntity,
                     globalExtremeMinInterestRate,
@@ -85,13 +84,38 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
                     recommendedLoanProduct.getSimilarity(),
                     badges
                 );
-            })
-            .toList();
+            }).toList();
 
-        // 4) 저장 후, 저장된 recommendedId를 도메인으로 재구성
-        Map<Long, Long> loanProductIdToRecommendedId = recommendedLoanProductJpaRepository
-            .saveAll(entityList)
-            .stream()
+        //배치 처리로 메모리에 부담을 적게 주기위한 배치 메서드
+        List<RecommendedLoanProductEntity> savedEntities = saveAllRecommendedLoanProductInBatch(entityList);
+
+        return toDomainFrom(savedEntities, recommendedLoanProductList);
+    }
+
+    private List<RecommendedLoanProductEntity> saveAllRecommendedLoanProductInBatch(
+        List<RecommendedLoanProductEntity> rows
+    ) {
+        int batchSize = 500;
+        for (int start = 0; start < rows.size(); start += batchSize) {
+            int end = Math.min(start + batchSize, rows.size());
+            List<RecommendedLoanProductEntity> chunk = rows.subList(start, end);
+
+            for (RecommendedLoanProductEntity r : chunk) {
+                em.persist(r);
+            }
+
+            em.flush();
+            em.clear();
+        }
+
+        return rows;
+    }
+
+    private List<RecommendedLoanProduct> toDomainFrom(
+        List<RecommendedLoanProductEntity> entityList,
+        List<RecommendedLoanProduct> recommendedLoanProductList
+    ) {
+        Map<Long, UUID> loanProductIdToRecommendedId = entityList.stream()
             .collect(toMap(
                 e -> e.getLoanProductEntity().getId(),
                 RecommendedLoanProductEntity::getId
@@ -184,7 +208,6 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
             .orElse(null);
     }
 
-    /** 배지 계산: 동점 허용, null-세이프, 안정된 순서(ENUM 선언 순) 유지 */
     private static List<LoanProductBadge> buildBadges(
         RecommendedLoanProduct p,
         LoanProductEntity lp,
