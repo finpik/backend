@@ -29,7 +29,8 @@ type RecommendedLoanProductResultList {
 }
 
 type RecommendedLoanProductResult {
-    recommendedLoanProductId: Long!
+    """여기 변경 됨 2025-08-29"""
+    recommendedLoanProductId: String!
     profileId: Long!
     bankName: String!
     loanProductId: Long!
