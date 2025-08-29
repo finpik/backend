@@ -44,9 +44,9 @@ class OccupationDetailTest {
             null
         );
 
-        OccupationDetail otherDetail = OccupationDetail.of(
+        OccupationDetail unemployedDetail = OccupationDetail.of(
             annualIncome,
-            Occupation.OTHER,
+            Occupation.UNEMPLOYED,
             null,
             null,
             null,
@@ -63,7 +63,7 @@ class OccupationDetailTest {
         );
         OccupationDetail freelancerDetail = OccupationDetail.of(
             annualIncome,
-            Occupation.FREELANCER,
+            Occupation.OTHER,
             null,
             LocalDate.now(),
             null,
@@ -75,7 +75,7 @@ class OccupationDetailTest {
         assertAll(
             () -> assertThat(employmentDetail).isInstanceOf(EmployeeDetail.class),
             () -> assertThat(publicServantDetail).isInstanceOf(PublicServantDetail.class),
-            () -> assertThat(otherDetail).isInstanceOf(OtherDetail.class),
+            () -> assertThat(unemployedDetail).isInstanceOf(OtherDetail.class),
             () -> assertThat(selfEmployedDetail).isInstanceOf(SelfEmployedDetail.class),
             () -> assertThat(freelancerDetail).isInstanceOf(FreelancerDetail.class)
         );

@@ -9,9 +9,8 @@ public enum Occupation {
     EMPLOYEE("직장인"),
     PUBLIC_SERVANT("공무원"),
     SELF_EMPLOYED("사업자"),
-    FREELANCER("프리랜서"),
-    OTHER("기타 (학생, 무직, 주부 등)"),
-    ALL("모든 대상")
+    OTHER("프리랜서"),
+    UNEMPLOYED("기타 (학생, 무직, 주부 등)"),
     ;
 
     private final String displayName;
