@@ -11,6 +11,7 @@ public enum Occupation {
     SELF_EMPLOYED("사업자"),
     OTHER("프리랜서"),
     UNEMPLOYED("기타 (학생, 무직, 주부 등)"),
+    ALL("대출 상품에 모든 직업에 해당하는 값")
     ;
 
     private final String displayName;
