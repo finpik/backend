@@ -48,14 +48,14 @@ public sealed interface OccupationDetail
                 businessStartDate
             );
 
-            case FREELANCER -> new FreelancerDetail(
+            case OTHER -> new FreelancerDetail(
                 occupation,
                 annualIncome,
                 employmentDate,
                 EmploymentForm.CONTRACT
             );
 
-            case OTHER -> new OtherDetail(
+            case UNEMPLOYED -> new OtherDetail(
                 occupation,
                 annualIncome
             );

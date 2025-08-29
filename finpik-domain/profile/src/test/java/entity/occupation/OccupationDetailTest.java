@@ -63,7 +63,7 @@ class OccupationDetailTest {
         );
         OccupationDetail freelancerDetail = OccupationDetail.of(
             annualIncome,
-            Occupation.FREELANCER,
+            Occupation.OTHER,
             null,
             LocalDate.now(),
             null,
