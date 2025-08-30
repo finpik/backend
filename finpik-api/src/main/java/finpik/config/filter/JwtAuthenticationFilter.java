@@ -36,7 +36,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-
+        //로그 시작
+        long t0 = System.nanoTime();
         String token = resolveToken(request);
 
         if (token != null && jwtProvider.isValid(token)) {
@@ -56,6 +57,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         chain.doFilter(request, response);
+        //로그 종료
+        long tookMs = (System.nanoTime()-t0)/1_000_000;
+        log.info("[TIMING] {} {} -> {} {}ms len={}",
+            request.getMethod(), request.getRequestURI(), response.getStatus(), tookMs, response.getBufferSize());
     }
 
     private String resolveToken(HttpServletRequest request) {
