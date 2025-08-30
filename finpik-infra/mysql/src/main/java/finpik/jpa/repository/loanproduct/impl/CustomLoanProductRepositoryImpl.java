@@ -6,11 +6,8 @@ import static finpik.entity.loanproduct.QLoanProductEntity.loanProductEntity;
 import static finpik.entity.loanproduct.QRecommendedLoanProductEntity.recommendedLoanProductEntity;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import com.querydsl.core.group.GroupBy;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
