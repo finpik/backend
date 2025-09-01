@@ -99,8 +99,29 @@ spring:
       auto-create: ${SPRING_KAFKA_ADMIN_AUTO_CREATE}
       fail-fast: ${SPRING_KAFKA_ADMIN_FAIL_FAST}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
 
+  metrics:
+    tags:
+      application: finpik-api
 
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        hikaricp.connections.acquire: true
+
+      sla:
+        http.server.requests: 50ms,100ms,250ms,500ms,1s,2s
+        hikaricp.connections.acquire: 5ms,10ms,20ms,50ms,100ms,200ms
+
+      minimum-expected-value:
+        http.server.requests: 10ms
+      maximum-expected-value:
+        http.server.requests: 5s
 
 #Log
 logging:
@@ -126,6 +147,9 @@ logging:
     # hibernate 통계
     org.hibernate.stat: debug
     com.zaxxer.hikari: debug
+
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
 
 fin-pik:
   jwt:
