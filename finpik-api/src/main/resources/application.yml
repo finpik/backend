@@ -43,10 +43,6 @@ spring:
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
-    hikari:
-      # Micrometer 트래커 활성화
-      metrics-tracker-factory: com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory
-
   jpa:
     hibernate:
       ddl-auto: update    # create, update, none 등
