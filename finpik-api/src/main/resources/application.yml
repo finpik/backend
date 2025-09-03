@@ -106,6 +106,7 @@ management:
         hikaricp.connections.acquire: true
 
       sla:
+        jdbc: 50ms,100ms,250ms,500ms,1s,2s,5s
         http.server.requests: 50ms,100ms,250ms,500ms,1s,2s
         hikaricp.connections.acquire: 5ms,10ms,20ms,50ms,100ms,200ms
 
