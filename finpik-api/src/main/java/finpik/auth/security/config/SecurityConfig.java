@@ -45,7 +45,7 @@ public class SecurityConfig {
                     "/oauth2/**", // 인가 시작 URL (`/oauth2/authorization/kakao`)
                     "/auth/**", // 사용자 정의 callback 또는 API
                     "/graphql",
-                    "/actuator/prometheus", "/actuator/health", "/actuator/info")
+                    "/actuator/**")
                 .permitAll()
                 .anyRequest()
                 .permitAll()
