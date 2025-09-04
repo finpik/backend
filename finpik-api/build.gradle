@@ -41,8 +41,8 @@ dependencies {
     //prometheus
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-    //jdbc matric
-    implementation 'com.github.gavlyukovskiy:datasource-proxy-spring-boot-starter:1.9.1'
+    //jdbc metric
+    implementation "net.ttddyy.observation:datasource-micrometer-spring-boot:1.1.2"
 
     //aop
     implementation 'org.springframework.boot:spring-boot-starter-aop'
