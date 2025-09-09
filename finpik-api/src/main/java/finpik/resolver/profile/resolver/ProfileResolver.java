@@ -107,11 +107,11 @@ public class ProfileResolver implements ProfileApi {
 
     @Override
     @MutationMapping
-    public List<ProfileResult> deleteProfile(@Argument Long deletedId,
+    public List<ProfileResult> deleteProfile(@Argument List<Long> deletedIdList,
             @ContextValue(value = "user", required = false) User userInput) {
         User user = validateUser(userInput);
 
-        List<ProfileResultDto> profileList = deleteProfileUseCase.execute(deletedId, user.getId());
+        List<ProfileResultDto> profileList = deleteProfileUseCase.execute(deletedIdList, user.getId());
 
         return profileList.stream().map(ProfileResult::of).toList();
     }

@@ -74,6 +74,16 @@ public record ProfileList(
         return filteredProfileList;
     }
 
+    public ProfileList deleteProfileList(List<Long> deletedIdList) {
+        ProfileList filteredProfileList = new ProfileList(profileList.stream().filter(profile ->
+            !deletedIdList.contains(profile.getId())
+        ).toList());
+
+        filteredProfileList.balanceSequence(START_SEQ_DELETE);
+
+        return filteredProfileList;
+    }
+
     public int size() {
         return profileList.size();
     }
