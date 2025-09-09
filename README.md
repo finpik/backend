@@ -115,3 +115,4 @@ Features
 - feature/FP-27: 추천 대출 상품 Redis Cache 제거
 - feature/FP-28: 대출 상품 뱃지 추가
 - feature/FP-29: 추천 대출 상품 insert batch 처리
+- feature/FP-30: 프로필 삭제를 단건 -> 리스트 삭제로 변경
