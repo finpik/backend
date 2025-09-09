@@ -22,14 +22,14 @@ public class DeleteProfileUseCaseImpl implements DeleteProfileUseCase {
     private final UserRepository userRepository;
 
     @Override
-    public List<ProfileResultDto> execute(Long deletedId, Long userId) {
+    public List<ProfileResultDto> execute(List<Long> deletedIdList, Long userId) {
         User user = findUserBy(userId);
 
         ProfileList foundProfileList = findProfileListBy(user);
 
-        ProfileList profileList = foundProfileList.deleteProfile(deletedId);
+        ProfileList profileList = foundProfileList.deleteProfileList(deletedIdList);
 
-        profileRepository.deleteById(deletedId);
+        profileRepository.deleteAllById(deletedIdList);
 
         return profileList.getProfileList().stream().map(ProfileResultDto::new).toList();
     }
