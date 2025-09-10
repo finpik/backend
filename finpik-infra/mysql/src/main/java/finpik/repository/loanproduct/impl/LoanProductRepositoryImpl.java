@@ -41,7 +41,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     private final EntityManager em;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<LoanProduct> findByIdWithDescription(Long loanProductId, Long profileId) {
         Optional<LoanProductProjection> loanProductEntity =
             loanProductJpaRepository.findByIdWithDescriptionAndBadge(loanProductId, profileId);
@@ -52,6 +52,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     }
 
     @Override
+    @Transactional
     public List<RecommendedLoanProduct> saveAllRecommendedLoanProduct(Long profileId, List<RecommendedLoanProduct> recommendedLoanProductList) {
         Map<Long, LoanProductEntity> idLoanProductEntityMap = loanProductJpaRepository
             .findAllById(
@@ -137,6 +138,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Slice<RecommendedLoanProduct> findAllRecommendedLoanProductSliceByProfileId(Long profileId, Pageable pageable) {
         Slice<RecommendedLoanProductProjection> recommendedLoanProductList =
             recommendedLoanProductJpaRepository.findAllByProfileId(profileId, pageable);
@@ -162,6 +164,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RelatedLoanProduct> findAllRelatedLoanProductById(Long loanProductId) {
         List<RelatedLoanProductProjection> projectionList = viewHistoryJpaRepository
             .getRelatedLoanProductList(loanProductId);
