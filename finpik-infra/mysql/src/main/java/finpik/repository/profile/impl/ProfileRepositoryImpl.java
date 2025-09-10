@@ -130,4 +130,9 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     public void deleteById(Long id) {
         profileEntityJpaRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteAllById(List<Long> idList) {
+        profileEntityJpaRepository.deleteAllById(idList);
+    }
 }

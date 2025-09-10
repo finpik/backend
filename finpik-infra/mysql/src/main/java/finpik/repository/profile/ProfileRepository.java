@@ -23,4 +23,6 @@ public interface ProfileRepository {
     ProfileList findAllById(List<Long> ids);
 
     void deleteById(Long id);
+
+    void deleteAllById(List<Long> idList);
 }
