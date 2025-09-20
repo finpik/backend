@@ -90,7 +90,7 @@ jobs:
             docker run -d \
               -e JAVA_OPTS="${JAVA_OPTS}" \
               --name "${APP_NAME}" \
-              -p "${PORT}" \
+              -p "${PORT}":"${PORT}" \
               --env-file "${ENV_FILE}" \
               -e SPRING_PROFILES_ACTIVE=prod \
               --restart "${RESTART_POLICY}" \
