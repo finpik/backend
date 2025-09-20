@@ -67,7 +67,7 @@ jobs:
             PORT="8080"
             ENV_FILE="/srv/app/.env"
             RESTART_POLICY="no"
-            JAVA_OPTS="-Xms1g -Xmx1g -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError"
+            JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError"
 
             # (선택) GHCR private이면 EC2에서 로그인 필요: packages:read 권한 PAT를 GHCR_TOKEN/USERNAME로 넣어두기
             if [ -n "${{ secrets.GHCR_TOKEN || '' }}" ]; then
@@ -88,12 +88,11 @@ jobs:
 
             echo "== Run new container =="
             docker run -d \
-              -e JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError" \
+              -e JAVA_OPTS="${JAVA_OPTS}" \
               --name "${APP_NAME}" \
               -p "${PORT}" \
               --env-file "${ENV_FILE}" \
               -e SPRING_PROFILES_ACTIVE=prod \
-              -e JAVA_TOOL_OPTIONS="${JAVA_OPTS}" \
               --restart "${RESTART_POLICY}" \
               "${IMAGE_REPO}:${IMAGE_TAG}"
 
