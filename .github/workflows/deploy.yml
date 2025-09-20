@@ -88,8 +88,9 @@ jobs:
 
             echo "== Run new container =="
             docker run -d \
+              -e JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError" \
               --name "${APP_NAME}" \
-              -p "${PORT}:8080" \
+              -p "${PORT}" \
               --env-file "${ENV_FILE}" \
               -e SPRING_PROFILES_ACTIVE=prod \
               -e JAVA_TOOL_OPTIONS="${JAVA_OPTS}" \
