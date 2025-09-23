@@ -95,6 +95,16 @@ jobs:
               -e SPRING_PROFILES_ACTIVE=prod \
               --restart "${RESTART_POLICY}" \
               "${IMAGE_REPO}:${IMAGE_TAG}"
+            
+            echo "== Wait container status: running =="
+            for i in {1..20}; do
+              status="$(docker inspect -f '{{.State.Status}}' "${APP_NAME}" 2>/dev/null || echo 'unknown')"
+              if [ "${status}" = "running" ]; then
+                echo "status=running"
+                break
+              fi
+              sleep 1
+            done
 
             echo "== Wait for health (up to 60s) =="
             # 호스트에서 외부 헬스체크(컨테이너 안에 curl/wget 없어도 OK)
