@@ -32,7 +32,7 @@ public record ProfileCreationSpec(
     EmploymentForm employmentForm,
     User user,
     Integer recommendedLoanProductCount,
-    Double minInterestRate,
+    Float minInterestRate,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
@@ -46,7 +46,7 @@ public record ProfileCreationSpec(
         EmploymentForm employmentForm, User user, BusinessType businessType
     ) {
         Integer newRecommendedLoanProductCount = 0;
-        Double newMinInterestRate = 0.0;
+        Float newMinInterestRate = 0.0f;
 
         return new ProfileCreationSpec(
             null, desiredLoanAmount, loanProductUsageCount,
@@ -68,7 +68,7 @@ public record ProfileCreationSpec(
         ProfileColor profileColor, Integer annualIncome, LocalDate businessStartDate,
         LocalDate employmentDate, Occupation occupation, BusinessType businessType,
         EmploymentForm employmentForm, User user, Integer recommendedLoanProductCount,
-        Double minInterestRate, LocalDateTime createdAt, LocalDateTime updatedAt
+        Float minInterestRate, LocalDateTime createdAt, LocalDateTime updatedAt
     ) {
         return new ProfileCreationSpec(
             id, desiredLoanAmount, loanProductUsageCount,
