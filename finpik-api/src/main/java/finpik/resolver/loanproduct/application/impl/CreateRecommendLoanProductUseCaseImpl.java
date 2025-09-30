@@ -2,7 +2,11 @@ package finpik.resolver.loanproduct.application.impl;
 
 import finpik.RecommendedLoanProduct;
 import finpik.dto.CreateRecommendedLoanProductEvent;
+import finpik.entity.enums.LoanProductBadge;
+import finpik.error.enums.ErrorCode;
+import finpik.error.exception.BusinessException;
 import finpik.repository.loanproduct.LoanProductRepository;
+import finpik.repository.profile.ProfileRepository;
 import finpik.resolver.loanproduct.application.CreateRecommendLoanProductUseCase;
 import finpik.sse.service.SseEmitterService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +26,7 @@ public class CreateRecommendLoanProductUseCaseImpl implements
     CreateRecommendLoanProductUseCase
 {
     private final LoanProductRepository loanProductRepository;
+    private final ProfileRepository profileRepository;
     private final SseEmitterService sseEmitterService;
 
     @Async
@@ -45,7 +50,17 @@ public class CreateRecommendLoanProductUseCaseImpl implements
             )
         ).toList();
 
-        loanProductRepository.saveAllRecommendedLoanProduct(event.profileId(), recommendedLoanProductList);
+        List<RecommendedLoanProduct> recommendedLoanProducts =
+            loanProductRepository.saveAllRecommendedLoanProduct(event.profileId(), recommendedLoanProductList);
+
+        RecommendedLoanProduct first = recommendedLoanProducts.stream()
+            .filter(it ->
+                it.getLoanProductBadges().contains(LoanProductBadge.LOWEST_MIN_INTEREST_RATE)
+            ).findFirst().orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ANNUAL_INCOME));
+
+        profileRepository.updateProfileAfterRecommend(
+            event.profileId(), recommendedLoanProductList.size(), first.getMinInterestRate()
+        );
 
         sseEmitterService.notifyRecommendationCompleted(
             event.eventId(),
