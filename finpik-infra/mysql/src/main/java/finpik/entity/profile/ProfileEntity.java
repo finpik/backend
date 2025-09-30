@@ -85,6 +85,9 @@ public class ProfileEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
+    private Integer recommendedLoanProductCount;
+    private Float minInterestRate;
+
     @Column(updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -100,7 +103,8 @@ public class ProfileEntity {
             profile.getLoanProductUsageStatus(), profile.getPurposeOfLoan(),
             mapper.occupation(), profile.getProfileColor(), mapper.employmentDate(),
             mapper.businessStartDate(), mapper.businessType(),
-            userEntity, profile.getCreatedAt(), profile.getUpdatedAt()
+            userEntity, profile.getRecommendedLoanProductCount(), profile.getMinInterestRate(),
+            profile.getCreatedAt(), profile.getUpdatedAt()
         );
     }
 
@@ -110,7 +114,8 @@ public class ProfileEntity {
             creditScore, profileName, seq, creditGradeStatus, loanProductUsageStatus,
             purposeOfLoan, profileColor, annualIncome, businessStartDate,
             employmentDate, occupation, businessType, employmentForm,
-            user.toDomain(), createdAt, updatedAt
+            user.toDomain(), recommendedLoanProductCount,
+            minInterestRate, createdAt, updatedAt
         );
 
         return Profile.withId(spec);
@@ -139,5 +144,9 @@ public class ProfileEntity {
 
     public void updateSeq(Integer seq) {
         this.seq = seq;
+    }
+
+    public void updateRecommendedLoanProductCount(Integer recommendedLoanProductCount) {
+        this.recommendedLoanProductCount = recommendedLoanProductCount;
     }
 }
