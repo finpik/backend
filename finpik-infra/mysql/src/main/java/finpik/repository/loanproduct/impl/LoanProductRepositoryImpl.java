@@ -132,7 +132,8 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
                 p.getInterestRate().maxInterestRate(),
                 p.getInterestRate().minInterestRate(),
                 p.getMaxLoanLimitAmount(),
-                p.getSimilarity()
+                p.getSimilarity(),
+                p.getLoanProductBadges()
             ))
             .toList();
     }
@@ -155,7 +156,8 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
                     product.maxInterestRate(),
                     product.minInterestRate(),
                     product.maxLoanLimitAmount(),
-                    product.similarity()
+                    product.similarity(),
+                    product.loanProductBadges()
                 )
             )
             .toList();

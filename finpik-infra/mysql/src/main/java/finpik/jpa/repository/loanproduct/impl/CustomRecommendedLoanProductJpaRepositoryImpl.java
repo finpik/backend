@@ -36,7 +36,8 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
                     loanProductEntity.maxInterestRate,
                     loanProductEntity.minInterestRate,
                     loanProductEntity.maxLoanLimitAmount,
-                    recommendedLoanProductEntity.similarity
+                    recommendedLoanProductEntity.similarity,
+                    recommendedLoanProductEntity.loanProductBadgeList
                 ))
             .from(recommendedLoanProductEntity)
             .where(recommendedLoanProductEntity.profileId.eq(productId))
