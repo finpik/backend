@@ -1,5 +1,6 @@
 package finpik;
 
+import finpik.entity.enums.LoanProductBadge;
 import finpik.util.Preconditions;
 import finpik.vo.InterestRate;
 import lombok.AccessLevel;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -21,6 +24,7 @@ public class RecommendedLoanProduct {
     private InterestRate interestRate;
     private Long maxLoanLimitAmount;
     private Float similarity;
+    private List<LoanProductBadge> loanProductBadges;
 
     public static RecommendedLoanProduct of(
         Long profileId,
@@ -33,6 +37,7 @@ public class RecommendedLoanProduct {
         Float similarity
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
+        List<LoanProductBadge> loanProductBadges = new ArrayList<>();
 
         return new RecommendedLoanProduct(
             null,
@@ -42,7 +47,8 @@ public class RecommendedLoanProduct {
             Preconditions.require(productName, "productName must not be null"),
             interestRate,
             maxLoanLimitAmount,
-            Preconditions.require(similarity, "similarity must not be null")
+            Preconditions.require(similarity, "similarity must not be null"),
+            loanProductBadges
         );
     }
 
@@ -55,7 +61,8 @@ public class RecommendedLoanProduct {
         Float maxInterestRate,
         Float minInterestRate,
         Long maxLoanLimitAmount,
-        Float similarity
+        Float similarity,
+        List<LoanProductBadge> loanProductBadges
     ) {
         InterestRate interestRate = new InterestRate(maxInterestRate, minInterestRate);
 
@@ -67,7 +74,8 @@ public class RecommendedLoanProduct {
             Preconditions.require(productName, "productName must not be null"),
             interestRate,
             maxLoanLimitAmount,
-            Preconditions.require(similarity, "similarity must not be null")
+            Preconditions.require(similarity, "similarity must not be null"),
+            loanProductBadges
         );
     }
 
