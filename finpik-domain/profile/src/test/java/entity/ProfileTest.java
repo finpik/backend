@@ -104,6 +104,8 @@ class ProfileTest {
             null,
             EmploymentForm.CONTRACT,
             null,
+            0,
+            0.0f,
             LocalDateTime.now(),
             LocalDateTime.now()
         );
@@ -142,6 +144,8 @@ class ProfileTest {
             null,
             EmploymentForm.CONTRACT,
             user,
+            0,
+            0.0f,
             LocalDateTime.now(),
             LocalDateTime.now()
         );
@@ -192,6 +196,8 @@ class ProfileTest {
             null,
             null,
             user,
+            0,
+            0.0f,
             LocalDateTime.now(),
             LocalDateTime.now()
         );
