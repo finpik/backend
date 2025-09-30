@@ -34,7 +34,7 @@ public class Profile {
     private OccupationDetail occupationDetail;
     private User user;
     private Integer recommendedLoanProductCount;
-    private Double minInterestRate;
+    private Float minInterestRate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
