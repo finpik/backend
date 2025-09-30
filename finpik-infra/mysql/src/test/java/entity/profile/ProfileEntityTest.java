@@ -77,6 +77,8 @@ class ProfileEntityTest {
             null,
             null,
             user,
+            0,
+            0.0,
             LocalDateTime.now(),
             LocalDateTime.now()
         );
