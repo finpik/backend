@@ -109,6 +109,8 @@ class ProfileListTest {
             null,
             null,
             user,
+            0,
+            0.0f,
             LocalDateTime.now(),
             LocalDateTime.now()
         );

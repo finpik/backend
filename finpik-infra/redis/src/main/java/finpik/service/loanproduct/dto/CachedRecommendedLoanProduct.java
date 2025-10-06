@@ -1,8 +1,10 @@
 package finpik.service.loanproduct.dto;
 
 import finpik.RecommendedLoanProduct;
+import finpik.entity.enums.LoanProductBadge;
 import lombok.Builder;
 
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -15,7 +17,8 @@ public record CachedRecommendedLoanProduct(
     Float minInterestRate,
     Float maxInterestRate,
     Long maxLoanLimitAmount,
-    Float similarity
+    Float similarity,
+    List<LoanProductBadge> loanProductBadges
 ) {
 
     public RecommendedLoanProduct toDomain() {
@@ -28,7 +31,8 @@ public record CachedRecommendedLoanProduct(
             maxInterestRate,
             minInterestRate,
             maxLoanLimitAmount,
-            similarity
+            similarity,
+            loanProductBadges
         );
     }
 
@@ -43,6 +47,7 @@ public record CachedRecommendedLoanProduct(
             .maxInterestRate(recommendedLoanProduct.getInterestRate().maxInterestRate())
             .maxLoanLimitAmount(recommendedLoanProduct.getMaxLoanLimitAmount())
             .similarity(recommendedLoanProduct.getSimilarity())
+            .loanProductBadges(recommendedLoanProduct.getLoanProductBadges())
             .build();
     }
 }

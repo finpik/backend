@@ -1,21 +1,14 @@
 package entity.policy;
 
 import finpik.entity.User;
-import finpik.entity.enums.BusinessType;
-import finpik.entity.enums.CreditGradeStatus;
-import finpik.entity.enums.EmploymentForm;
-import finpik.entity.enums.Gender;
-import finpik.entity.enums.LoanProductUsageStatus;
-import finpik.entity.enums.Occupation;
-import finpik.entity.enums.ProfileColor;
-import finpik.entity.enums.PurposeOfLoan;
-import finpik.entity.enums.RegistrationType;
+import finpik.entity.enums.*;
 import finpik.entity.policy.ProfileCreationSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -43,6 +36,8 @@ class ProfileCreationSpecTest {
         Occupation occupation = Occupation.EMPLOYEE;
         EmploymentForm employmentForm = EmploymentForm.FULL_TIME;
         User user = new User(1L, "username", "user@example.com", Gender.MALE, RegistrationType.KAKAO, LocalDateTime.now(), LocalDate.of(1995, 1, 1));
+        Float minInterestRate = 0.0f;
+        Integer recommendedLoanProductCount = 0;
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
         BusinessType businessType = null;
@@ -52,7 +47,8 @@ class ProfileCreationSpecTest {
             id, desiredLoanAmount, loanProductUsageCount, totalLoanUsageAmount,
             creditScore, profileName, seq, creditGradeStatus, loanProductUsageStatus,
             purposeOfLoan, profileColor, annualIncome, businessStartDate, employmentDate,
-            occupation, businessType, employmentForm, user, createdAt, updatedAt
+            occupation, businessType, employmentForm, user,
+            recommendedLoanProductCount, minInterestRate, createdAt, updatedAt
         );
 
         //then

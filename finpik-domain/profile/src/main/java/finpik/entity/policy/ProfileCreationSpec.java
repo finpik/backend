@@ -31,6 +31,8 @@ public record ProfileCreationSpec(
     BusinessType businessType,
     EmploymentForm employmentForm,
     User user,
+    Integer recommendedLoanProductCount,
+    Float minInterestRate,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
@@ -43,6 +45,9 @@ public record ProfileCreationSpec(
         LocalDate employmentDate, Occupation occupation,
         EmploymentForm employmentForm, User user, BusinessType businessType
     ) {
+        Integer newRecommendedLoanProductCount = 0;
+        Float newMinInterestRate = 0.0f;
+
         return new ProfileCreationSpec(
             null, desiredLoanAmount, loanProductUsageCount,
             totalLoanUsageAmount, creditScore,
@@ -50,7 +55,8 @@ public record ProfileCreationSpec(
             loanProductUsageStatus, purposeOfLoan,
             profileColor, annualIncome, businessStartDate,
             employmentDate, occupation, businessType,
-            employmentForm, user, null, null
+            employmentForm, user, newRecommendedLoanProductCount,
+            newMinInterestRate, null, null
         );
     }
 
@@ -61,8 +67,8 @@ public record ProfileCreationSpec(
         LoanProductUsageStatus loanProductUsageStatus, PurposeOfLoan purposeOfLoan,
         ProfileColor profileColor, Integer annualIncome, LocalDate businessStartDate,
         LocalDate employmentDate, Occupation occupation, BusinessType businessType,
-        EmploymentForm employmentForm, User user,
-        LocalDateTime createdAt, LocalDateTime updatedAt
+        EmploymentForm employmentForm, User user, Integer recommendedLoanProductCount,
+        Float minInterestRate, LocalDateTime createdAt, LocalDateTime updatedAt
     ) {
         return new ProfileCreationSpec(
             id, desiredLoanAmount, loanProductUsageCount,
@@ -71,7 +77,8 @@ public record ProfileCreationSpec(
             loanProductUsageStatus, purposeOfLoan,
             profileColor, annualIncome, businessStartDate,
             employmentDate, occupation, businessType,
-            employmentForm, user, createdAt, updatedAt
+            employmentForm, user, recommendedLoanProductCount,
+            minInterestRate, createdAt, updatedAt
         );
     }
 }

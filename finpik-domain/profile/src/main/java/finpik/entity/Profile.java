@@ -33,6 +33,8 @@ public class Profile {
     private ProfileColor profileColor;
     private OccupationDetail occupationDetail;
     private User user;
+    private Integer recommendedLoanProductCount;
+    private Float minInterestRate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -70,6 +72,8 @@ public class Profile {
             require(spec.profileColor(), "profileColor must not be null."),
             occupationDetail,
             require(spec.user(), "user must not be null."),
+            spec.recommendedLoanProductCount(),
+            spec.minInterestRate(),
             spec.createdAt() == null ? createdAt : spec.createdAt(),
             spec.updatedAt()
         );

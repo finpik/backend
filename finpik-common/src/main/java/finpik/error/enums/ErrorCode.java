@@ -49,6 +49,7 @@ public enum ErrorCode {
     NOT_FOUND_LOAN_PRODUCT("대출 상품을 찾을 수 없습니다.", "LPD-0001", CustomHttpStatus.NOT_FOUND),
     NOT_CONVERT_KAFKA_MESSAGE_LOAN_PRODUCT("카프카에서 받은 추천 대출 상품 메세지를 컨버팅할 수 없습니다.", "LPD-0002", CustomHttpStatus.BAD_REQUEST),
     NOT_CONVERT_KAFKA_MESSAGE("카프카에 메세지를 보내기 위한 추천 대출 상품의 조건을 문자열로 변경이 실패했습니다.", "LPD-0003", CustomHttpStatus.BAD_REQUEST),
+    EMPTY_BADGES("추천된 상품에 뱃지를 받은 상품이 존재하지 않습니다.", "LPD-0004", CustomHttpStatus.BAD_REQUEST),
 
     //System
     ORDER_BY_PROPERTY_NOT_FOUND("정렬 조건을 찾을 수 없습니다. 개발자에게 문의 부탁드립니다.", "ITN-0001", CustomHttpStatus.INTERNAL_SERVER_ERROR),;
