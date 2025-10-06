@@ -1,5 +1,8 @@
 package finpik.jpa.repository.loanproduct.projection;
 
+import finpik.entity.enums.LoanProductBadge;
+
+import java.util.List;
 import java.util.UUID;
 
 public record RecommendedLoanProductProjection(
@@ -11,6 +14,7 @@ public record RecommendedLoanProductProjection(
     Float minInterestRate,
     Float maxInterestRate,
     Long maxLoanLimitAmount,
-    Float similarity
+    Float similarity,
+    List<LoanProductBadge> loanProductBadges
 ) {
 }

@@ -7,6 +7,8 @@ import finpik.entity.enums.PurposeOfLoan;
 import finpik.resolver.profile.application.dto.ProfileResultDto;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+
 @Builder
 public record ProfileResult(
     Long profileId,
@@ -19,7 +21,10 @@ public record ProfileResult(
     Integer profileSeq,
     String profileName,
     ProfileColor profileColor,
-    Integer annualIncome
+    Integer annualIncome,
+    LocalDateTime createdAt,
+    Integer recommendedLoanProductCount,
+    Float minInterestRate
 ) {
 
     public static ProfileResult of(ProfileResultDto profile) {
@@ -35,6 +40,9 @@ public record ProfileResult(
             .profileSeq(profile.getProfileSeq())
             .profileColor(profile.getProfileColor())
             .annualIncome(profile.getAnnualIncome())
+            .createdAt(profile.getCreatedAt())
+            .recommendedLoanProductCount(profile.getRecommendedLoanProductCount())
+            .minInterestRate(profile.getMinInterestRate())
             .build();
     }
 }

@@ -25,4 +25,10 @@ public interface ProfileRepository {
     void deleteById(Long id);
 
     void deleteAllById(List<Long> idList);
+
+    void updateProfileAfterRecommend(
+        Long profileId,
+        Integer recommendedLoanProductCount,
+        Float minInterestRate
+    );
 }

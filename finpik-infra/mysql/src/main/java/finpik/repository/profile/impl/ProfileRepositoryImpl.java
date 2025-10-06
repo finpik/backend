@@ -135,4 +135,16 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     public void deleteAllById(List<Long> idList) {
         profileEntityJpaRepository.deleteAllById(idList);
     }
+
+    @Override
+    public void updateProfileAfterRecommend(
+        Long profileId,
+        Integer recommendedLoanProductCount,
+        Float minInterestRate
+    ) {
+        ProfileEntity profileEntity = profileEntityJpaRepository.findById(profileId)
+            .orElseThrow(() -> new BusinessException(ErrorCode.NOT_FOUND_PROFILE));
+
+        profileEntity.updateRecommendedLoanProductCount(recommendedLoanProductCount);
+    }
 }
