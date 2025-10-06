@@ -67,7 +67,19 @@ jobs:
             PORT="8080"
             ENV_FILE="/srv/app/.env"
             RESTART_POLICY="no"
-            JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+ExitOnOutOfMemoryError"
+            JAVA_OPTS="\
+                      -Xms256m \
+                      -Xmx320m \
+                      -XX:+UseG1GC \
+                      -XX:MaxGCPauseMillis=200 \
+                      -XX:MaxMetaspaceSize=128m \
+                      -XX:ReservedCodeCacheSize=80m \
+                      -XX:MaxDirectMemorySize=96m \
+                      -Xss512k \
+                      -XX:+ExitOnOutOfMemoryError \
+                      -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/opt/app/oom.hprof \
+                      -XX:+UnlockDiagnosticVMOptions -XX:NativeMemoryTracking=summary \
+                      -Xlog:gc*:stdout:time,uptime,level,tags"
 
             # (선택) GHCR private이면 EC2에서 로그인 필요: packages:read 권한 PAT를 GHCR_TOKEN/USERNAME로 넣어두기
             if [ -n "${{ secrets.GHCR_TOKEN || '' }}" ]; then
