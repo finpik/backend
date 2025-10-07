@@ -40,7 +40,7 @@ public enum ErrorCode {
     PROFILE_SEQUENCE_CANNOT_BE_NULL("프로필의 순번이 NULL일 수 없습니다.", "PRF-0008", CustomHttpStatus.BAD_REQUEST),
     CREDITS_CANNOT_BE_NULL("프로필의 신용점수, 신용상태 둘다 NULL일 수 없습니다.", "PRF-0009", CustomHttpStatus.BAD_REQUEST),
     OUT_OF_RANGE_CREDIT_GRADE_STATUS("신용점수에 맞는 신용 등급이 존재하지 않습니다.", "PRF-0010", CustomHttpStatus.BAD_REQUEST),
-    INVALID_ANNUAL_INCOME("유효하지 않은 연수입 입니다. 값을 확인해주세요.", "PRF-0011", CustomHttpStatus.BAD_REQUEST),
+    INVALID_ANNUAL_INCOME("유효하지 않은 연수입니다. 값을 확인해주세요.", "PRF-0011", CustomHttpStatus.BAD_REQUEST),
     INVALID_PUBLIC_SERVANT_FIELDS("공무워 직군 관련 필드에 문제가 있습니다.", "PRF-0012", CustomHttpStatus.BAD_REQUEST),
     INVALID_FREELANCER_FIELDS("프리랜서 직군 관련 필드에 문제가 있습니다.", "PRF-0013", CustomHttpStatus.BAD_REQUEST),
     UNSUPPORTED_OCCUPATION("지원하지 않는 직군입니다.", "PRF-0014", CustomHttpStatus.BAD_REQUEST),
