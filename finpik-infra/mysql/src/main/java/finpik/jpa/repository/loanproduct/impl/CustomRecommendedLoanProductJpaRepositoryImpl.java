@@ -3,6 +3,7 @@ package finpik.jpa.repository.loanproduct.impl;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import finpik.entity.loanproduct.RecommendedLoanProductEntity;
 import finpik.jpa.repository.loanproduct.CustomRecommendedLoanProductJpaRepository;
 import finpik.jpa.repository.loanproduct.projection.RecommendedLoanProductProjection;
 import finpik.util.db.OrderSpecifierTransformer;
@@ -25,35 +26,39 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
     private final JPAQueryFactory jpaQueryFactory;
     private static final String SIMILARITY_PROPERTY = "similarity";
 
-    public Slice<RecommendedLoanProductProjection> findAllByProfileId(Long productId, Pageable pageable) {
-        List<RecommendedLoanProductProjection> proejctionList = jpaQueryFactory
-            .select(Projections.constructor(RecommendedLoanProductProjection.class,
-                    recommendedLoanProductEntity.id,
-                    recommendedLoanProductEntity.profileId,
-                    loanProductEntity.bankName,
-                    loanProductEntity.id,
-                    loanProductEntity.productName,
-                    loanProductEntity.maxInterestRate,
-                    loanProductEntity.minInterestRate,
-                    loanProductEntity.maxLoanLimitAmount,
-                    recommendedLoanProductEntity.similarity,
-                    recommendedLoanProductEntity.loanProductBadgeList
-                ))
-            .from(recommendedLoanProductEntity)
-            .where(recommendedLoanProductEntity.profileId.eq(productId))
-            .leftJoin(loanProductEntity).on(recommendedLoanProductEntity.loanProductEntity.id.eq(loanProductEntity.id))
+    public Slice<RecommendedLoanProductProjection> findAllByProfileId(Long profileId, Pageable pageable) {
+        List<RecommendedLoanProductEntity> recommendedLoanProducts = jpaQueryFactory
+            .selectFrom(recommendedLoanProductEntity)
+            .leftJoin(recommendedLoanProductEntity.loanProductEntity, loanProductEntity).fetchJoin()
+            .leftJoin(recommendedLoanProductEntity.loanProductBadgeList).fetchJoin()
+            .where(recommendedLoanProductEntity.profileId.eq(profileId))
+            .orderBy(orderBySort(pageable.getSort()))
             .offset(pageable.getOffset())
             .limit(getLimit(pageable.getPageSize()))
-            .orderBy(orderBySort(pageable.getSort()))
+            .distinct()
             .fetch();
 
-        boolean hasNext = hasNext(proejctionList.size(), pageable.getPageSize());
-
-        if (hasNext) {
-            proejctionList.remove(pageable.getPageSize());
+        boolean hasNextPage = hasNext(recommendedLoanProducts.size(), pageable.getPageSize());
+        if (hasNextPage) {
+            recommendedLoanProducts.remove(pageable.getPageSize());
         }
 
-        return new SliceImpl<>(proejctionList, pageable, hasNext);
+        List<RecommendedLoanProductProjection> projections = recommendedLoanProducts.stream()
+            .map(entity -> new RecommendedLoanProductProjection(
+                entity.getId(),
+                entity.getProfileId(),
+                entity.getLoanProductEntity().getBankName(),
+                entity.getLoanProductEntity().getId(),
+                entity.getLoanProductEntity().getProductName(),
+                entity.getLoanProductEntity().getMinInterestRate(),
+                entity.getLoanProductEntity().getMaxInterestRate(),
+                entity.getLoanProductEntity().getMaxLoanLimitAmount(),
+                entity.getSimilarity(),
+                entity.getLoanProductBadgeList()
+            ))
+            .toList();
+
+        return new SliceImpl<>(projections, pageable, hasNextPage);
     }
 
     private OrderSpecifier<?>[] orderBySort(Sort sort) {
