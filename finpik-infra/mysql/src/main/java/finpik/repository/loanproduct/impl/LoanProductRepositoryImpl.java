@@ -88,12 +88,14 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
             }).toList();
 
         //배치 처리로 메모리에 부담을 적게 주기위한 배치 메서드
-        List<RecommendedLoanProductEntity> savedEntities = saveAllRecommendedLoanProductInBatch(entityList);
+        saveAllRecommendedLoanProductInBatch(entityList);
+
+        List<RecommendedLoanProductEntity> savedEntities = recommendedLoanProductJpaRepository.findAllByProfileId(profileId);
 
         return toDomainFrom(savedEntities, recommendedLoanProductList);
     }
 
-    private List<RecommendedLoanProductEntity> saveAllRecommendedLoanProductInBatch(
+    private void saveAllRecommendedLoanProductInBatch(
         List<RecommendedLoanProductEntity> rows
     ) {
         int batchSize = 500;
@@ -108,33 +110,35 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
             em.flush();
             em.clear();
         }
-
-        return rows;
     }
 
     private List<RecommendedLoanProduct> toDomainFrom(
         List<RecommendedLoanProductEntity> entityList,
         List<RecommendedLoanProduct> recommendedLoanProductList
     ) {
-        Map<Long, UUID> loanProductIdToRecommendedId = entityList.stream()
+        Map<Long, RecommendedLoanProductEntity> loanProductIdToRecommendedId = entityList.stream()
             .collect(toMap(
                 e -> e.getLoanProductEntity().getId(),
-                RecommendedLoanProductEntity::getId
+                e -> e
             ));
 
         return recommendedLoanProductList.stream()
-            .map(p -> RecommendedLoanProduct.rebuild(
-                loanProductIdToRecommendedId.get(p.getLoanProductId()),
-                p.getProfileId(),
-                p.getBankName(),
-                p.getLoanProductId(),
-                p.getProductName(),
-                p.getInterestRate().maxInterestRate(),
-                p.getInterestRate().minInterestRate(),
-                p.getMaxLoanLimitAmount(),
-                p.getSimilarity(),
-                p.getLoanProductBadges()
-            ))
+            .map(p -> {
+                RecommendedLoanProductEntity entity = loanProductIdToRecommendedId.get(p.getLoanProductId());
+
+                return RecommendedLoanProduct.rebuild(
+                    entity.getId(),
+                    p.getProfileId(),
+                    p.getBankName(),
+                    p.getLoanProductId(),
+                    p.getProductName(),
+                    p.getInterestRate().maxInterestRate(),
+                    p.getInterestRate().minInterestRate(),
+                    p.getMaxLoanLimitAmount(),
+                    p.getSimilarity(),
+                    entity.getLoanProductBadgeList()
+                );
+            })
             .toList();
     }
 
@@ -142,7 +146,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     @Transactional(readOnly = true)
     public Slice<RecommendedLoanProduct> findAllRecommendedLoanProductSliceByProfileId(Long profileId, Pageable pageable) {
         Slice<RecommendedLoanProductProjection> recommendedLoanProductList =
-            recommendedLoanProductJpaRepository.findAllByProfileId(profileId, pageable);
+            recommendedLoanProductJpaRepository.findAllByProfileIdPage(profileId, pageable);
 
         List<RecommendedLoanProduct> content = recommendedLoanProductList
             .stream()
