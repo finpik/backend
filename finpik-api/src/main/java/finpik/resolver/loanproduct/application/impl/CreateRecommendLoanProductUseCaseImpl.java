@@ -34,8 +34,6 @@ public class CreateRecommendLoanProductUseCaseImpl implements
     @EventListener
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void execute(CreateRecommendedLoanProductEvent event) {
-        //TODO 혹여 해당 부분이 실패할 경우 어떻게 해야할지 강구
-
         List<RecommendedLoanProduct> recommendedLoanProductList = event.contentList().stream()
             .map(content ->
             RecommendedLoanProduct.of(
@@ -53,10 +51,14 @@ public class CreateRecommendLoanProductUseCaseImpl implements
         List<RecommendedLoanProduct> recommendedLoanProducts =
             loanProductRepository.saveAllRecommendedLoanProduct(event.profileId(), recommendedLoanProductList);
 
+        log.info("Created {} recommended loan product events", recommendedLoanProducts.stream().filter(it ->
+            it.getLoanProductBadges().contains(LoanProductBadge.LOWEST_MIN_INTEREST_RATE)
+        ).toList().size());
+
         RecommendedLoanProduct first = recommendedLoanProducts.stream()
             .filter(it ->
                 it.getLoanProductBadges().contains(LoanProductBadge.LOWEST_MIN_INTEREST_RATE)
-            ).findFirst().orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ANNUAL_INCOME));
+            ).findFirst().orElseThrow(() -> new BusinessException(ErrorCode.EMPTY_BADGES));
 
         profileRepository.updateProfileAfterRecommend(
             event.profileId(), recommendedLoanProductList.size(), first.getMinInterestRate()
