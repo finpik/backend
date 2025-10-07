@@ -119,11 +119,7 @@ management:
 logging:
   level:
     org.springframework.security.web.authentication: debug
-    org.apache.kafka: error
-    org.apache.kafka.clients: warn
-    org.springframework.kafka: error
-    org.springframework.kafka.listener: warn
-    org.springframework.security: info
+    org.apache.kafka.clients.NetworkClient: ERROR
 
     # 필터 체인과 보안 디버깅(요청마다 어떤 필터가 적용됐는지)
     org.springframework.security.web.FilterChainProxy: TRACE
