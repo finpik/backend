@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 import finpik.LoanProduct;
 import finpik.RecommendedLoanProduct;
@@ -88,14 +87,12 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
             }).toList();
 
         //배치 처리로 메모리에 부담을 적게 주기위한 배치 메서드
-        saveAllRecommendedLoanProductInBatch(entityList);
-
-        List<RecommendedLoanProductEntity> savedEntities = recommendedLoanProductJpaRepository.findAllByProfileId(profileId);
+        List<RecommendedLoanProductEntity> savedEntities = saveAllRecommendedLoanProductInBatch(entityList);
 
         return toDomainFrom(savedEntities, recommendedLoanProductList);
     }
 
-    private void saveAllRecommendedLoanProductInBatch(
+    private List<RecommendedLoanProductEntity> saveAllRecommendedLoanProductInBatch(
         List<RecommendedLoanProductEntity> rows
     ) {
         int batchSize = 500;
@@ -110,6 +107,8 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
             em.flush();
             em.clear();
         }
+
+        return rows;
     }
 
     private List<RecommendedLoanProduct> toDomainFrom(
