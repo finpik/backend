@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
@@ -30,7 +29,7 @@ public class RecommendedLoanProductEntity {
     @JoinColumn(name = "loan_product_id")
     private LoanProductEntity loanProductEntity;
     private Float similarity;
-    @ElementCollection(fetch = EAGER)
+    @ElementCollection(fetch = LAZY)
     private List<LoanProductBadge> loanProductBadgeList;
 
     public static RecommendedLoanProductEntity of(

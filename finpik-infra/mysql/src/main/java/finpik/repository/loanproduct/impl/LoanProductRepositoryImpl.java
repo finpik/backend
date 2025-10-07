@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 import finpik.LoanProduct;
 import finpik.RecommendedLoanProduct;
@@ -116,25 +115,29 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
         List<RecommendedLoanProductEntity> entityList,
         List<RecommendedLoanProduct> recommendedLoanProductList
     ) {
-        Map<Long, UUID> loanProductIdToRecommendedId = entityList.stream()
+        Map<Long, RecommendedLoanProductEntity> loanProductIdToRecommendedId = entityList.stream()
             .collect(toMap(
                 e -> e.getLoanProductEntity().getId(),
-                RecommendedLoanProductEntity::getId
+                e -> e
             ));
 
         return recommendedLoanProductList.stream()
-            .map(p -> RecommendedLoanProduct.rebuild(
-                loanProductIdToRecommendedId.get(p.getLoanProductId()),
-                p.getProfileId(),
-                p.getBankName(),
-                p.getLoanProductId(),
-                p.getProductName(),
-                p.getInterestRate().maxInterestRate(),
-                p.getInterestRate().minInterestRate(),
-                p.getMaxLoanLimitAmount(),
-                p.getSimilarity(),
-                p.getLoanProductBadges()
-            ))
+            .map(p -> {
+                RecommendedLoanProductEntity entity = loanProductIdToRecommendedId.get(p.getLoanProductId());
+
+                return RecommendedLoanProduct.rebuild(
+                    entity.getId(),
+                    p.getProfileId(),
+                    p.getBankName(),
+                    p.getLoanProductId(),
+                    p.getProductName(),
+                    p.getInterestRate().maxInterestRate(),
+                    p.getInterestRate().minInterestRate(),
+                    p.getMaxLoanLimitAmount(),
+                    p.getSimilarity(),
+                    entity.getLoanProductBadgeList()
+                );
+            })
             .toList();
     }
 
@@ -142,7 +145,7 @@ public class LoanProductRepositoryImpl implements LoanProductRepository {
     @Transactional(readOnly = true)
     public Slice<RecommendedLoanProduct> findAllRecommendedLoanProductSliceByProfileId(Long profileId, Pageable pageable) {
         Slice<RecommendedLoanProductProjection> recommendedLoanProductList =
-            recommendedLoanProductJpaRepository.findAllByProfileId(profileId, pageable);
+            recommendedLoanProductJpaRepository.findAllByProfileIdPage(profileId, pageable);
 
         List<RecommendedLoanProduct> content = recommendedLoanProductList
             .stream()

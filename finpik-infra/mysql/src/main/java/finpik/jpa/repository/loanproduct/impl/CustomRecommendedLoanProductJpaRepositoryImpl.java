@@ -1,7 +1,6 @@
 package finpik.jpa.repository.loanproduct.impl;
 
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import finpik.entity.loanproduct.RecommendedLoanProductEntity;
 import finpik.jpa.repository.loanproduct.CustomRecommendedLoanProductJpaRepository;
@@ -26,7 +25,7 @@ public class CustomRecommendedLoanProductJpaRepositoryImpl implements CustomReco
     private final JPAQueryFactory jpaQueryFactory;
     private static final String SIMILARITY_PROPERTY = "similarity";
 
-    public Slice<RecommendedLoanProductProjection> findAllByProfileId(Long profileId, Pageable pageable) {
+    public Slice<RecommendedLoanProductProjection> findAllByProfileIdPage(Long profileId, Pageable pageable) {
         List<RecommendedLoanProductEntity> recommendedLoanProducts = jpaQueryFactory
             .selectFrom(recommendedLoanProductEntity)
             .leftJoin(recommendedLoanProductEntity.loanProductEntity, loanProductEntity).fetchJoin()

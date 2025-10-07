@@ -57,7 +57,8 @@ public class CreateRecommendLoanProductUseCaseImpl implements
 
         RecommendedLoanProduct first = recommendedLoanProducts.stream()
             .filter(it ->
-                it.getLoanProductBadges().contains(LoanProductBadge.LOWEST_MIN_INTEREST_RATE)
+                it.getLoanProductBadges().stream()
+                    .anyMatch(badge -> badge == LoanProductBadge.LOWEST_MIN_INTEREST_RATE)
             ).findFirst().orElseThrow(() -> new BusinessException(ErrorCode.EMPTY_BADGES));
 
         profileRepository.updateProfileAfterRecommend(
