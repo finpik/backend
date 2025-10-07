@@ -48,3 +48,6 @@ jacoco.exec
 .git/
 
 config/**
+
+out/
+generated/
