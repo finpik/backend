@@ -69,7 +69,7 @@ type ProfileResult {
     profileSeq: Int!
     profileName: String!
     profileColor: ProfileColor!
-    createdAt: DateTime!
+    createdAt: Date!
     recommendedLoanProductCount: Int!
     minInterestRate: Float!
 }
